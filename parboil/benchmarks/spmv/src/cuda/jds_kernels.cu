@@ -11,9 +11,9 @@ __global__ void spmv_jds(float *dst_vector,
 	if(ix<dim)
 	{
 		float sum=0.0f;
-		int	bound=sh_zcnt_int[warp_id];
+		int	bound=sh_zcnt_int[warp_id]; // constant mem
 		//prefetch 0
-		int j=jds_ptr_int[0]+ix;  
+		int j=jds_ptr_int[0]+ix;  //constant mem
 		float d = d_data[j]; 
 		int i = d_index[j];  
 		float t = x_vec[i];
