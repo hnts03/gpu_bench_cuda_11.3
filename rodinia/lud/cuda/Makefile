@@ -37,11 +37,11 @@ EXECUTABLE  := lud
 CUFILES     := lud_kernel.cu
 # C/C++ source files (compiled with gcc / c++)
 CCFILES     := lud.c lud_cuda.c ../common/common.c
-
+BINDIR = ..
 OBJS = ../common/common.o lud.o lud_kernel.o
 
 .PHONY: all clean 
-all : $(EXECUTABLE)
+all : $(BINDIR)/$(EXECUTABLE)
 
 .c.o : 
 	$(NVCC) $(KERNEL_DIM) $(NVCCFLAGS) $(DEFS) -o $@ -c $<
@@ -50,8 +50,8 @@ all : $(EXECUTABLE)
 	$(NVCC) $(KERNEL_DIM) $(NVCCFLAGS) $(DEFS) -o $@ -c $<
 
 
-$(EXECUTABLE) : $(OBJS)
+$(BINDIR)/$(EXECUTABLE) : $(OBJS)
 	$(NVCC) $(NVCCFLAGS) -o $@  $?
 
 clean:
-	rm -f $(EXECUTABLE) $(OBJS) *.linkinfo
+	rm -f $(BINDIR)/$(EXECUTABLE) $(OBJS) *.linkinfo

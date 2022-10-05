@@ -10,7 +10,7 @@
 
 #define THREADS_PER_DIM 16
 #define BLOCKS_PER_DIM 16
-#define THREADS_PER_BLOCK THREADS_PER_DIM*THREADS_PER_DIM
+#define THREADS_PER_BLOCK THREADS_PER_DIM*THREADS_PER_DIM //256
 
 #include "kmeans_cuda_kernel.cu"
 
@@ -22,23 +22,23 @@
 #define CPU_CENTER_REDUCE
 
 extern "C"
-int setup(int argc, char** argv);									/* function prototype */
+int setup(int argc, char** argv);				/* function prototype */
 
 // GLOBAL!!!!!
-unsigned int num_threads_perdim = THREADS_PER_DIM;					/* sqrt(256) -- see references for this choice */
-unsigned int num_blocks_perdim = BLOCKS_PER_DIM;					/* temporary */
+unsigned int num_threads_perdim = THREADS_PER_DIM;			/* sqrt(256) -- see references for this choice */
+unsigned int num_blocks_perdim = BLOCKS_PER_DIM;			/* temporary */
 unsigned int num_threads = num_threads_perdim*num_threads_perdim;	/* number of threads */
 unsigned int num_blocks = num_blocks_perdim*num_blocks_perdim;		/* number of blocks */
 
 /* _d denotes it resides on the device */
-int    *membership_new;												/* newly assignment membership */
-float  *feature_d;													/* inverted data array */
-float  *feature_flipped_d;											/* original (not inverted) data array */
-int    *membership_d;												/* membership on the device */
-float  *block_new_centers;											/* sum of points in a cluster (per block) */
-float  *clusters_d;													/* cluster centers on the device */
-float  *block_clusters_d;											/* per block calculation of cluster centers */
-int    *block_deltas_d;												/* per block calculation of deltas */
+int    *membership_new;				/* newly assignment membership */
+float  *feature_d;				/* inverted data array */
+float  *feature_flipped_d;			/* original (not inverted) data array */
+int    *membership_d;				/* membership on the device */
+float  *block_new_centers;			/* sum of points in a cluster (per block) */
+float  *clusters_d;				/* cluster centers on the device */
+float  *block_clusters_d;			/* per block calculation of cluster centers */
+int    *block_deltas_d;				/* per block calculation of deltas */
 
 
 /* -------------- allocateMemory() ------------------- */

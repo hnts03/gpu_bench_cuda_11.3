@@ -26,7 +26,6 @@ ifeq ($(emu),1)
 	NVCC_FLAGS += -deviceemu
 endif
 
-
 kmeans: kmeans.o cluster.o getopt.o kmeans_clustering.o kmeans_cuda.o rmse.o
 	$(CC) $(CC_FLAGS) kmeans.o cluster.o getopt.o kmeans_clustering.o kmeans_cuda.o rmse.o -o kmeans -L$(CUDA_LIB_DIR) -lcudart -lm
 
@@ -35,6 +34,9 @@ kmeans: kmeans.o cluster.o getopt.o kmeans_clustering.o kmeans_cuda.o rmse.o
 
 kmeans_cuda.o: kmeans_cuda.cu 
 	$(NVCC) $(NVCC_FLAGS) -c kmeans_cuda.cu
+
+kmeans.o: kmeans.c
+	$(CC) -c kmeans.h kmeans.c
 
 clean:
 	rm -f *.o *~ kmeans kmeans_cuda.linkinfo

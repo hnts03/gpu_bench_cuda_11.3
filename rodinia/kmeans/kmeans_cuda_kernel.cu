@@ -76,19 +76,19 @@ kmeansPoint(float  *features,			/* in: [npoints*nfeatures] */
 	{
 		int i, j;
 		float min_dist = FLT_MAX;
-		float dist;													/* distance square between a point to cluster center */
+		float dist;			/* distance square between a point to cluster center */
 		
 		/* find the cluster center id with min distance to pt */
 		for (i=0; i<nclusters; i++) {
-			int cluster_base_index = i*nfeatures;					/* base index of cluster centers for inverted array */			
-			float ans=0.0;												/* Euclidean distance sqaure */
+			int cluster_base_index = i*nfeatures;	/* base index of cluster centers for inverted array */			
+			float ans=0.0;				/* Euclidean distance sqaure */
 
 			for (j=0; j < nfeatures; j++)
 			{					
-				int addr = point_id + j*npoints;					/* appropriate index of data point */
+				int addr = point_id + j*npoints; 	/* appropriate index of data point */
 				float diff = (tex1Dfetch(t_features,addr) -
 							  c_clusters[cluster_base_index + j]);	/* distance between a data point to cluster centers */
-				ans += diff*diff;									/* sum of squares */
+				ans += diff*diff;					/* sum of squares */
 			}
 			dist = ans;		
 

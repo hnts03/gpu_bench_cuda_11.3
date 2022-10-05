@@ -81,7 +81,7 @@ void BFSGraph( int argc, char** argv)
 	fscanf(fp,"%d",&no_of_nodes);
 
 	int num_of_blocks = 1;
-	int num_of_threads_per_block = no_of_nodes;
+	int num_of_threads_per_block = no_of_nodes; 
 
 	//Make execution Parameters according to the number of nodes
 	//Distribute threads across multiple Blocks if necessary
