@@ -10,7 +10,7 @@ outdir="$1"
 mkdir ${outdir}
 for currDir in *
 do
-    if [ -d $currDir ]; then
+    if [ -d $currDir ] && [ $currDir != $outdir ]; then
 	case $currDir in
 	particlefilter)
 		echo "compile $currDir"
@@ -29,15 +29,15 @@ do
 		echo "compile $currDir"
 		cd $currDir
 		make clean
-		bench1="${currDir}_V1"
-		bench2="${currDir}_V2"
+		bench1="srad_v1"
+		bench2="srad_v2"
 		cd $bench1
 		make
-		bin1="${currDir}1"
+		bin1="srad1"
 		cp $bin1 ../../${outdir}
 		cd ../$bench2
 		make
-		bin2="${currDir}2"
+		bin2="srad2"
 		cp $bin2 ../../${outdir}
 		cd ../../
 	;;

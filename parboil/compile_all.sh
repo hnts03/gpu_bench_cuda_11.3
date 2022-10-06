@@ -10,7 +10,7 @@ chmod u+x benchmarks/*/tools/compare-output
 mkdir ${outdir}
 for currDir in benchmarks/*
 do
-    if [ -d $currDir ]; then
+    if [ -d $currDir ] && [ $currDir != $outdir ]; then
 	cd $currDir
 	bench=${PWD##*/}
 	echo "$bench"

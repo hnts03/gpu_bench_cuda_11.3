@@ -6,7 +6,7 @@ INCLUDE := $(CUDA_DIR)/include
 
 SRC = 3D.cu
 
-EXE = 3D 
+EXE = hotspot3D 
 
 OUTPUT = *.out
 
