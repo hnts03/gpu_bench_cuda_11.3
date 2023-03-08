@@ -25,10 +25,10 @@
 INCLUDES += -I$(CUDA_INSTALL_PATH)/targets/x86_64-linux/include
 
 # Add new SM Versions here as devices with new Compute Capability are released
-SM_VERSIONS   := 10 11 12 13 20 21 30 50 60 62 61 70 75
+SM_VERSIONS   := 10 11 12 13 20 21 30 50 60 62 61 70 75 86
 
 #CUDA_INSTALL_PATH ?= /home/tgrogers-raid/a/common/cuda-4.2
-CUDA_INSTALL_PATH ?= /usr/local/cuda-10.1
+CUDA_INSTALL_PATH ?= /usr/local/cuda-11.3
 
 ifdef cuda-install
 	CUDA_INSTALL_PATH := $(cuda-install)
@@ -162,6 +162,7 @@ GENCODE_SM62 ?= -gencode=arch=compute_62,code=\"sm_62,compute_62\"
 GENCODE_SM61 ?= -gencode=arch=compute_61,code=\"sm_61,compute_61\"
 GENCODE_SM70 ?= -gencode=arch=compute_70,code=\"sm_70,compute_70\"
 GENCODE_SM75 ?= -gencode=arch=compute_75,code=\"sm_75,compute_75\"
+GENCODE_SM86 ?= -gencode=arch=compute_86,code=\"sm_86,compute_86\"
 
 CXXFLAGS  += $(CXXWARN_FLAGS) $(CXX_ARCH_FLAGS)
 CFLAGS    += $(CWARN_FLAGS) $(CXX_ARCH_FLAGS)
@@ -435,11 +436,11 @@ $(OBJDIR)/%.cpp.o : $(SRCDIR)%.cpp $(C_DEPS) makedirectories
 
 # Default arch includes gencode for sm_10, sm_20, sm_30, and other archs from GENCODE_ARCH declared in the makefile
 $(OBJDIR)/%.cu.o : $(SRCDIR)%.cu $(CU_DEPS) makedirectories
-	$(VERBOSE)$(NVCC) $(GENCODE_SM70) $(GENCODE_SM75) $(GENCODE_ARCH) $(GENCODE_SM61) $(GENCODE_SM30) $(GENCODE_SM35) $(GENCODE_SM50) $(GENCODE_SM60) $(GENCODE_SM62) $(NVCCFLAGS) $(SMVERSIONFLAGS) -o $@ -c $<
+	$(VERBOSE)$(NVCC) $(GENCODE_SM70) $(GENCODE_SM75) $(GENCODE_ARCH) $(GENCODE_SM86) $(GENCODE_SM60) $(GENCODE_SM62) $(NVCCFLAGS) $(SMVERSIONFLAGS) -o $@ -c $<
 
 # Default arch includes gencode for sm_10, sm_20, sm_30, and other archs from GENCODE_ARCH declared in the makefile
 $(CUBINDIR)/%.cubin : $(SRCDIR)%.cu cubindirectory makedirectories
-	$(VERBOSE)$(NVCC) $(GENCODE_SM70) $(GENCODE_SM75) $(GENCODE_ARCH) $(GENCODE_SM61) $(GENCODE_SM30) $(GENCODE_SM35) $(GENCODE_SM50) $(GENCODE_SM60) $(GENCODE_SM62) $(CUBIN_ARCH_FLAG) $(NVCCFLAGS) $(SMVERSIONFLAGS) -o $@ -cubin $<
+	$(VERBOSE)$(NVCC) $(GENCODE_SM70) $(GENCODE_SM75) $(GENCODE_ARCH) $(GENCODE_SM86) $(GENCODE_SM60) $(GENCODE_SM62) $(CUBIN_ARCH_FLAG) $(NVCCFLAGS) $(SMVERSIONFLAGS) -o $@ -cubin $<
 
 $(PTXDIR)/%.ptx : $(SRCDIR)%.cu ptxdirectory makedirectories
 	$(VERBOSE)$(NVCC) $(CUBIN_ARCH_FLAG) $(NVCCFLAGS) $(SMVERSIONFLAGS) -o $@ -ptx $<
@@ -464,7 +465,7 @@ define SMVERSION_template
 OBJS += $(patsubst %.cu,$(OBJDIR)/%.cu_$(1).o,$(notdir $(CUFILES_sm_$(1))))
 $(OBJDIR)/%.cu_$(1).o : $(SRCDIR)%.cu $(CU_DEPS)
 #	$(VERBOSE)$(NVCC) -o $$@ -c $$< $(NVCCFLAGS)  $(1)
-	$(VERBOSE)$(NVCC) -gencode=arch=compute_$(1),code=\"sm_$(1),compute_$(1)\" $(GENCODE_SM70) $(GENCODE_SM75) $(GENCODE_SM61) -o $$@ -c $$< $(NVCCFLAGS)
+	$(VERBOSE)$(NVCC) -gencode=arch=compute_$(1),code=\"sm_$(1),compute_$(1)\" $(GENCODE_SM70) $(GENCODE_SM75) $(GENCODE_SM86) -o $$@ -c $$< $(NVCCFLAGS)
 endef
 
 # This line invokes the above template for each arch version stored in
