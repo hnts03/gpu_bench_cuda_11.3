@@ -19,8 +19,9 @@ do
 		cd $currDir
 		make clean
 		make
-		bin="$currDir.exe"
-		mv $bin ../$outdir
+		#bin="$currDir.exe"
+		#mv $bin ../$outdir
+		mv *.exe ../$outdir
 		cd ..
     fi
 done
