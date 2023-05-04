@@ -10,7 +10,7 @@ $(error You must run "source setup_environment before calling make")
 endif
 
 ifeq ($(CUDA_GT_10), 1)
-all: rodinia lonestar polybench parboil
+all: rodinia lonestar2.0 polybench parboil
 endif
 # ifeq ($(CUDA_GT_7), 1)
 # # all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive dragon-cdp microbench rodinia ispass-2009 lonestargpu-2.0 polybench Parboil shoc custom_apps deeplearning cutlass GPU_Microbenchmark heterosync Deepbench_nvidia
@@ -26,7 +26,7 @@ endif
 #Disable clean for now, It has a bug!
 # clean_dragon-naive clean_pannotia clean_proxy-apps
 #clean: clean_rodinia_2.0-ft clean_dragon-cdp  clean_ispass-2009 clean_lonestargpu-2.0 clean_custom_apps clean_Parboil clean_cutlass clean_rodinia clean_heterosync
-clean: clean_rodinia clean_lonestar clean_parboil
+clean: clean_rodinia clean_lonestar2.0 clean_parboil
 
 clean_data:
 	./clean_data.sh
@@ -138,7 +138,7 @@ Deepbench_nvidia:
 # 	$(SETENV) make $(MAKE_ARGS) -C proxy-apps-doe/xsbench
 
 rodinia:
-	mkdir -p $(BINDIR)/
+	mkdir -p $(BINDIR)/rodinia-3.1
 	if [ ${CUDA_VERSION_MAJOR} -gt 5 ]; then \
 		$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C rodinia-3.1/huffman/; \
 	fi
@@ -149,7 +149,7 @@ rodinia:
 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C rodinia-3.1/kmeans 
 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C rodinia-3.1/needle 
 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C rodinia-3.1/streamingcluster
-	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C rodinia-3.1/mummergpu
+#	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C rodinia-3.1/mummergpu
 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C rodinia-3.1/b+tree/
 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C rodinia-3.1/dwt2d/
 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C rodinia-3.1/heartwall/
@@ -166,34 +166,34 @@ rodinia:
 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C rodinia-3.1/srad/
 #	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C rodinia-3.1/srad/srad_v2 -f Makefile_nvidia
 	if [ ${CUDA_VERSION_MAJOR} -gt 5 ]; then \
-		mv rodinia-3.1/huffman/huffman $(BINDIR)/huffman; \
+		mv rodinia-3.1/huffman/huffman $(BINDIR)/rodinia-3.1/huffman; \
 	fi
-	mv rodinia-3.1/b+tree/b+tree $(BINDIR)/b+tree
-	mv rodinia-3.1/dwt2d/dwt2d $(BINDIR)/dwt2d
-	mv rodinia-3.1/heartwall/heartwall $(BINDIR)/heartwall
-	mv rodinia-3.1/hybridsort/hybridsort $(BINDIR)/hybridsort
-	mv rodinia-3.1/myocyte/myocyte $(BINDIR)/myocyte
-	mv rodinia-3.1/nn/nn $(BINDIR)/nn
-	mv rodinia-3.1/particlefilter/particlefilter_float $(BINDIR)/particlefilter_float
-	mv rodinia-3.1/particlefilter/particlefilter_naive $(BINDIR)/particlefilter_naive
-	mv rodinia-3.1/pathfinder/pathfinder $(BINDIR)/pathfinder
-	mv rodinia-3.1/lavaMD/lavaMD $(BINDIR)/lavaMD
-	mv rodinia-3.1/lud/lud $(BINDIR)/lud
-	mv rodinia-3.1/leukocyte/leukocyte $(BINDIR)/leukocyte
-	mv rodinia-3.1/hotspot3D/hotspot3D $(BINDIR)/hotspot3D
-	mv rodinia-3.1/gaussian/gaussian $(BINDIR)/gaussian
-	mv rodinia-3.1/srad/srad_v1/srad1 $(BINDIR)/srad1
-	mv rodinia-3.1/srad/srad_v2/srad2 $(BINDIR)/srad2
-	mv rodinia-3.1/backprop/backprop $(BINDIR)/backprop
-	mv rodinia-3.1/bfs/bfs  $(BINDIR)/bfs
-	mv rodinia-3.1/cfd/euler3d $(BINDIR)/euler3d
-	mv rodinia-3.1/cfd/pre_euler3d $(BINDIR)/pre_euler3d
-	mv rodinia-3.1/cfd/euler3d_double $(BINDIR)/euler3d_double
-	mv rodinia-3.1/cfd/pre_euler3d_double $(BINDIR)/pre_euler3d_double
-	mv rodinia-3.1/hotspot/hotspot $(BINDIR)/hotspot
-	mv rodinia-3.1/kmeans/kmeans $(BINDIR)/kmeans
-	mv rodinia-3.1/needle/needle $(BINDIR)/nw
-	mv rodinia-3.1/streamingcluster/streamingcluster $(BINDIR)/streamingcluster
+	mv rodinia-3.1/b+tree/b+tree $(BINDIR)/rodinia-3.1/b+tree
+	mv rodinia-3.1/dwt2d/dwt2d $(BINDIR)/rodinia-3.1/dwt2d
+	mv rodinia-3.1/heartwall/heartwall $(BINDIR)/rodinia-3.1/heartwall
+	mv rodinia-3.1/hybridsort/hybridsort $(BINDIR)/rodinia-3.1/hybridsort
+	mv rodinia-3.1/myocyte/myocyte $(BINDIR)/rodinia-3.1/myocyte
+	mv rodinia-3.1/nn/nn $(BINDIR)/rodinia-3.1/nn
+	mv rodinia-3.1/particlefilter/particlefilter_float $(BINDIR)/rodinia-3.1/particlefilter_float
+	mv rodinia-3.1/particlefilter/particlefilter_naive $(BINDIR)/rodinia-3.1/particlefilter_naive
+	mv rodinia-3.1/pathfinder/pathfinder $(BINDIR)/rodinia-3.1/pathfinder
+	mv rodinia-3.1/lavaMD/lavaMD $(BINDIR)/rodinia-3.1/lavaMD
+	mv rodinia-3.1/lud/lud $(BINDIR)/rodinia-3.1/lud
+	mv rodinia-3.1/leukocyte/leukocyte $(BINDIR)/rodinia-3.1/leukocyte
+	mv rodinia-3.1/hotspot3D/hotspot3D $(BINDIR)/rodinia-3.1/hotspot3D
+	mv rodinia-3.1/gaussian/gaussian $(BINDIR)/rodinia-3.1/gaussian
+	mv rodinia-3.1/srad/srad_v1/srad1 $(BINDIR)/rodinia-3.1/srad1
+	mv rodinia-3.1/srad/srad_v2/srad2 $(BINDIR)/rodinia-3.1/srad2
+	mv rodinia-3.1/backprop/backprop $(BINDIR)/rodinia-3.1/backprop
+	mv rodinia-3.1/bfs/bfs  $(BINDIR)/rodinia-3.1/bfs
+	mv rodinia-3.1/cfd/euler3d $(BINDIR)/rodinia-3.1/euler3d
+	mv rodinia-3.1/cfd/pre_euler3d $(BINDIR)/rodinia-3.1/pre_euler3d
+	mv rodinia-3.1/cfd/euler3d_double $(BINDIR)/rodinia-3.1/euler3d_double
+	mv rodinia-3.1/cfd/pre_euler3d_double $(BINDIR)/rodinia-3.1/pre_euler3d_double
+	mv rodinia-3.1/hotspot/hotspot $(BINDIR)/rodinia-3.1/hotspot
+	mv rodinia-3.1/kmeans/kmeans $(BINDIR)/rodinia-3.1/kmeans
+	mv rodinia-3.1/needle/needle $(BINDIR)/rodinia-3.1/nw
+	mv rodinia-3.1/streamingcluster/streamingcluster $(BINDIR)/rodinia-3.1/streamingcluster
 #	mv $(BINDIR)/mummergpu $(BINDIR)/mummergpu
 
 # ispass-2009:
@@ -211,25 +211,26 @@ rodinia:
 # 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/STO
 # 	PID=$$$$ && cp -r ispass-2009/WP ispass-2009/WP-$$PID && $(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/WP-$$PID && rm -rf ispass-2009/WP-$$PID
 
-lonestar:
+lonestar2.0:
+	mkdir -p $(BINDIR)/lonestargpu-2.0
 	$(setenv) make $(make_args) noinline=$(noinline) -C lonestargpu-2.0 all
-	mv lonestargpu-2.0/apps/bfs/bfs $(BINDIR)/lonestar_bfs
-	mv lonestargpu-2.0/apps/bfs/bfs-atomic $(BINDIR)/lonestar_bfs-atomic
-	mv lonestargpu-2.0/apps/bfs/bfs-wlc $(BINDIR)/lonestar_bfs-wlc
-	mv lonestargpu-2.0/apps/bfs/bfs-wla $(BINDIR)/lonestar_bfs-wla
-	mv lonestargpu-2.0/apps/bfs/bfs-wlw $(BINDIR)/lonestar_bfs-wlw
-	mv lonestargpu-2.0/apps/bh/bh $(BINDIR)/bh
-	mv lonestargpu-2.0/apps/dmr/dmr $(BINDIR)/dmr
-	mv lonestargpu-2.0/apps/mst/mst $(BINDIR)/mst
-	mv lonestargpu-2.0/apps/pta/pta $(BINDIR)/pta
-	mv lonestargpu-2.0/apps/nsp/nsp $(BINDIR)/nsp
-	mv lonestargpu-2.0/apps/sssp/sssp $(BINDIR)/sssp
-	mv lonestargpu-2.0/apps/sssp/sssp-wlc $(BINDIR)/sssp-wlc
-	mv lonestargpu-2.0/apps/sssp/sssp-wln $(BINDIR)/sssp-wln
+	mv lonestargpu-2.0/apps/bfs/bfs $(BINDIR)/lonestargpu-2.0/lonestar-bfs
+	mv lonestargpu-2.0/apps/bfs/bfs-atomic $(BINDIR)/lonestargpu-2.0/lonestar-bfs-atomic
+	mv lonestargpu-2.0/apps/bfs/bfs-wlc $(BINDIR)/lonestargpu-2.0/lonestar-bfs-wlc
+	mv lonestargpu-2.0/apps/bfs/bfs-wla $(BINDIR)/lonestargpu-2.0/lonestar-bfs-wla
+	mv lonestargpu-2.0/apps/bfs/bfs-wlw $(BINDIR)/lonestargpu-2.0/lonestar-bfs-wlw
+	mv lonestargpu-2.0/apps/bh/bh $(BINDIR)/lonestargpu-2.0/lonestar-bh
+	mv lonestargpu-2.0/apps/dmr/dmr $(BINDIR)/lonestargpu-2.0/lonestar-dmr
+	mv lonestargpu-2.0/apps/mst/mst $(BINDIR)/lonestargpu-2.0/lonestar-mst
+	mv lonestargpu-2.0/apps/pta/pta $(BINDIR)/lonestargpu-2.0/lonestar-pta
+	mv lonestargpu-2.0/apps/nsp/nsp $(BINDIR)/lonestargpu-2.0/lonestar-nsp
+	mv lonestargpu-2.0/apps/sssp/sssp $(BINDIR)/lonestargpu-2.0/lonestar-sssp
+	mv lonestargpu-2.0/apps/sssp/sssp-wlc $(BINDIR)/lonestargpu-2.0/lonestar-sssp-wlc
+	mv lonestargpu-2.0/apps/sssp/sssp-wln $(BINDIR)/lonestargpu-2.0/lonestar-sssp-wln
 
 parboil:
 #	make data
-	mkdir -p $(BINDIR)/
+	mkdir -p $(BINDIR)/parboil
 	$(SETENV) cd Parboil; ./parboil compile cutcp cuda
 	$(SETENV) cd Parboil; ./parboil compile bfs cuda
 	$(SETENV) cd Parboil; ./parboil compile histo cuda
@@ -241,38 +242,43 @@ parboil:
 	$(SETENV) cd Parboil; ./parboil compile spmv cuda
 	$(SETENV) cd Parboil; ./parboil compile stencil cuda
 	$(SETENV) cd Parboil; ./parboil compile tpacf cuda
-	mv ./Parboil/benchmarks/lbm/build/cuda_default/lbm $(BINDIR)/lbm
-	mv ./Parboil/benchmarks/cutcp/build/cuda_default/cutcp $(BINDIR)/cutcp
-	mv ./Parboil/benchmarks/bfs/build/cuda_default/bfs $(BINDIR)/parboil_bfs
-	mv ./Parboil/benchmarks/histo/build/cuda_default/histo $(BINDIR)/histo
-	mv ./Parboil/benchmarks/mri-gridding/build/cuda_default/mri-gridding $(BINDIR)/mri-gridding
-	mv ./Parboil/benchmarks/mri-q/build/cuda_default/mri-q $(BINDIR)/mri-q
-	mv ./Parboil/benchmarks/sad/build/cuda_default/sad $(BINDIR)/sad
-	mv ./Parboil/benchmarks/sgemm/build/cuda_default/sgemm $(BINDIR)/sgemm
-	mv ./Parboil/benchmarks/spmv/build/cuda_default/spmv $(BINDIR)/spmv
-	mv ./Parboil/benchmarks/stencil/build/cuda_default/stencil $(BINDIR)/stencil
-	mv ./Parboil/benchmarks/tpacf/build/cuda_default/tpacf $(BINDIR)/tpacf
+	mv ./Parboil/benchmarks/lbm/build/cuda_default/lbm $(BINDIR)/parboil/lbm
+	mv ./Parboil/benchmarks/cutcp/build/cuda_default/cutcp $(BINDIR)/parboil/cutcp
+	mv ./Parboil/benchmarks/bfs/build/cuda_default/bfs $(BINDIR)/parboil/bfs
+	mv ./Parboil/benchmarks/histo/build/cuda_default/histo $(BINDIR)/parboil/histo
+	mv ./Parboil/benchmarks/mri-gridding/build/cuda_default/mri-gridding $(BINDIR)/parboil/mri-gridding
+	mv ./Parboil/benchmarks/mri-q/build/cuda_default/mri-q $(BINDIR)/parboil/mri-q
+	mv ./Parboil/benchmarks/sad/build/cuda_default/sad $(BINDIR)/parboil/sad
+	mv ./Parboil/benchmarks/sgemm/build/cuda_default/sgemm $(BINDIR)/parboil/sgemm
+	mv ./Parboil/benchmarks/spmv/build/cuda_default/spmv $(BINDIR)/parboil/spmv
+	mv ./Parboil/benchmarks/stencil/build/cuda_default/stencil $(BINDIR)/parboil/stencil
+	mv ./Parboil/benchmarks/tpacf/build/cuda_default/tpacf $(BINDIR)/parboil/tpacf
 
 polybench:
-	mkdir -p $(BINDIR)/
+	mkdir -p $(BINDIR)/polybench
 	$(SETENV) cd polybench-3.2/; sh ./compileCodes.sh bin
-	cp polybench-3.2/bin/* $(BINDIR)/
+	mv polybench-3.2/bin/2DConvolution.exe $(BINDIR)/polybench/2DConvolution
+	mv polybench-3.2/bin/3DConvolution.exe $(BINDIR)/polybench/3DConvolution
+	mv polybench-3.2/bin/2mm.exe $(BINDIR)/polybench/2mm
+	mv polybench-3.2/bin/3mm.exe $(BINDIR)/polybench/3mm
+	mv polybench-3.2/bin/adi.exe $(BINDIR)/polybench/adi
+	mv polybench-3.2/bin/atax.exe $(BINDIR)/polybench/atax
+	mv polybench-3.2/bin/bicg.exe $(BINDIR)/polybench/bicg
+	mv polybench-3.2/bin/correlation.exe $(BINDIR)/polybench/correlation
+	mv polybench-3.2/bin/covariance.exe $(BINDIR)/polybench/covariance
+	mv polybench-3.2/bin/doitgen.exe $(BINDIR)/polybench/doitgen
+	mv polybench-3.2/bin/fdtd2d.exe $(BINDIR)/polybench/fdtd2d
+	mv polybench-3.2/bin/gemm.exe $(BINDIR)/polybench/gemm
+	mv polybench-3.2/bin/gemver.exe $(BINDIR)/polybench/gemver
+	mv polybench-3.2/bin/gesummv.exe $(BINDIR)/polybench/gesummv
+	mv polybench-3.2/bin/gramschmidt.exe $(BINDIR)/polybench/gramschmidt
+	mv polybench-3.2/bin/jacobi1D.exe $(BINDIR)/polybench/jacobi1D
+	mv polybench-3.2/bin/jacobi2D.exe $(BINDIR)/polybench/jacobi2D
+	mv polybench-3.2/bin/lu.exe $(BINDIR)/polybench/lu
+	mv polybench-3.2/bin/mvt.exe $(BINDIR)/polybench/mvt
+	mv polybench-3.2/bin/syr2k.exe $(BINDIR)/polybench/syr2k
+	mv polybench-3.2/bin/syrk.exe $(BINDIR)/polybench/syrk
 	rm -r polybench-3.2/bin
-# mv polybench/convolution-2d/2DConvolution.exe $(BINDIR)/2DConvolution
-# mv polybench/2MM/2mm.exe $(BINDIR)/2mm
-# mv polybench/3DCONV/3DConvolution.exe $(BINDIR)/3DConvolution
-# mv polybench/3MM/3mm.exe $(BINDIR)/3mm
-# mv polybench/ATAX/atax.exe $(BINDIR)/atax
-# mv polybench/BICG/bicg.exe $(BINDIR)/bicg
-# mv polybench/CORR/correlation.exe $(BINDIR)/correlation
-# mv polybench/COVAR/covariance.exe $(BINDIR)/covariance
-# mv polybench/FDTD-2D/fdtd2d.exe $(BINDIR)/fdtd2d
-# mv polybench/GEMM/gemm.exe $(BINDIR)/gemm
-# mv polybench/GESUMMV/gesummv.exe $(BINDIR)/gesummv
-# mv polybench/GRAMSCHM/gramschmidt.exe $(BINDIR)/gramschmidt
-# mv polybench/MVT/mvt.exe $(BINDIR)/mvt
-# mv polybench/SYR2K/syr2k.exe $(BINDIR)/syr2k
-# mv polybench/SYRK/syrk.exe $(BINDIR)/syrk
 
 # shoc:
 # 	mkdir -p $(BINDIR)/
@@ -359,7 +365,7 @@ clean_parboil:
 	$(SETENV) cd Parboil; ./parboil clean stencil cuda
 	$(SETENV) cd Parboil; ./parboil clean tpacf cuda
 
-clean_lonestar:
+clean_lonestar2.0:
 	$(setenv) make $(make_args) noinline=$(noinline) -C lonestargpu-2.0 clean
 
 # clean_ispass-2009:

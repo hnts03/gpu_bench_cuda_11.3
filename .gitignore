@@ -1,3 +1,5 @@
 bin/
 *.swp
 *~
+data_dirs/
+*.o
