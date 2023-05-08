@@ -13,19 +13,19 @@ ifeq ($(CUDA_GT_10), 1)
 all: rodinia lonestar2.0 polybench parboil ispass deepbench cutlass
 endif
 # ifeq ($(CUDA_GT_7), 1)
-# # all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive dragon-cdp microbench rodinia ispass-2009 lonestargpu-2.0 polybench Parboil shoc custom_apps deeplearning cutlass GPU_Microbenchmark heterosync Deepbench_nvidia
-# all: rodinia lonestargpu-2.0 polybench Parboil tango
+# # all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive dragon-cdp microbench rodinia ispass-2009 lonestargpu-2.0 polybench parboil shoc custom_apps deeplearning cutlass GPU_Microbenchmark heterosync Deepbench_nvidia
+# all: rodinia lonestargpu-2.0 polybench parboil tango
 # else
 # 	ifeq ($(CUDA_GT_4), 1)
-# 	all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive microbench rodinia ispass-2009 dragon-cdp lonestargpu-2.0 polybench Parboil shoc custom_apps
+# 	all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive microbench rodinia ispass-2009 dragon-cdp lonestargpu-2.0 polybench parboil shoc custom_apps
 # 	else
-# 	all:   pannotia rodinia_2.0-ft proxy-apps microbench rodinia ispass-2009 polybench Parboil shoc custom_apps
+# 	all:   pannotia rodinia_2.0-ft proxy-apps microbench rodinia ispass-2009 polybench parboil shoc custom_apps
 # 	endif
 # endif
 
 #Disable clean for now, It has a bug!
 # clean_dragon-naive clean_pannotia clean_proxy-apps
-#clean: clean_rodinia_2.0-ft clean_dragon-cdp  clean_ispass-2009 clean_lonestargpu-2.0 clean_custom_apps clean_Parboil clean_cutlass clean_rodinia clean_heterosync
+#clean: clean_rodinia_2.0-ft clean_dragon-cdp  clean_ispass-2009 clean_lonestargpu-2.0 clean_custom_apps clean_parboil clean_cutlass clean_rodinia clean_heterosync
 clean: clean_rodinia clean_lonestar2.0 clean_parboil clean_ispass
 
 # clean_data:
@@ -233,28 +233,28 @@ lonestar2.0:
 parboil:
 #	make data
 	mkdir -p $(BINDIR)/parboil
-	$(SETENV) cd Parboil; ./parboil compile cutcp cuda
-	$(SETENV) cd Parboil; ./parboil compile bfs cuda
-	$(SETENV) cd Parboil; ./parboil compile histo cuda
-	$(SETENV) cd Parboil; ./parboil compile lbm cuda
-	$(SETENV) cd Parboil; ./parboil compile mri-gridding cuda
-	$(SETENV) cd Parboil; ./parboil compile mri-q cuda
-	$(SETENV) cd Parboil; ./parboil compile sad cuda
-	$(SETENV) cd Parboil; ./parboil compile sgemm cuda
-	$(SETENV) cd Parboil; ./parboil compile spmv cuda
-	$(SETENV) cd Parboil; ./parboil compile stencil cuda
-	$(SETENV) cd Parboil; ./parboil compile tpacf cuda
-	mv ./Parboil/benchmarks/lbm/build/cuda_default/lbm $(BINDIR)/parboil/lbm
-	mv ./Parboil/benchmarks/cutcp/build/cuda_default/cutcp $(BINDIR)/parboil/cutcp
-	mv ./Parboil/benchmarks/bfs/build/cuda_default/bfs $(BINDIR)/parboil/bfs
-	mv ./Parboil/benchmarks/histo/build/cuda_default/histo $(BINDIR)/parboil/histo
-	mv ./Parboil/benchmarks/mri-gridding/build/cuda_default/mri-gridding $(BINDIR)/parboil/mri-gridding
-	mv ./Parboil/benchmarks/mri-q/build/cuda_default/mri-q $(BINDIR)/parboil/mri-q
-	mv ./Parboil/benchmarks/sad/build/cuda_default/sad $(BINDIR)/parboil/sad
-	mv ./Parboil/benchmarks/sgemm/build/cuda_default/sgemm $(BINDIR)/parboil/sgemm
-	mv ./Parboil/benchmarks/spmv/build/cuda_default/spmv $(BINDIR)/parboil/spmv
-	mv ./Parboil/benchmarks/stencil/build/cuda_default/stencil $(BINDIR)/parboil/stencil
-	mv ./Parboil/benchmarks/tpacf/build/cuda_default/tpacf $(BINDIR)/parboil/tpacf
+	$(SETENV) cd parboil; ./parboil compile cutcp cuda
+	$(SETENV) cd parboil; ./parboil compile bfs cuda
+	$(SETENV) cd parboil; ./parboil compile histo cuda
+	$(SETENV) cd parboil; ./parboil compile lbm cuda
+	$(SETENV) cd parboil; ./parboil compile mri-gridding cuda
+	$(SETENV) cd parboil; ./parboil compile mri-q cuda
+	$(SETENV) cd parboil; ./parboil compile sad cuda
+	$(SETENV) cd parboil; ./parboil compile sgemm cuda
+	$(SETENV) cd parboil; ./parboil compile spmv cuda
+	$(SETENV) cd parboil; ./parboil compile stencil cuda
+	$(SETENV) cd parboil; ./parboil compile tpacf cuda
+	mv ./parboil/benchmarks/lbm/build/cuda_default/lbm $(BINDIR)/parboil/lbm
+	mv ./parboil/benchmarks/cutcp/build/cuda_default/cutcp $(BINDIR)/parboil/cutcp
+	mv ./parboil/benchmarks/bfs/build/cuda_default/bfs $(BINDIR)/parboil/bfs
+	mv ./parboil/benchmarks/histo/build/cuda_default/histo $(BINDIR)/parboil/histo
+	mv ./parboil/benchmarks/mri-gridding/build/cuda_default/mri-gridding $(BINDIR)/parboil/mri-gridding
+	mv ./parboil/benchmarks/mri-q/build/cuda_default/mri-q $(BINDIR)/parboil/mri-q
+	mv ./parboil/benchmarks/sad/build/cuda_default/sad $(BINDIR)/parboil/sad
+	mv ./parboil/benchmarks/sgemm/build/cuda_default/sgemm $(BINDIR)/parboil/sgemm
+	mv ./parboil/benchmarks/spmv/build/cuda_default/spmv $(BINDIR)/parboil/spmv
+	mv ./parboil/benchmarks/stencil/build/cuda_default/stencil $(BINDIR)/parboil/stencil
+	mv ./parboil/benchmarks/tpacf/build/cuda_default/tpacf $(BINDIR)/parboil/tpacf
 
 polybench:
 	mkdir -p $(BINDIR)/polybench
@@ -355,17 +355,17 @@ clean_cutlass:
 # 	cd shoc-master/; make clean; make distclean
 
 clean_parboil:
-	$(SETENV) cd Parboil; ./parboil clean cutcp cuda
-	$(SETENV) cd Parboil; ./parboil clean bfs cuda
-	$(SETENV) cd Parboil; ./parboil clean histo cuda
-	$(SETENV) cd Parboil; ./parboil clean lbm cuda
-	$(SETENV) cd Parboil; ./parboil clean mri-gridding cuda
-	$(SETENV) cd Parboil; ./parboil clean mri-q cuda
-	$(SETENV) cd Parboil; ./parboil clean sad cuda
-	$(SETENV) cd Parboil; ./parboil clean sgemm cuda
-	$(SETENV) cd Parboil; ./parboil clean spmv cuda
-	$(SETENV) cd Parboil; ./parboil clean stencil cuda
-	$(SETENV) cd Parboil; ./parboil clean tpacf cuda
+	$(SETENV) cd parboil; ./parboil clean cutcp cuda
+	$(SETENV) cd parboil; ./parboil clean bfs cuda
+	$(SETENV) cd parboil; ./parboil clean histo cuda
+	$(SETENV) cd parboil; ./parboil clean lbm cuda
+	$(SETENV) cd parboil; ./parboil clean mri-gridding cuda
+	$(SETENV) cd parboil; ./parboil clean mri-q cuda
+	$(SETENV) cd parboil; ./parboil clean sad cuda
+	$(SETENV) cd parboil; ./parboil clean sgemm cuda
+	$(SETENV) cd parboil; ./parboil clean spmv cuda
+	$(SETENV) cd parboil; ./parboil clean stencil cuda
+	$(SETENV) cd parboil; ./parboil clean tpacf cuda
 
 clean_lonestar2.0:
 	$(setenv) make $(make_args) noinline=$(noinline) -C lonestargpu-2.0 clean
