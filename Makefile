@@ -10,7 +10,7 @@ $(error You must run "source setup_environment before calling make")
 endif
 
 ifeq ($(CUDA_GT_10), 1)
-all: rodinia lonestar2.0 polybench parboil ispass deepbench cutlass
+all: rodinia lonestar2.0 polybench parboil ispass deepbench
 endif
 # ifeq ($(CUDA_GT_7), 1)
 # # all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive dragon-cdp microbench rodinia ispass-2009 lonestargpu-2.0 polybench parboil shoc custom_apps deeplearning cutlass GPU_Microbenchmark heterosync Deepbench_nvidia
@@ -37,67 +37,6 @@ clean: clean_rodinia clean_lonestar2.0 clean_parboil clean_ispass
 data:
 	cp -r ../hdd/data_dirs .
 
-###################################################################################################3
-# Rodinia 2.0 Functional Test Stuff
-# ###################################################################################################3
-# rodinia_2.0-ft:
-# 	$(SETENV) make $(MAKE_ARGS) -C rodinia-3.1/2.0-ft/backprop
-# 	$(SETENV) make $(MAKE_ARGS) -C rodinia-3.1/2.0-ft/bfs
-# 	$(SETENV) make $(MAKE_ARGS) -C rodinia-3.1/2.0-ft/heartwall
-# 	$(SETENV) make $(MAKE_ARGS) -C rodinia-3.1/2.0-ft/hotspot
-# 	$(SETENV) make $(MAKE_ARGS) -C rodinia-3.1/2.0-ft/kmeans
-# 	$(SETENV) make $(MAKE_ARGS) -C rodinia-3.1/2.0-ft/lud
-# 	$(SETENV) make $(MAKE_ARGS) -C rodinia-3.1/2.0-ft/nn
-# 	$(SETENV) make $(MAKE_ARGS) -C rodinia-3.1/2.0-ft/nw
-# 	$(SETENV) make $(MAKE_ARGS) -C rodinia-3.1/2.0-ft/pathfinder
-# 	$(SETENV) make $(MAKE_ARGS) -C rodinia-3.1/2.0-ft/srad
-# 	$(SETENV) make $(MAKE_ARGS) -C rodinia-3.1/2.0-ft/streamcluster
-
-# ###################################################################################################3
-# # Purdue microbenchmarks for added functionality
-# ###################################################################################################3
-# microbench:
-# 	$(SETENV) make $(MAKE_ARGS) -C microbench cuda-$(CUDA_VERSION_MAJOR)
-
-# ###################################################################################################3
-# # For Dragon, we need to change the archs manually!  (TO DO)
-# # Naive works wwith only SM_20 and above
-# # Fro Dragon-cdp comilation, you need to ensure that you are using at least CUDA 5.5
-# ###################################################################################################3
-# dragon-naive: 
-# 	chmod +x dragon_li/sconstruct
-# 	if [ ${CUDA_VERSION_MAJOR} -lt 8 ]; then \
-# 		scons sm35=1 no_debug=1 -C dragon_li; \
-# 	else \
-# 		scons sm35=1 sm61=1 no_debug=1 -C dragon_li; \
-# 	fi
-# 	cp ./dragon_li/bin/$(CUDA_VERSION)/testAmr $(BINDIR)/
-# 	cp ./dragon_li/bin/$(CUDA_VERSION)/testBfs $(BINDIR)/
-# 	cp ./dragon_li/bin/$(CUDA_VERSION)/testJoin $(BINDIR)/
-# 	cp ./dragon_li/bin/$(CUDA_VERSION)/testSssp $(BINDIR)/
-
-# dragon-cdp: dragon-naive
-# 	chmod +x dragon_li/sconstruct
-# 	if [ ${CUDA_VERSION_MAJOR} -lt 8 ]; then \
-# 		scons cdp=1 no_debug=1 sm35=1 -C dragon_li; \
-# 	else \
-# 		scons cdp=1 no_debug=1 sm61=1 sm35=1 -C dragon_li; \
-# 	fi
-# 	cp ./dragon_li/cdp_bin/$(CUDA_VERSION)/testAmr-cdp $(BINDIR)/
-# 	cp ./dragon_li/cdp_bin/$(CUDA_VERSION)/testBfs-cdp $(BINDIR)/
-# 	cp ./dragon_li/cdp_bin/$(CUDA_VERSION)/testJoin-cdp $(BINDIR)/
-# 	cp ./dragon_li/cdp_bin/$(CUDA_VERSION)/testSssp-cdp $(BINDIR)/
-
-# ###################################################################################################3
-# #Microbenchmarks for cache
-# ###################################################################################################3
-
-# GPU_Microbenchmark:
-# 	mkdir -p $(BINDIR)/
-# 	$(SETENV) make $(MAKE_ARGS) -C GPU_Microbenchmark
-# 	cp -r GPU_Microbenchmark/bin/* $(BINDIR)/
-
-
 deepbench:
 	mkdir -p $(BINDIR)/deepbench
 	$(SETENV) make $(MAKE_ARGS) -C deepbench/code/nvidia
@@ -105,40 +44,6 @@ deepbench:
 #	cp -r deepbench/code/nvidia/bin/gemm_bench* $(BINDIR)/
 #	cp -r deepbench/code/nvidia/bin/rnn_bench* $(BINDIR)/
 
-###################################################################################################3
-#pagerank and bc does not work with SM_10 because they need atomic_add
-###################################################################################################3
-
-# pannotia:
-# 	$(SETENV) make $(MAKE_ARGS) -C pannotia/bc
-# 	$(SETENV) export VARIANT="MAX"; make $(MAKE_ARGS) -C pannotia/color
-# 	$(SETENV) export VARIANT="MAXMIN"; make $(MAKE_ARGS) -C pannotia/color
-# 	$(SETENV) export VARIANT="DEFAULT"; make $(MAKE_ARGS) -C pannotia/fw
-# 	$(SETENV) export VARIANT="BLOCK"; make $(MAKE_ARGS) -C pannotia/fw
-# 	$(SETENV) make $(MAKE_ARGS) -C pannotia/mis
-# 	$(SETENV) export VARIANT="DEFAULT"; make $(MAKE_ARGS) -C pannotia/pagerank
-# 	$(SETENV) export VARIANT="SPMV"; make $(MAKE_ARGS) -C pannotia/pagerank
-# 	$(SETENV) export VARIANT="CSR"; make $(MAKE_ARGS) -C pannotia/sssp
-# 	$(SETENV) export VARIANT="ELL"; make $(MAKE_ARGS) -C pannotia/sssp
-
-###################################################################################################3
-#TO DO
-#note: matvec does not work with cuda 8.0
-#comd does not wark with cuda 4.2
-#xsbench does not work with SM_10
-###################################################################################################3
-
-
-# proxy-apps:
-# 	chmod +x proxy-apps-doe/cns/compile.bash
-# 	($(SETENV) cd proxy-apps-doe/cns/ ; ./compile.bash)
-# 	#chmod +x proxy-apps-doe/comd/cmd_compile.sh
-# 	#( cd proxy-apps-doe/comd ; ./cmd_compile.sh)
-# 	$(SETENV) make $(MAKE_ARGS) -C proxy-apps-doe/lulesh
-# 	if [ ${CUDA_VERSION_MAJOR} -lt 7 ] ; then  \
-# 		$(SETENV) make $(MAKE_ARGS) -C proxy-apps-doe/minife_matvec_ell;\
-# 	fi
-# 	$(SETENV) make $(MAKE_ARGS) -C proxy-apps-doe/xsbench
 
 rodinia:
 	mkdir -p $(BINDIR)/rodinia-3.1
@@ -282,77 +187,17 @@ polybench:
 	mv polybench-3.2/bin/syrk.exe $(BINDIR)/polybench/syrk
 	rm -r polybench-3.2/bin
 
-# shoc:
-# 	mkdir -p $(BINDIR)/
-# 	cd shoc-master/; ./configure; $(SETENV) make $(MAKE_ARGS); $(SETENV) make $(MAKE_ARGS) -C src/cuda
-# 	mv shoc-master/src/level0/BusSpeedDownload $(BINDIR)/shoc-BusSpeedDownload
-# 	mv shoc-master/src/level0/BusSpeedReadback $(BINDIR)/shoc-BusSpeedReadback
-# 	mv shoc-master/src/level0/DeviceMemory $(BINDIR)/shoc-DeviceMemory
-# 	mv shoc-master/src/level0/MaxFlops $(BINDIR)/shoc-MaxFlops
-# 	mv shoc-master/src/level1/bfs/BFS $(BINDIR)/shoc-BFS
-# 	mv shoc-master/src/level1/fft/FFT $(BINDIR)/shoc-FFT
-# 	mv shoc-master/src/level1/gemm/GEMM $(BINDIR)/shoc-GEMM
-# 	mv shoc-master/src/level1/md/MD $(BINDIR)/shoc-MD
-# 	mv shoc-master/src/level1/md5hash/MD5Hash $(BINDIR)/shoc-MD5Hash
-# 	mv shoc-master/src/level1/neuralnet/NeuralNet $(BINDIR)/shoc-NeuralNet
-# 	mv shoc-master/src/level1/reduction/Reduction $(BINDIR)/shoc-Reduction
-# 	mv shoc-master/src/level1/scan/Scan $(BINDIR)/shoc-Scan
-# 	mv shoc-master/src/level1/sort/Sort $(BINDIR)/shoc-Sort
-# 	mv shoc-master/src/level1/spmv/Spmv $(BINDIR)/shoc-Spmv
-# 	mv shoc-master/src/level1/stencil2d/Stencil2D $(BINDIR)/shoc-Stencil2D
-# 	mv shoc-master/src/level1/triad/Triad $(BINDIR)/shoc-Triad
-# 	mv shoc-master/src/level2/qtclustering/QTC $(BINDIR)/shoc-QTC
-# 	mv shoc-master/src/level2/s3d/S3D $(BINDIR)/shoc-S3D
-# 	mv shoc-master/src/stability/Stability $(BINDIR)/shoc-Stability
 
-# custom_apps:
-# 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C custom-apps/shoc-modified-spmv/
-# 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C custom-apps/rodinia-kmn-no-tex/
-# 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C custom-apps/sdk-matrixMul-modified/
+# cutlass:
+# 	mkdir -p $(BINDIR)
+# 	git submodule init && git submodule update
+# 	$(SETENV) mkdir -p cutlass-bench/build && cd cutlass-bench/build && cmake .. -DUSE_GPGPUSIM=1 -DCUTLASS_NVCC_ARCHS=86 && make cutlass_perf_test
+# 	cd cutlass-bench/build/tools/test/perf && ln -s -f ../../../../binary.sh . && ./binary.sh
+# 	cp cutlass-bench/build/tools/test/perf/cutlass_perf_test $(BINDIR)/
 
-# power:
-# 	$(SETENV) make $(MAKE_ARGS) PWRTYPE=SM noinline=$(noinline) -C gpuwattch-ubench/ power
-# 	$(SETENV) make $(MAKE_ARGS) PWRTYPE=HW noinline=$(noinline) -C gpuwattch-ubench/ power
+# clean_cutlass:
+# 	rm -fr cutlass-bench/build
 
-# deeplearning:
-# 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cudnn/mnist
-# 	cp cudnn/mnist/mnistCUDNN $(BINDIR)/
-
-cutlass:
-	mkdir -p $(BINDIR)
-	git submodule init && git submodule update
-	$(SETENV) mkdir -p cutlass-bench/build && cd cutlass-bench/build && cmake .. -DUSE_GPGPUSIM=1 -DCUTLASS_NVCC_ARCHS=86 && make cutlass_perf_test
-	cd cutlass-bench/build/tools/test/perf && ln -s -f ../../../../binary.sh . && ./binary.sh
-	cp cutlass-bench/build/tools/test/perf/cutlass_perf_test $(BINDIR)/
-
-# Maybe we should use submodules for this - but I have heard a lot of horor stories about these..
-# For now - lets just clone if we don't have it and set the SHA we want.
-# heterosync:
-# 	mkdir -p $(BINDIR)/
-# 	cd cuda && \
-# 	if [ ! -d "heterosync" ]; then \
-# 		git clone git@github.com:mattsinc/heterosync.git; \
-# 	fi && \
-# 	cd heterosync && git checkout 22bc0eb
-# 	$(SETENV) make $(MAKE_ARGS) CUDA_DIR=$(CUDA_INSTALL_PATH) -C heterosync/syncPrims/uvm/
-# 	mv heterosync/syncPrims/uvm/allSyncPrims-1kernel $(BINDIR)/
-
-# clean_heterosync:
-# 	rm -rf heterosync
-
-clean_cutlass:
-	rm -fr cutlass-bench/build
-
-# clean_deeplearning:
-# 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C cudnn/mnist clean
-
-# clean_custom_apps:
-# 	make clean -C custom-apps/shoc-modified-spmv/
-# 	make clean -C custom-apps/rodinia-kmn-no-tex/
-# 	make clean -C custom-apps/sdk-matrixMul-modified/
-
-# clean_shoc:
-# 	cd shoc-master/; make clean; make distclean
 
 clean_parboil:
 	$(SETENV) cd parboil; ./parboil clean cutcp cuda
@@ -407,43 +252,3 @@ clean_rodinia:
 	$(SETENV) make clean $(MAKE_ARGS) noinline=$(noinline) -C rodinia-3.1/hotspot3D/
 	$(SETENV) make clean $(MAKE_ARGS) noinline=$(noinline) -C rodinia-3.1/gaussian
 	$(SETENV) make clean $(MAKE_ARGS) noinline=$(noinline) -C rodinia-3.1/srad/
-
-# clean_rodinia_2.0-ft:
-# 	$(SETENV) make $(MAKE_ARGS) clean -C rodinia-3.1/2.0-ft/backprop
-# 	$(SETENV) make $(MAKE_ARGS) clean -C rodinia-3.1/2.0-ft/bfs
-# 	$(SETENV) make $(MAKE_ARGS) clean -C rodinia-3.1/2.0-ft/heartwall
-# 	$(SETENV) make $(MAKE_ARGS) clean -C rodinia-3.1/2.0-ft/hotspot
-# 	$(SETENV) make $(MAKE_ARGS) clean -C rodinia-3.1/2.0-ft/kmeans
-# 	$(SETENV) make $(MAKE_ARGS) clean -C rodinia-3.1/2.0-ft/lud
-# 	$(SETENV) make $(MAKE_ARGS) clean -C rodinia-3.1/2.0-ft/nn
-# 	$(SETENV) make $(MAKE_ARGS) clean -C rodinia-3.1/2.0-ft/nw
-# 	$(SETENV) make $(MAKE_ARGS) clean -C rodinia-3.1/2.0-ft/pathfinder
-# 	$(SETENV) make $(MAKE_ARGS) clean -C rodinia-3.1/2.0-ft/srad
-# 	$(SETENV) make $(MAKE_ARGS) clean -C rodinia-3.1/2.0-ft/streamcluster
-
-# clean_dragon-naive: 
-# 	$(SETENV) rm -f /dragon_li/bin
-
-# clean_dragon-cdp: 
-# 	$(SETENV) rm -f /dragon_li/cdp_bin
-
-# clean_pannotia: 
-# 	$(SETENV) make $(MAKE_ARGS) clean -C pannotia/bc
-# 	$(SETENV) export VARIANT="MAX"; make $(MAKE_ARGS) clean -C pannotia/color
-# 	$(SETENV) export VARIANT="MAXMIN"; make $(MAKE_ARGS) clean -C pannotia/color
-# 	$(SETENV) export VARIANT="DEFAULT"; make $(MAKE_ARGS) clean -C pannotia/fw
-# 	$(SETENV) export VARIANT="BLOCK"; make $(MAKE_ARGS) clean -C pannotia/fw
-# 	$(SETENV) make $(MAKE_ARGS)  -C pannotia/mis
-# 	$(SETENV) export VARIANT="DEFAULT"; make $(MAKE_ARGS) clean -C pannotia/pagerank
-# 	$(SETENV) export VARIANT="SPMV"; make $(MAKE_ARGS) clean -C pannotia/pagerank
-# 	$(SETENV) export VARIANT="DEFAULT"; make $(MAKE_ARGS) clean -C pannotia/sssp
-# 	$(SETENV) export VARIANT="ELL"; make $(MAKE_ARGS) clean -C pannotia/sssp
-
-# clean_proxy-apps:
-# 	$(SETENV) make $(MAKE_ARGS) clean -C proxy-apps-doe/lulesh
-# 	$(SETENV) make $(MAKE_ARGS) clean -C proxy-apps-doe/minife_matvec_ell
-# 	$(SETENV) make $(MAKE_ARGS) clean -C proxy-apps-doe/xsbench
-# 	chmod +x proxy-apps-doe/cns/compile.bash
-# 	(cd proxy-apps-doe/cns/ ; ./compile.bash -c)
-# 	chmod +x proxy-apps-doe/comd/clean.sh
-# 	( cd proxy-apps-doe/comd ; ./clean.sh ) 
