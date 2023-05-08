@@ -37,9 +37,9 @@ export CUDA_VERSION_MAJOR=`nvcc --version | grep release | sed -re 's/.*release 
 export CUDAHOME=$CUDA_INSTALL_PATH
 
 export BINDIR=$GPUAPPS_ROOT/bin/$CUDA_VERSION
-# export BINSUBDIR=release
+# export BINSUBDIR=
 
-export SETENV="export BINDIR=$BINDIR; export BINSUBDIR=$BINSUBDIR; export ROOTOBJDIR=obj_$CUDA_VERSION;"
+export SETENV="export BINDIR=$BINDIR; export ROOTOBJDIR=obj_$CUDA_VERSION;"
 echo BINDIR=$BINDIR
 
 export MAKE_ARGS=""

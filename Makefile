@@ -10,7 +10,7 @@ $(error You must run "source setup_environment before calling make")
 endif
 
 ifeq ($(CUDA_GT_10), 1)
-all: rodinia lonestar2.0 polybench parboil
+all: rodinia lonestar2.0 polybench parboil ispass deepbench cutlass
 endif
 # ifeq ($(CUDA_GT_7), 1)
 # # all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive dragon-cdp microbench rodinia ispass-2009 lonestargpu-2.0 polybench Parboil shoc custom_apps deeplearning cutlass GPU_Microbenchmark heterosync Deepbench_nvidia
@@ -26,14 +26,16 @@ endif
 #Disable clean for now, It has a bug!
 # clean_dragon-naive clean_pannotia clean_proxy-apps
 #clean: clean_rodinia_2.0-ft clean_dragon-cdp  clean_ispass-2009 clean_lonestargpu-2.0 clean_custom_apps clean_Parboil clean_cutlass clean_rodinia clean_heterosync
-clean: clean_rodinia clean_lonestar2.0 clean_parboil
+clean: clean_rodinia clean_lonestar2.0 clean_parboil clean_ispass
 
-clean_data:
-	./clean_data.sh
+# clean_data:
+# 	./clean_data.sh
 
+# data:
+# 	mkdir -p $(BINDIR)/
+# 	cd ../ && bash ./get_data.sh
 data:
-	mkdir -p $(BINDIR)/
-	cd ../ && bash ./get_data.sh
+	cp -r ../hdd/data_dirs .
 
 ###################################################################################################3
 # Rodinia 2.0 Functional Test Stuff
@@ -96,11 +98,12 @@ data:
 # 	cp -r GPU_Microbenchmark/bin/* $(BINDIR)/
 
 
-Deepbench_nvidia:
-	$(SETENV) make $(MAKE_ARGS) -C DeepBench/code/nvidia
-	cp -r DeepBench/code/nvidia/bin/conv_bench* $(BINDIR)/
-	cp -r DeepBench/code/nvidia/bin/gemm_bench* $(BINDIR)/
-	cp -r DeepBench/code/nvidia/bin/rnn_bench* $(BINDIR)/
+deepbench:
+	mkdir -p $(BINDIR)/deepbench
+	$(SETENV) make $(MAKE_ARGS) -C deepbench/code/nvidia
+	mv deepbench/code/nvidia/bin/* $(BINDIR)/deepbench/
+#	cp -r deepbench/code/nvidia/bin/gemm_bench* $(BINDIR)/
+#	cp -r deepbench/code/nvidia/bin/rnn_bench* $(BINDIR)/
 
 ###################################################################################################3
 #pagerank and bc does not work with SM_10 because they need atomic_add
@@ -196,20 +199,19 @@ rodinia:
 	mv rodinia-3.1/streamingcluster/streamingcluster $(BINDIR)/rodinia-3.1/streamingcluster
 #	mv $(BINDIR)/mummergpu $(BINDIR)/mummergpu
 
-# ispass-2009:
-# 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/AES
-# 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/BFS
-# #	cd CP; export Parboil_ROOT=`pwd`; cd common/src; make $(MAKE_ARGS); cd -; ./Parboil compile cp cuda_short; cp benchmarks/cp/build/cuda_short/cp $(BINDIR)/CP 
-# #	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C DG/3rdParty/ParMetis
-# #	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C DG
-# 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/LIB
-# 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/LPS
-# 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/MUM
-# 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/NN
-# 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/NQU
-# 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/RAY
-# 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/STO
-# 	PID=$$$$ && cp -r ispass-2009/WP ispass-2009/WP-$$PID && $(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/WP-$$PID && rm -rf ispass-2009/WP-$$PID
+ispass:
+#	mkdir -p $(BINDIR)/ispass-2009
+#	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/AES
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/BFS
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/LIB
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/LPS
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/MUM
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/NN
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/NQU
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/RAY
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/STO
+	mv $(BINDIR)/release $(BINDIR)/ispass-2009
+#	PID=$$$$ && cp -r ispass-2009/WP ispass-2009/WP-$$PID && $(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/WP-$$PID && rm -rf ispass-2009/WP-$$PID
 
 lonestar2.0:
 	mkdir -p $(BINDIR)/lonestargpu-2.0
@@ -317,9 +319,9 @@ polybench:
 # 	cp cudnn/mnist/mnistCUDNN $(BINDIR)/
 
 cutlass:
-	mkdir -p $(BINDIR)/
+	mkdir -p $(BINDIR)
 	git submodule init && git submodule update
-	$(SETENV) mkdir -p cutlass-bench/build && cd cutlass-bench/build && cmake .. -DUSE_GPGPUSIM=1 -DCUTLASS_NVCC_ARCHS=70 && make cutlass_perf_test
+	$(SETENV) mkdir -p cutlass-bench/build && cd cutlass-bench/build && cmake .. -DUSE_GPGPUSIM=1 -DCUTLASS_NVCC_ARCHS=86 && make cutlass_perf_test
 	cd cutlass-bench/build/tools/test/perf && ln -s -f ../../../../binary.sh . && ./binary.sh
 	cp cutlass-bench/build/tools/test/perf/cutlass_perf_test $(BINDIR)/
 
@@ -368,20 +370,17 @@ clean_parboil:
 clean_lonestar2.0:
 	$(setenv) make $(make_args) noinline=$(noinline) -C lonestargpu-2.0 clean
 
-# clean_ispass-2009:
-# 	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/AES
-# 	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/BFS
-# #	cd CP; export Parboil_ROOT=`pwd`; cd common/src; make $(MAKE_ARGS); cd -; ./Parboil compile cp cuda_short; cp benchmarks/cp/build/cuda_short/cp $(BINDIR)/CP 
-# #	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C DG/3rdParty/ParMetis
-# #	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C DG
-# 	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/LIB
-# 	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/LPS
-# 	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/MUM
-# 	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/NN
-# 	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/NQU
-# 	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/RAY
-# 	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/STO
-# 	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/WP
+clean_ispass:
+#	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/AES
+	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/BFS
+	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/LIB
+	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/LPS
+	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/MUM
+	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/NN
+	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/NQU
+	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/RAY
+	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/STO
+#	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/WP
 
 clean_rodinia:
 	$(SETENV) make clean $(MAKE_ARGS) noinline=$(noinline) -C rodinia-3.1/backprop 
