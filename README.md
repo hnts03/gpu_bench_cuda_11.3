@@ -1,4 +1,5 @@
 GPU benchsuites
+
 Environment settings
 	ubuntu-18.04
 	gcc-7.5.0
