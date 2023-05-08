@@ -1,12 +1,14 @@
 GPU benchsuites
 
 Environment settings:
+
 	ubuntu-18.04
 	gcc-7.5.0
 	cuda-11.3
 	cudnn-8.5.0 (for DeepBench)
 
 Benchsuites list:
+
 	Rodinia-3.1
 	Polybench-3.2
 	Parboil
@@ -16,6 +18,7 @@ Benchsuites list:
 	Tango
 
 Accel-SIM only:
+
 	Cutlass-1.3.1
 	DeepBench
 	Gardenia
@@ -28,6 +31,7 @@ Accel-SIM only:
 	cuGraph
 
 Usage:
+
 	source setup_cuda11.3 (setup_cudnn8.5.0 for DeepBench)
 	source setup_environment
 	*** get datasets ***
