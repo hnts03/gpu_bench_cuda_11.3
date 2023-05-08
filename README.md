@@ -1,13 +1,12 @@
 GPU benchsuites
 
 Environment settings:
-
 	ubuntu-18.04
 	gcc-7.5.0
 	cuda-11.3
 	cudnn-8.5.0 (for DeepBench)
 
-Benchsuites list
+Benchsuites list:
 	Rodinia-3.1
 	Polybench-3.2
 	Parboil
@@ -16,7 +15,7 @@ Benchsuites list
 	LonestarGPU-6.0
 	Tango
 
-Accel-SIM only
+Accel-SIM only:
 	Cutlass-1.3.1
 	DeepBench
 	Gardenia
