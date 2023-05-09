@@ -36,6 +36,12 @@ clean: clean_rodinia clean_lonestar2.0 clean_parboil clean_ispass clean_polybenc
 # 	cd ../ && bash ./get_data.sh
 data:
 	cp -r ../hdd/data_dirs .
+	mv data_dirs/tango/AlexNet/data $(BINDIR)/tango/AlexNet/
+	mv data_dirs/tango/CifarNet/data $(BINDIR)/tango/CifarNet/
+	mv data_dirs/tango/GRU/data $(BINDIR)/tango/GRU/
+	mv data_dirs/tango/LSTM/data $(BINDIR)/tango/LSTM/
+	mv data_dirs/tango/ResNet/data $(BINDIR)/tango/ResNet
+	mv data_dirs/tango/SqueezeNet/data $(BINDIR)/tango/SqueezeNet
 
 deepbench:
 	mkdir -p $(BINDIR)/deepbench
@@ -47,6 +53,12 @@ deepbench:
 tango:
 	mkdir -p $(BINDIR)/tango
 	$(SETENV) cd Tango/GPU; ./compile.sh
+	mkdir -p $(BINDIR)/tango/AlexNet
+	mkdir -p $(BINDIR)/tango/CifarNet
+	mkdir -p $(BINDIR)/tango/GRU
+	mkdir -p $(BINDIR)/tango/LSTM
+	mkdir -p $(BINDIR)/tango/ResNet
+	mkdir -p $(BINDIR)/tango/SqueezeNet
 	mv Tango/GPU/AlexNet/AN $(BINDIR)/tango
 	mv Tango/GPU/CifarNet/CN $(BINDIR)/tango
 	mv Tango/GPU/GRU/GRU $(BINDIR)/tango
