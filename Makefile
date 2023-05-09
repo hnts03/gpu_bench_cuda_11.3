@@ -10,7 +10,7 @@ $(error You must run "source setup_environment before calling make")
 endif
 
 ifeq ($(CUDA_GT_10), 1)
-all: rodinia lonestar2.0 polybench parboil ispass deepbench
+all: rodinia lonestar2.0 polybench parboil ispass deepbench tango
 endif
 # ifeq ($(CUDA_GT_7), 1)
 # # all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive dragon-cdp microbench rodinia ispass-2009 lonestargpu-2.0 polybench parboil shoc custom_apps deeplearning cutlass GPU_Microbenchmark heterosync Deepbench_nvidia
@@ -26,7 +26,7 @@ endif
 #Disable clean for now, It has a bug!
 # clean_dragon-naive clean_pannotia clean_proxy-apps
 #clean: clean_rodinia_2.0-ft clean_dragon-cdp  clean_ispass-2009 clean_lonestargpu-2.0 clean_custom_apps clean_parboil clean_cutlass clean_rodinia clean_heterosync
-clean: clean_rodinia clean_lonestar2.0 clean_parboil clean_ispass
+clean: clean_rodinia clean_lonestar2.0 clean_parboil clean_ispass clean_polybench clean_tango
 
 # clean_data:
 # 	./clean_data.sh
@@ -39,11 +39,20 @@ data:
 
 deepbench:
 	mkdir -p $(BINDIR)/deepbench
-	$(SETENV) make $(MAKE_ARGS) -C deepbench/code/nvidia
-	mv deepbench/code/nvidia/bin/* $(BINDIR)/deepbench/
+	$(SETENV) make $(MAKE_ARGS) -C DeepBench/code/nvidia
+	mv DeepBench/code/nvidia/bin/* $(BINDIR)/deepbench/
 #	cp -r deepbench/code/nvidia/bin/gemm_bench* $(BINDIR)/
 #	cp -r deepbench/code/nvidia/bin/rnn_bench* $(BINDIR)/
 
+tango:
+	mkdir -p $(BINDIR)/tango
+	$(SETENV) cd Tango/GPU; ./compile.sh
+	mv Tango/GPU/AlexNet/AN $(BINDIR)/tango
+	mv Tango/GPU/CifarNet/CN $(BINDIR)/tango
+	mv Tango/GPU/GRU/GRU $(BINDIR)/tango
+	mv Tango/GPU/LSTM/LSTM $(BINDIR)/tango
+	mv Tango/GPU/ResNet/RN $(BINDIR)/tango
+	mv Tango/GPU/SqueezeNet/SN $(BINDIR)/tango
 
 rodinia:
 	mkdir -p $(BINDIR)/rodinia-3.1
@@ -138,17 +147,17 @@ lonestar2.0:
 parboil:
 #	make data
 	mkdir -p $(BINDIR)/parboil
-	$(SETENV) cd parboil; ./parboil compile cutcp cuda
-	$(SETENV) cd parboil; ./parboil compile bfs cuda
-	$(SETENV) cd parboil; ./parboil compile histo cuda
-	$(SETENV) cd parboil; ./parboil compile lbm cuda
-	$(SETENV) cd parboil; ./parboil compile mri-gridding cuda
-	$(SETENV) cd parboil; ./parboil compile mri-q cuda
-	$(SETENV) cd parboil; ./parboil compile sad cuda
-	$(SETENV) cd parboil; ./parboil compile sgemm cuda
-	$(SETENV) cd parboil; ./parboil compile spmv cuda
-	$(SETENV) cd parboil; ./parboil compile stencil cuda
-	$(SETENV) cd parboil; ./parboil compile tpacf cuda
+	$(SETENV) cd Parboil; ./parboil compile cutcp cuda
+	$(SETENV) cd Parboil; ./parboil compile bfs cuda
+	$(SETENV) cd Parboil; ./parboil compile histo cuda
+	$(SETENV) cd Parboil; ./parboil compile lbm cuda
+	$(SETENV) cd Parboil; ./parboil compile mri-gridding cuda
+	$(SETENV) cd Parboil; ./parboil compile mri-q cuda
+	$(SETENV) cd Parboil; ./parboil compile sad cuda
+	$(SETENV) cd Parboil; ./parboil compile sgemm cuda
+	$(SETENV) cd Parboil; ./parboil compile spmv cuda
+	$(SETENV) cd Parboil; ./parboil compile stencil cuda
+	$(SETENV) cd Parboil; ./parboil compile tpacf cuda
 	mv ./parboil/benchmarks/lbm/build/cuda_default/lbm $(BINDIR)/parboil/lbm
 	mv ./parboil/benchmarks/cutcp/build/cuda_default/cutcp $(BINDIR)/parboil/cutcp
 	mv ./parboil/benchmarks/bfs/build/cuda_default/bfs $(BINDIR)/parboil/bfs
@@ -198,6 +207,11 @@ polybench:
 # clean_cutlass:
 # 	rm -fr cutlass-bench/build
 
+# clean_tango:
+# 	rm -r $(BINDIR)/tango
+
+# clean_polybench:
+# 	rm -r $(BINDIR)/polybench
 
 clean_parboil:
 	$(SETENV) cd parboil; ./parboil clean cutcp cuda

@@ -17,7 +17,7 @@ rodinia-3.1/myocyte/myocyte.out
 rodinia-3.1/leukocyte/*.o
 rodinia-3.1/leukocyte/meschach_lib/confdefs.h
 rodinia-3.1/leukocyte/meschach_lib/config.log
-#parboil/benchmarks/**/build/
+parboil/benchmarks/**/build/
 polybench-3.2/**/*.exe
 cutlass-bench/build/
 lonestargpu-2.0/apps/bfs/bfs
