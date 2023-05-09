@@ -10,7 +10,7 @@ $(error You must run "source setup_environment before calling make")
 endif
 
 ifeq ($(CUDA_GT_10), 1)
-all: rodinia lonestar2.0 polybench parboil ispass deepbench tango
+all: rodinia lonestar2.0 polybench parboil ispass deepbench tango graphbig
 endif
 # ifeq ($(CUDA_GT_7), 1)
 # # all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive dragon-cdp microbench rodinia ispass-2009 lonestargpu-2.0 polybench parboil shoc custom_apps deeplearning cutlass GPU_Microbenchmark heterosync Deepbench_nvidia
@@ -26,7 +26,7 @@ endif
 #Disable clean for now, It has a bug!
 # clean_dragon-naive clean_pannotia clean_proxy-apps
 #clean: clean_rodinia_2.0-ft clean_dragon-cdp  clean_ispass-2009 clean_lonestargpu-2.0 clean_custom_apps clean_parboil clean_cutlass clean_rodinia clean_heterosync
-clean: clean_rodinia clean_lonestar2.0 clean_parboil clean_ispass clean_polybench clean_tango
+clean: clean_rodinia clean_lonestar2.0 clean_parboil clean_ispass clean_polybench clean_tango clean_graphbig
 
 # clean_data:
 # 	./clean_data.sh
@@ -42,6 +42,37 @@ data:
 	mv data_dirs/tango/LSTM/data $(BINDIR)/tango/LSTM/
 	mv data_dirs/tango/ResNet/data $(BINDIR)/tango/ResNet
 	mv data_dirs/tango/SqueezeNet/data $(BINDIR)/tango/SqueezeNet
+
+graphbig:
+	mkdir -p $(BINDIR)/graphbig
+	$(SETENV) make $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_BFS
+	$(SETENV) make $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_BetweennessCentr
+	$(SETENV) make $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_ConnectedComp
+	$(SETENV) make $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_DegreeCentr
+	$(SETENV) make $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_GraphColoring
+	$(SETENV) make $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_SSSP
+	$(SETENV) make $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_TriangleCount
+	$(SETENV) make $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_kCore
+	mv graphBIG/gpu_bench/gpu_BFS/bfs_data_thread_centric $(BINDIR)/graphbig
+	mv graphBIG/gpu_bench/gpu_BFS/bfs_data_warp_centric $(BINDIR)/graphbig
+	mv graphBIG/gpu_bench/gpu_BFS/bfs_topo_thread_centric $(BINDIR)/graphbig
+	mv graphBIG/gpu_bench/gpu_BFS/bfs_topo_warp_centric $(BINDIR)/graphbig
+	mv graphBIG/gpu_bench/gpu_BFS/bfs_topo_unroll $(BINDIR)/graphbig
+	mv graphBIG/gpu_bench/gpu_BFS/bfs_topo_frontier $(BINDIR)/graphbig
+	mv graphBIG/gpu_bench/gpu_BFS/bfs_topo_atomic $(BINDIR)/graphbig
+	mv graphBIG/gpu_bench/gpu_BetweennessCentr/betweenness $(BINDIR)/graphbig
+	mv graphBIG/gpu_bench/gpu_ConnectedComp/connected_comp $(BINDIR)/graphbig
+	mv graphBIG/gpu_bench/gpu_DegreeCentr/degree_centr $(BINDIR)/graphbig
+	mv graphBIG/gpu_bench/gpu_GraphColoring/gc_data_thread_centric $(BINDIR)/graphbig
+	mv graphBIG/gpu_bench/gpu_GraphColoring/gc_data_warp_centric $(BINDIR)/graphbig
+	mv graphBIG/gpu_bench/gpu_GraphColoring/gc_topo_thread_centric $(BINDIR)/graphbig
+	mv graphBIG/gpu_bench/gpu_GraphColoring/gc_topo_warp_centric $(BINDIR)/graphbig
+	mv graphBIG/gpu_bench/gpu_SSSP/sssp_data_thread_centric $(BINDIR)/graphbig
+	mv graphBIG/gpu_bench/gpu_SSSP/sssp_data_warp_centric $(BINDIR)/graphbig
+	mv graphBIG/gpu_bench/gpu_SSSP/sssp_topo_thread_centric $(BINDIR)/graphbig
+	mv graphBIG/gpu_bench/gpu_SSSP/sssp_topo_warp_centric $(BINDIR)/graphbig
+	mv graphBIG/gpu_bench/gpu_TriangleCount/triangle_count $(BINDIR)/graphbig
+	mv graphBIG/gpu_bench/gpu_kCore/kcore $(BINDIR)/graphbig
 
 deepbench:
 	mkdir -p $(BINDIR)/deepbench
@@ -278,3 +309,13 @@ clean_rodinia:
 	$(SETENV) make clean $(MAKE_ARGS) noinline=$(noinline) -C rodinia-3.1/hotspot3D/
 	$(SETENV) make clean $(MAKE_ARGS) noinline=$(noinline) -C rodinia-3.1/gaussian
 	$(SETENV) make clean $(MAKE_ARGS) noinline=$(noinline) -C rodinia-3.1/srad/
+
+clean_graphbig:
+	$(SETENV) make clean $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_BFS
+	$(SETENV) make clean $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_BetweennessCentr
+	$(SETENV) make clean $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_ConnectedComp
+	$(SETENV) make clean $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_DegreeCentr
+	$(SETENV) make clean $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_GraphColoring
+	$(SETENV) make clean $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_SSSP
+	$(SETENV) make clean $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_TriangleCount
+	$(SETENV) make clean $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_kCore
