@@ -11,7 +11,7 @@ cd cmake-3.15.1
 ./bootstrap && make && sudo make install
 cd ..
 echo "install cudnn-8.5.0"
-if [ -e "cudnn-linux-x86_64-8.5.0.96_cuda11-archive.tar.xz" ];
+if [ -e "cudnn-linux-x86_64-8.5.0.96_cuda11-archive.tar.xz" ]; then
     tar -xvf cudnn-linux-x86_64-8.5.0.96_cuda11-archive.tar.xz
     sudo cp cudnn-linux-x86_64-8.5.0.96_cuda11-archive/include/cudnn*.h /usr/local/cuda-11.3/include
     sudo cp -P cudnn-linux-x86_64-8.5.0.96_cuda11-archive/lib/libcudnn* /usr/local/cuda-11.3/lib64
