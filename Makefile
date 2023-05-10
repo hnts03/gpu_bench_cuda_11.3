@@ -10,7 +10,7 @@ $(error You must run "source setup_environment before calling make")
 endif
 
 ifeq ($(CUDA_GT_10), 1)
-all: rodinia lonestar2.0 polybench parboil ispass deepbench tango graphbig
+all: rodinia lonestar2 polybench parboil ispass deepbench tango graphbig lonestar6
 endif
 # ifeq ($(CUDA_GT_7), 1)
 # # all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive dragon-cdp microbench rodinia ispass-2009 lonestargpu-2.0 polybench parboil shoc custom_apps deeplearning cutlass GPU_Microbenchmark heterosync Deepbench_nvidia
@@ -26,7 +26,7 @@ endif
 #Disable clean for now, It has a bug!
 # clean_dragon-naive clean_pannotia clean_proxy-apps
 #clean: clean_rodinia_2.0-ft clean_dragon-cdp  clean_ispass-2009 clean_lonestargpu-2.0 clean_custom_apps clean_parboil clean_cutlass clean_rodinia clean_heterosync
-clean: clean_rodinia clean_lonestar2.0 clean_parboil clean_ispass clean_polybench clean_tango clean_graphbig
+clean: clean_rodinia clean_lonestar2 clean_parboil clean_ispass clean_polybench clean_tango clean_graphbig
 
 # clean_data:
 # 	./clean_data.sh
@@ -43,8 +43,29 @@ data:
 #	mv data_dirs/tango/ResNet/data $(BINDIR)/tango/ResNet
 #	mv data_dirs/tango/SqueezeNet/data $(BINDIR)/tango/SqueezeNet
 
-# lonestar6.0:
-
+lonestar6:
+	mkdir -p $(BINDIR)/lonestargpu-6.0
+	git submodule init && git submodule update
+	mkdir -p lonestargpu-6.0/build
+	cd lonestargpu-6.0/build && cmake .. .. -DGALOIS_CUDA_CAPABILITY="7.0;7.5;8.6"
+	find lonestargpu-6.0/ -name "CMakeCUDACompiler.cmake" -exec sed -i 's/cudart_static/cudart/g' {} \;
+	$(SETENV) make $(MAKE_ARGS) -C lonestargpu-6.0/build/lonestar/analytics/gpu/
+	$(SETENV) make $(MAKE_ARGS) -C lonestargpu-6.0/build/lonestar/mining/gpu/
+	$(SETENV) make $(MAKE_ARGS) -C lonestargpu-6.0/build/lonestar/scientific/gpu/
+	mv lonestargpu-6.0/build/lonestar/analytics/gpu/bfs/bfs-gpu $(BINDIR)/lonestargpu-6.0/
+	mv lonestargpu-6.0/build/lonestar/analytics/gpu/connected-components/connected-components-gpu $(BINDIR)/lonestargpu-6.0/
+	mv lonestargpu-6.0/build/lonestar/analytics/gpu/independentset/maximal-independentset-gpu $(BINDIR)/lonestargpu-6.0/
+	mv lonestargpu-6.0/build/lonestar/analytics/gpu/matrixcompletion/matrixcompletion-gpu $(BINDIR)/lonestargpu-6.0/
+	mv lonestargpu-6.0/build/lonestar/analytics/gpu/pointstoanalysis/pointstoanalysis-gpu $(BINDIR)/lonestargpu-6.0/
+	mv lonestargpu-6.0/build/lonestar/analytics/gpu/pagerank/pagerank-gpu $(BINDIR)/lonestargpu-6.0/
+	mv lonestargpu-6.0/build/lonestar/analytics/gpu/spanningtree/minimum-spanningtree-gpu $(BINDIR)/lonestargpu-6.0/
+	mv lonestargpu-6.0/build/lonestar/analytics/gpu/sssp/sssp-gpu $(BINDIR)/lonestargpu-6.0/
+	mv lonestargpu-6.0/build/lonestar/analytics/gpu/triangle-counting/triangle-counting-gpu $(BINDIR)/lonestargpu-6.0/
+	mv lonestargpu-6.0/build/lonestar/mining/gpu/frequent-subgraph-mining/frequent-subgraph-mining-gpu $(BINDIR)/lonestargpu-6.0/
+	mv lonestargpu-6.0/build/lonestar/mining/gpu/motif-counting/motif-counting-gpu $(BINDIR)/lonestargpu-6.0/
+	mv lonestargpu-6.0/build/lonestar/mining/gpu/triangle-counting/triangle-counting-mining-gpu $(BINDIR)/lonestargpu-6.0/
+	mv lonestargpu-6.0/build/lonestar/scientific/gpu/barneshut/barneshut-gpu $(BINDIR)/lonestargpu-6.0/
+	mv lonestargpu-6.0/build/lonestar/scientific/gpu/delaunayrefinement/delaunayrefinement-gpu $(BINDIR)/lonestargpu-6.0/
 
 graphbig:
 	mkdir -p $(BINDIR)/graphbig
@@ -173,7 +194,7 @@ ispass:
 	mv $(BINDIR)/release $(BINDIR)/ispass-2009
 #	PID=$$$$ && cp -r ispass-2009/WP ispass-2009/WP-$$PID && $(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/WP-$$PID && rm -rf ispass-2009/WP-$$PID
 
-lonestar2.0:
+lonestar2:
 	mkdir -p $(BINDIR)/lonestargpu-2.0
 	$(setenv) make $(make_args) noinline=$(noinline) -C lonestargpu-2.0 all
 	mv lonestargpu-2.0/apps/bfs/bfs $(BINDIR)/lonestargpu-2.0/lonestar-bfs
@@ -272,7 +293,7 @@ clean_parboil:
 	$(SETENV) cd Parboil; ./parboil clean stencil cuda
 	$(SETENV) cd Parboil; ./parboil clean tpacf cuda
 
-clean_lonestar2.0:
+clean_lonestar2:
 	$(setenv) make $(make_args) noinline=$(noinline) -C lonestargpu-2.0 clean
 
 clean_ispass:
@@ -322,3 +343,8 @@ clean_graphbig:
 	$(SETENV) make clean $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_SSSP
 	$(SETENV) make clean $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_TriangleCount
 	$(SETENV) make clean $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_kCore
+
+clean_lonestar6:
+	$(SETENV) make clean $(MAKE_ARGS) -C lonestargpu-6.0/build/lonestar/analytics/gpu/
+	$(SETENV) make clean $(MAKE_ARGS) -C lonestargpu-6.0/build/lonestar/mining/gpu/
+	$(SETENV) make clean $(MAKE_ARGS) -C lonestargpu-6.0/build/lonestar/scientific/gpu/

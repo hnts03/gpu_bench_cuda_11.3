@@ -3,6 +3,8 @@ bin/
 *~
 data_dirs/
 *.o
+cmake-3.15.1/
+lonestargpu-6.0/build/
 rodinia-3.1/backprop/obj_*
 rodinia-3.1/mummergpu/lib/
 rodinia-3.1/mummergpu/src/obj_*

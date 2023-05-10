@@ -5,9 +5,7 @@ Environment settings:
 	ubuntu-18.04
 	gcc-7.5.0
 	cuda-11.3
-	cudnn-8.5.0 (for DeepBench)
-	cmake-3.15.1
-	boost-1.65
+	RTX 3070
 
 Benchsuites list:
 
@@ -34,7 +32,7 @@ Accel-SIM only:
 
 Usage:
 
-	source setup_cuda11.3 (setup_cudnn8.5.0 for DeepBench)
+	./install_dependency.sh (need cuDNN installer for compiling DeepBench)
 	source setup_environment
 	*** get datasets ***
 	make
