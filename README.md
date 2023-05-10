@@ -1,4 +1,6 @@
-GPU benchsuites
+GPU benchsuites compile script written by Jong Hyun Jeong
+emali: dida1245@korea.ac.kr
+email: dida1245@gmail.com
 
 Environment settings:
 
@@ -32,7 +34,12 @@ Accel-SIM only:
 
 Usage:
 
-	./install_dependency.sh (need cuDNN installer for compiling DeepBench)
+	./install_dependency.sh (need cuDNN8.5.0 installer for compiling DeepBench)
+		https://developer.nvidia.com/rdp/cudnn-archive
+		Select cuDNN v8.5.0 (August 8th, 2022), for CUDA 11.x
+		Download Local Installer for Linux x86_64 (Tar)
+		Locate tar.xz file to $(GPUAPPS_ROOT)
+
 	source setup_environment
 	*** get datasets ***
 	make

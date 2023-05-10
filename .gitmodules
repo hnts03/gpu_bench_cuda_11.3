@@ -1,9 +1,9 @@
+[submodule "lonestargpu-6.0/external/moderngpu"]
+	path = lonestargpu-6.0/external/moderngpu
+	url = https://github.com/moderngpu/moderngpu.git
+[submodule "lonestargpu-6.0/external/cub"]
+	path = lonestargpu-6.0/external/cub
+	url = https://github.com/NVlabs/cub.git
 [submodule "cutlass-bench/tools/external/googletest"]
 	path = cutlass-bench/tools/external/googletest
 	url = https://github.com/google/googletest.git
-[submodule "moderngpu"]
-	path = lonestargpu-6.0/external/moderngpu
-	url = https://github.com/moderngpu/moderngpu.git
-[submodule "cub"]
-	path = lonestargpu-6.0/external/cub
-	url = https://github.com/NVlabs/cub.git
