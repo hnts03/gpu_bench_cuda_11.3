@@ -7,6 +7,8 @@ echo "CUDA_INSTALL_PATH=$CUDA_INSTALL_PATH"
 export GPUAPPS_SETUP_ENVIRONMENT_WAS_RUN=
 export GPUAPPS_ROOT="$( cd "$( dirname "$BASH_SOURCE" )" && pwd )"
 export CUDA_PATH=$CUDA_INSTALL_PATH
+export STORAGE_PATH="/root/workspace/hdd"
+echo "STORAGE_PATH=$STORAGE_PATH"
 
 # if [ ! -d $NVIDIA_COMPUTE_SDK_LOCATION/../4.2 ]; then
 #     echo "SDK 4.2 Not detected - installing and building"
