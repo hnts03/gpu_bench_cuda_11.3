@@ -51,20 +51,21 @@ lonestar6:
 	$(SETENV) make $(MAKE_ARGS) -C lonestargpu-6.0/build/lonestar/analytics/gpu/
 	$(SETENV) make $(MAKE_ARGS) -C lonestargpu-6.0/build/lonestar/mining/gpu/
 	$(SETENV) make $(MAKE_ARGS) -C lonestargpu-6.0/build/lonestar/scientific/gpu/
-	mv lonestargpu-6.0/build/lonestar/analytics/gpu/bfs/bfs-gpu $(BINDIR)/lonestargpu-6.0/
-	mv lonestargpu-6.0/build/lonestar/analytics/gpu/connected-components/connected-components-gpu $(BINDIR)/lonestargpu-6.0/
-	mv lonestargpu-6.0/build/lonestar/analytics/gpu/independentset/maximal-independentset-gpu $(BINDIR)/lonestargpu-6.0/
-	mv lonestargpu-6.0/build/lonestar/analytics/gpu/matrixcompletion/matrixcompletion-gpu $(BINDIR)/lonestargpu-6.0/
-	mv lonestargpu-6.0/build/lonestar/analytics/gpu/pointstoanalysis/pointstoanalysis-gpu $(BINDIR)/lonestargpu-6.0/
-	mv lonestargpu-6.0/build/lonestar/analytics/gpu/pagerank/pagerank-gpu $(BINDIR)/lonestargpu-6.0/
-	mv lonestargpu-6.0/build/lonestar/analytics/gpu/spanningtree/minimum-spanningtree-gpu $(BINDIR)/lonestargpu-6.0/
-	mv lonestargpu-6.0/build/lonestar/analytics/gpu/sssp/sssp-gpu $(BINDIR)/lonestargpu-6.0/
-	mv lonestargpu-6.0/build/lonestar/analytics/gpu/triangle-counting/triangle-counting-gpu $(BINDIR)/lonestargpu-6.0/
-	mv lonestargpu-6.0/build/lonestar/mining/gpu/frequent-subgraph-mining/frequent-subgraph-mining-gpu $(BINDIR)/lonestargpu-6.0/
-	mv lonestargpu-6.0/build/lonestar/mining/gpu/motif-counting/motif-counting-gpu $(BINDIR)/lonestargpu-6.0/
-	mv lonestargpu-6.0/build/lonestar/mining/gpu/triangle-counting/triangle-counting-mining-gpu $(BINDIR)/lonestargpu-6.0/
-	mv lonestargpu-6.0/build/lonestar/scientific/gpu/barneshut/barneshut-gpu $(BINDIR)/lonestargpu-6.0/
-	mv lonestargpu-6.0/build/lonestar/scientific/gpu/delaunayrefinement/delaunayrefinement-gpu $(BINDIR)/lonestargpu-6.0/
+	mv lonestargpu-6.0/build/lonestar/analytics/gpu/bfs/bfs-gpu $(BINDIR)/lonestargpu-6.0/l6-bfs
+	mv lonestargpu-6.0/build/lonestar/analytics/gpu/connected-components/connected-components-gpu $(BINDIR)/lonestargpu-6.0/l6-cc
+	mv lonestargpu-6.0/build/lonestar/analytics/gpu/independentset/maximal-independentset-gpu $(BINDIR)/lonestargpu-6.0/l6-mis
+	mv lonestargpu-6.0/build/lonestar/analytics/gpu/matrixcompletion/matrixcompletion-gpu $(BINDIR)/lonestargpu-6.0/l6-mxc
+	mv lonestargpu-6.0/build/lonestar/analytics/gpu/pointstoanalysis/pointstoanalysis-gpu $(BINDIR)/lonestargpu-6.0/l6-pta
+	mv lonestargpu-6.0/build/lonestar/analytics/gpu/pagerank/pagerank-gpu $(BINDIR)/lonestargpu-6.0/l6-pr
+	mv lonestargpu-6.0/build/lonestar/analytics/gpu/spanningtree/minimum-spanningtree-gpu $(BINDIR)/lonestargpu-6.0/l6-mst
+	mv lonestargpu-6.0/build/lonestar/analytics/gpu/sssp/sssp-gpu $(BINDIR)/lonestargpu-6.0/l6-ssp
+	mv lonestargpu-6.0/build/lonestar/analytics/gpu/triangle-counting/triangle-counting-gpu $(BINDIR)/lonestargpu-6.0/l6-tgc
+	mv lonestargpu-6.0/build/lonestar/mining/gpu/frequent-subgraph-mining/frequent-subgraph-mining-gpu $(BINDIR)/lonestargpu-6.0/l6-fsm
+	mv lonestargpu-6.0/build/lonestar/mining/gpu/motif-counting/motif-counting-gpu $(BINDIR)/lonestargpu-6.0/l6-mfc
+	mv lonestargpu-6.0/build/lonestar/mining/gpu/triangle-counting/triangle-counting-mining-gpu $(BINDIR)/lonestargpu-6.0/l6-tgcm
+	mv lonestargpu-6.0/build/lonestar/mining/gpu/k-clique-listing/k-clique-listing-gpu $(BINDIR)/lonestargpu-6.0/l6-kql
+	mv lonestargpu-6.0/build/lonestar/scientific/gpu/barneshut/barneshut-gpu $(BINDIR)/lonestargpu-6.0/l6-bh
+	mv lonestargpu-6.0/build/lonestar/scientific/gpu/delaunayrefinement/delaunayrefinement-gpu $(BINDIR)/lonestargpu-6.0/l6-drf
 
 graphbig:
 	mkdir -p $(BINDIR)/graphbig
@@ -76,26 +77,26 @@ graphbig:
 	$(SETENV) make $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_SSSP
 	$(SETENV) make $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_TriangleCount
 	$(SETENV) make $(MAKE_ARGS) -C graphBIG/gpu_bench/gpu_kCore
-	mv graphBIG/gpu_bench/gpu_BFS/bfs_data_thread_centric $(BINDIR)/graphbig
-	mv graphBIG/gpu_bench/gpu_BFS/bfs_data_warp_centric $(BINDIR)/graphbig
-	mv graphBIG/gpu_bench/gpu_BFS/bfs_topo_thread_centric $(BINDIR)/graphbig
-	mv graphBIG/gpu_bench/gpu_BFS/bfs_topo_warp_centric $(BINDIR)/graphbig
-	mv graphBIG/gpu_bench/gpu_BFS/bfs_topo_unroll $(BINDIR)/graphbig
-	mv graphBIG/gpu_bench/gpu_BFS/bfs_topo_frontier $(BINDIR)/graphbig
-	mv graphBIG/gpu_bench/gpu_BFS/bfs_topo_atomic $(BINDIR)/graphbig
-	mv graphBIG/gpu_bench/gpu_BetweennessCentr/betweenness $(BINDIR)/graphbig
-	mv graphBIG/gpu_bench/gpu_ConnectedComp/connected_comp $(BINDIR)/graphbig
-	mv graphBIG/gpu_bench/gpu_DegreeCentr/degree_centr $(BINDIR)/graphbig
-	mv graphBIG/gpu_bench/gpu_GraphColoring/gc_data_thread_centric $(BINDIR)/graphbig
-	mv graphBIG/gpu_bench/gpu_GraphColoring/gc_data_warp_centric $(BINDIR)/graphbig
-	mv graphBIG/gpu_bench/gpu_GraphColoring/gc_topo_thread_centric $(BINDIR)/graphbig
-	mv graphBIG/gpu_bench/gpu_GraphColoring/gc_topo_warp_centric $(BINDIR)/graphbig
-	mv graphBIG/gpu_bench/gpu_SSSP/sssp_data_thread_centric $(BINDIR)/graphbig
-	mv graphBIG/gpu_bench/gpu_SSSP/sssp_data_warp_centric $(BINDIR)/graphbig
-	mv graphBIG/gpu_bench/gpu_SSSP/sssp_topo_thread_centric $(BINDIR)/graphbig
-	mv graphBIG/gpu_bench/gpu_SSSP/sssp_topo_warp_centric $(BINDIR)/graphbig
-	mv graphBIG/gpu_bench/gpu_TriangleCount/triangle_count $(BINDIR)/graphbig
-	mv graphBIG/gpu_bench/gpu_kCore/kcore $(BINDIR)/graphbig
+	mv graphBIG/gpu_bench/gpu_BFS/bfs_data_thread_centric $(BINDIR)/graphbig/big-bfs-dtc
+	mv graphBIG/gpu_bench/gpu_BFS/bfs_data_warp_centric $(BINDIR)/graphbig/big-bfs-dwc
+	mv graphBIG/gpu_bench/gpu_BFS/bfs_topo_thread_centric $(BINDIR)/graphbig/big-bfs-ttc
+	mv graphBIG/gpu_bench/gpu_BFS/bfs_topo_warp_centric $(BINDIR)/graphbig/big-bfs-twc
+	mv graphBIG/gpu_bench/gpu_BFS/bfs_topo_unroll $(BINDIR)/graphbig/big-bfs-tu
+	mv graphBIG/gpu_bench/gpu_BFS/bfs_topo_frontier $(BINDIR)/graphbig/big-bfs-tf
+	mv graphBIG/gpu_bench/gpu_BFS/bfs_topo_atomic $(BINDIR)/graphbig/big-bfs-ta
+	mv graphBIG/gpu_bench/gpu_BetweennessCentr/betweenness $(BINDIR)/graphbig/big-bc
+	mv graphBIG/gpu_bench/gpu_ConnectedComp/connected_comp $(BINDIR)/graphbig/big-cc
+	mv graphBIG/gpu_bench/gpu_DegreeCentr/degree_centr $(BINDIR)/graphbig/big-dc
+	mv graphBIG/gpu_bench/gpu_GraphColoring/gc_data_thread_centric $(BINDIR)/graphbig/big-gc-dtc
+	mv graphBIG/gpu_bench/gpu_GraphColoring/gc_data_warp_centric $(BINDIR)/graphbig/big-gc-dwc
+	mv graphBIG/gpu_bench/gpu_GraphColoring/gc_topo_thread_centric $(BINDIR)/graphbig/big-gc-ttc
+	mv graphBIG/gpu_bench/gpu_GraphColoring/gc_topo_warp_centric $(BINDIR)/graphbig/big-gc-twc
+	mv graphBIG/gpu_bench/gpu_SSSP/sssp_data_thread_centric $(BINDIR)/graphbig/big-ssp-dtc
+	mv graphBIG/gpu_bench/gpu_SSSP/sssp_data_warp_centric $(BINDIR)/graphbig/big-ssp-dwc
+	mv graphBIG/gpu_bench/gpu_SSSP/sssp_topo_thread_centric $(BINDIR)/graphbig/big-ssp-ttc
+	mv graphBIG/gpu_bench/gpu_SSSP/sssp_topo_warp_centric $(BINDIR)/graphbig/big-ssp-twc
+	mv graphBIG/gpu_bench/gpu_TriangleCount/triangle_count $(BINDIR)/graphbig/big-tc
+	mv graphBIG/gpu_bench/gpu_kCore/kcore $(BINDIR)/graphbig/big-kc
 
 deepbench:
 	mkdir -p $(BINDIR)/deepbench
@@ -107,18 +108,12 @@ deepbench:
 tango:
 	mkdir -p $(BINDIR)/tango
 	$(SETENV) cd Tango/GPU; ./compile.sh
-	mkdir -p $(BINDIR)/tango/AlexNet
-	mkdir -p $(BINDIR)/tango/CifarNet
-	mkdir -p $(BINDIR)/tango/GRU
-	mkdir -p $(BINDIR)/tango/LSTM
-	mkdir -p $(BINDIR)/tango/ResNet
-	mkdir -p $(BINDIR)/tango/SqueezeNet
-	mv Tango/GPU/AlexNet/AN $(BINDIR)/tango
-	mv Tango/GPU/CifarNet/CN $(BINDIR)/tango
-	mv Tango/GPU/GRU/GRU $(BINDIR)/tango
-	mv Tango/GPU/LSTM/LSTM $(BINDIR)/tango
-	mv Tango/GPU/ResNet/RN $(BINDIR)/tango
-	mv Tango/GPU/SqueezeNet/SN $(BINDIR)/tango
+	mv Tango/GPU/AlexNet/AN $(BINDIR)/tango/
+	mv Tango/GPU/CifarNet/CN $(BINDIR)/tango/
+	mv Tango/GPU/GRU/GRU $(BINDIR)/tango/
+	mv Tango/GPU/LSTM/LSTM $(BINDIR)/tango/
+	mv Tango/GPU/ResNet/RN $(BINDIR)/tango/
+	mv Tango/GPU/SqueezeNet/SN $(BINDIR)/tango/
 
 rodinia:
 	mkdir -p $(BINDIR)/rodinia-3.1
