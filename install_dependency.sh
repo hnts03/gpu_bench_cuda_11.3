@@ -15,7 +15,7 @@ if [ -e "cudnn-linux-x86_64-8.5.0.96_cuda11-archive.tar.xz" ]; then
     tar -xvf cudnn-linux-x86_64-8.5.0.96_cuda11-archive.tar.xz
     sudo cp cudnn-linux-x86_64-8.5.0.96_cuda11-archive/include/cudnn*.h /usr/local/cuda-11.3/include
     sudo cp -P cudnn-linux-x86_64-8.5.0.96_cuda11-archive/lib/libcudnn* /usr/local/cuda-11.3/lib64
-    sudo chmod a+r /usr/local/cuda/include-11.3/cudnn*.h /usr/local/cuda-11.3/lib64/libcudnn*
+    sudo chmod a+r /usr/local/cuda-11.3/include/cudnn*.h /usr/local/cuda-11.3/lib64/libcudnn*
     rm -r cudnn-linux-x86_64-8.5.0.96_cuda11-archive
 else
     echo "No cudnn library installer"

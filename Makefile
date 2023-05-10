@@ -45,7 +45,6 @@ data:
 
 lonestar6:
 	mkdir -p $(BINDIR)/lonestargpu-6.0
-	git submodule init && git submodule update
 	mkdir -p lonestargpu-6.0/build
 	cd lonestargpu-6.0/build && cmake .. .. -DGALOIS_CUDA_CAPABILITY="7.0;7.5;8.6"
 	find lonestargpu-6.0/ -name "CMakeCUDACompiler.cmake" -exec sed -i 's/cudart_static/cudart/g' {} \;
@@ -266,7 +265,6 @@ polybench:
 
 # cutlass:
 # 	mkdir -p $(BINDIR)
-# 	git submodule init && git submodule update
 # 	$(SETENV) mkdir -p cutlass-bench/build && cd cutlass-bench/build && cmake .. -DUSE_GPGPUSIM=1 -DCUTLASS_NVCC_ARCHS=86 && make cutlass_perf_test
 # 	cd cutlass-bench/build/tools/test/perf && ln -s -f ../../../../binary.sh . && ./binary.sh
 # 	cp cutlass-bench/build/tools/test/perf/cutlass_perf_test $(BINDIR)/

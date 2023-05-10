@@ -1,4 +1,5 @@
 GPU benchsuites compile script written by Jong Hyun Jeong
+
 emali: dida1245@korea.ac.kr
 email: dida1245@gmail.com
 
