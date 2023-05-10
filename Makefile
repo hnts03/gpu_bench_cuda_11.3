@@ -36,12 +36,15 @@ clean: clean_rodinia clean_lonestar2.0 clean_parboil clean_ispass clean_polybenc
 # 	cd ../ && bash ./get_data.sh
 data:
 	cp -r ../hdd/data_dirs .
-	mv data_dirs/tango/AlexNet/data $(BINDIR)/tango/AlexNet/
-	mv data_dirs/tango/CifarNet/data $(BINDIR)/tango/CifarNet/
-	mv data_dirs/tango/GRU/data $(BINDIR)/tango/GRU/
-	mv data_dirs/tango/LSTM/data $(BINDIR)/tango/LSTM/
-	mv data_dirs/tango/ResNet/data $(BINDIR)/tango/ResNet
-	mv data_dirs/tango/SqueezeNet/data $(BINDIR)/tango/SqueezeNet
+#	mv data_dirs/tango/AlexNet/data $(BINDIR)/tango/AlexNet/
+#	mv data_dirs/tango/CifarNet/data $(BINDIR)/tango/CifarNet/
+#	mv data_dirs/tango/GRU/data $(BINDIR)/tango/GRU/
+#	mv data_dirs/tango/LSTM/data $(BINDIR)/tango/LSTM/
+#	mv data_dirs/tango/ResNet/data $(BINDIR)/tango/ResNet
+#	mv data_dirs/tango/SqueezeNet/data $(BINDIR)/tango/SqueezeNet
+
+# lonestar6.0:
+
 
 graphbig:
 	mkdir -p $(BINDIR)/graphbig
@@ -158,7 +161,7 @@ rodinia:
 
 ispass:
 #	mkdir -p $(BINDIR)/ispass-2009
-#	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/AES
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/AES
 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/BFS
 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/LIB
 	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C ispass-2009/LPS
@@ -257,23 +260,23 @@ polybench:
 # 	rm -r $(BINDIR)/polybench
 
 clean_parboil:
-	$(SETENV) cd parboil; ./parboil clean cutcp cuda
-	$(SETENV) cd parboil; ./parboil clean bfs cuda
-	$(SETENV) cd parboil; ./parboil clean histo cuda
-	$(SETENV) cd parboil; ./parboil clean lbm cuda
-	$(SETENV) cd parboil; ./parboil clean mri-gridding cuda
-	$(SETENV) cd parboil; ./parboil clean mri-q cuda
-	$(SETENV) cd parboil; ./parboil clean sad cuda
-	$(SETENV) cd parboil; ./parboil clean sgemm cuda
-	$(SETENV) cd parboil; ./parboil clean spmv cuda
-	$(SETENV) cd parboil; ./parboil clean stencil cuda
-	$(SETENV) cd parboil; ./parboil clean tpacf cuda
+	$(SETENV) cd Parboil; ./parboil clean cutcp cuda
+	$(SETENV) cd Parboil; ./parboil clean bfs cuda
+	$(SETENV) cd Parboil; ./parboil clean histo cuda
+	$(SETENV) cd Parboil; ./parboil clean lbm cuda
+	$(SETENV) cd Parboil; ./parboil clean mri-gridding cuda
+	$(SETENV) cd Parboil; ./parboil clean mri-q cuda
+	$(SETENV) cd Parboil; ./parboil clean sad cuda
+	$(SETENV) cd Parboil; ./parboil clean sgemm cuda
+	$(SETENV) cd Parboil; ./parboil clean spmv cuda
+	$(SETENV) cd Parboil; ./parboil clean stencil cuda
+	$(SETENV) cd Parboil; ./parboil clean tpacf cuda
 
 clean_lonestar2.0:
 	$(setenv) make $(make_args) noinline=$(noinline) -C lonestargpu-2.0 clean
 
 clean_ispass:
-#	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/AES
+	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/AES
 	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/BFS
 	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/LIB
 	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/LPS

@@ -6,6 +6,8 @@ Environment settings:
 	gcc-7.5.0
 	cuda-11.3
 	cudnn-8.5.0 (for DeepBench)
+	cmake-3.15.1
+	boost-1.65
 
 Benchsuites list:
 
@@ -14,8 +16,9 @@ Benchsuites list:
 	Parboil
 	Ispass-2009
 	CUDA SDK
-	LonestarGPU-6.0
+	LonestarGPU-2.0
 	Tango
+	graphBIG
 
 Accel-SIM only:
 
@@ -23,7 +26,6 @@ Accel-SIM only:
 	DeepBench
 	Gardenia
 	LonestarGPU-6.0
-	GraphBig
 	DNNMark
 	GNNMark
 	MLperf
