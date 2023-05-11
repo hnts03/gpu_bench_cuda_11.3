@@ -10,7 +10,7 @@ $(error You must run "source setup_environment before calling make")
 endif
 
 ifeq ($(CUDA_GT_10), 1)
-all: rodinia lonestar2 polybench parboil ispass deepbench tango graphbig lonestar6
+all: rodinia lonestar2 polybench parboil ispass deepbench tango graphbig lonestar6 cutlass
 endif
 # ifeq ($(CUDA_GT_7), 1)
 # # all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive dragon-cdp microbench rodinia ispass-2009 lonestargpu-2.0 polybench parboil shoc custom_apps deeplearning cutlass GPU_Microbenchmark heterosync Deepbench_nvidia
@@ -26,7 +26,7 @@ endif
 #Disable clean for now, It has a bug!
 # clean_dragon-naive clean_pannotia clean_proxy-apps
 #clean: clean_rodinia_2.0-ft clean_dragon-cdp  clean_ispass-2009 clean_lonestargpu-2.0 clean_custom_apps clean_parboil clean_cutlass clean_rodinia clean_heterosync
-clean: clean_rodinia clean_lonestar2 clean_parboil clean_ispass clean_polybench clean_tango clean_graphbig
+clean: clean_rodinia clean_lonestar2 clean_parboil clean_ispass clean_polybench clean_tango clean_graphbig clean_cutlass
 
 # clean_data:
 # 	./clean_data.sh
@@ -250,14 +250,14 @@ polybench:
 	rm -r polybench-3.2/bin
 
 
-# cutlass:
-# 	mkdir -p $(BINDIR)
-# 	$(SETENV) mkdir -p cutlass-bench/build && cd cutlass-bench/build && cmake .. -DUSE_GPGPUSIM=1 -DCUTLASS_NVCC_ARCHS=86 && make cutlass_perf_test
-# 	cd cutlass-bench/build/tools/test/perf && ln -s -f ../../../../binary.sh . && ./binary.sh
-# 	cp cutlass-bench/build/tools/test/perf/cutlass_perf_test $(BINDIR)/
+cutlass:
+	mkdir -p $(BINDIR)
+	$(SETENV) mkdir -p cutlass-bench/build && cd cutlass-bench/build && cmake .. -DUSE_GPGPUSIM=1 -DCUTLASS_NVCC_ARCHS=86 && make cutlass_perf_test
+	cd cutlass-bench/build/tools/test/perf && ln -s -f ../../../../binary.sh . && ./binary.sh
+	cp cutlass-bench/build/tools/test/perf/cutlass_perf_test $(BINDIR)/
 
-# clean_cutlass:
-# 	rm -fr cutlass-bench/build
+clean_cutlass:
+	rm -fr cutlass-bench/build
 
 # clean_tango:
 # 	rm -r $(BINDIR)/tango
@@ -333,3 +333,4 @@ clean_lonestar6:
 	$(SETENV) make clean $(MAKE_ARGS) -C lonestargpu-6.0/build/lonestar/analytics/gpu/
 	$(SETENV) make clean $(MAKE_ARGS) -C lonestargpu-6.0/build/lonestar/mining/gpu/
 	$(SETENV) make clean $(MAKE_ARGS) -C lonestargpu-6.0/build/lonestar/scientific/gpu/
+	rm -rf lonestargpu-6.0/build

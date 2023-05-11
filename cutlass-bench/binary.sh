@@ -9,6 +9,6 @@ do
     fi
     cd ${I}
     ln -sf ../cutlass_perf_test .
-    ln -sf /home/scratch.ziy_nvresearch/gpgpusim/gpgpusim-gcc-4.8.5-cuda-9.1.85/configs/tested-cfgs/SM7_QV100/* .
+    #ln -sf /home/scratch.ziy_nvresearch/gpgpusim/gpgpusim-gcc-4.8.5-cuda-9.1.85/configs/tested-cfgs/SM7_QV100/* .
     cd ${BIN_FOLDER}
 done

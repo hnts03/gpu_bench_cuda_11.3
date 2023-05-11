@@ -35,4 +35,4 @@ lonestargpu-2.0/apps/sp/nsp
 lonestargpu-2.0/apps/sssp/sssp
 lonestargpu-2.0/apps/sssp/sssp-wlc
 lonestargpu-2.0/apps/sssp/sssp-wln
-cudnn-linux-x86_64-8.5.0.96_cuda11-archive.tar.xz
+cudnn-11.3-linux-x64-v8.2.0.53.tgz
