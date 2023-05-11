@@ -36,10 +36,10 @@
 	* cuGraph
 
 ## Usage:
-* need [cuDNN8.5.0 installer](https://developer.nvidia.com/rdp/cudnn-archive) for compiling DeepBench
-* Select cuDNN v8.5.0 (August 8th, 2022), for CUDA 11.x
-* Download Local Installer for Linux x86_64 (Tar)
-* Locate tar.xz file to $(GPUAPPS_ROOT)
+* need [cuDNN8.2.0 installer](https://developer.nvidia.com/rdp/cudnn-archive) for compiling DeepBench
+* Select Download cuDNN v8.2.0 (April 23rd, 2021), for CUDA 11.x
+* Download cuDNN Library for Linux (x86_64)
+* Locate tar file to $(GPUAPPS_ROOT)
 	'''
 	./install_dependency.sh 
 	source setup_environment

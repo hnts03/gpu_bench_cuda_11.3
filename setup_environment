@@ -182,7 +182,7 @@ fi
 #     export MAKE_ARGS="$MAKE_ARGS GENCODE_SM20="
 # fi
 
-export MAKE_ARGS="$MAKE_ARGS CUBLAS_LIB=cublas_static CUDNN_LIB=cudnn_static"
+# export MAKE_ARGS="$MAKE_ARGS CUBLAS_LIB=cublas_static CUDNN_LIB=cudnn_static"
 export GENCODE_FLAGS=$CUDA_CPPFLAGS
 
 export CUDA_CPPFLAGS="$CUDA_CPPFLAGS $NVCC_ADDITIONAL_ARGS"
