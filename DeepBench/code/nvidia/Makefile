@@ -2,9 +2,12 @@
 NVCC=nvcc
 #ARCH?=sm_70
 
-CUDA_PATH?=/usr/local/cuda
+#CUDA_PATH?=/usr/local/cuda
+#CUDA_LIB64=$(CUDA_PATH)/lib64
+#CUDNN_PATH?=/usr/local/cudnn
+CUDA_PATH=$(CUDA_INSTALL_PATH)
+CUDNN_PATH=$(CUDA_PATH)
 CUDA_LIB64=$(CUDA_PATH)/lib64
-CUDNN_PATH?=/usr/local/cudnn
 NCCL_PATH?=/usr/local/nccl
 MPI_PATH?=/usr/local/openmpi
 MPI_INCLUDE_PATH?=$(MPI_PATH)/include
@@ -15,7 +18,7 @@ BLAS_LIBRARY?=cublas
 BLAS_PATH?=$(CUDA_LIB64)
 #CONV
 CONV_LIBRARY?=cudnn
-CONV_PATH?=$
+CONV_PATH?=$(CUDA_LIB64)/
 KERNELS_DIR=../kernels/
 PAD_KERNELS?=1
 COMMA=,
@@ -37,8 +40,8 @@ conv:
 
 rnn:
 	$(MKDIR) $(BIN_DIR)
-	$(CUDA_PATH)/bin/$(NVCC) rnn_bench.cu -DUSE_TENSOR_CORES=0 -o $(BIN_DIR)/rnn_bench -I $(KERNELS_DIR) -I $(CUDA_PATH)/include -I $(CUDNN_PATH)/include/ -L $(CUDNN_PATH)/lib64/ -L $(CUDA_LIB64) -lcurand -lcudnn $(CUDA_CPPFLAGS) -std=c++14
-	$(CUDA_PATH)/bin/$(NVCC) rnn_bench.cu -DUSE_TENSOR_CORES=1 -o $(BIN_DIR)/rnn_bench-tencore -I $(KERNELS_DIR) -I $(CUDA_PATH)/include -I $(CUDNN_PATH)/include/ -L $(CUDNN_PATH)/lib64/ -L $(CUDA_LIB64) -lcurand -lcudnn $(CUDA_CPPFLAGS) 
+	$(CUDA_PATH)/bin/$(NVCC) rnn_bench.cu -DUSE_TENSOR_CORES=0 -o $(BIN_DIR)/rnn_bench -I $(KERNELS_DIR) -I $(CUDA_PATH)/include -I $(CUDNN_PATH)/include/ -L $(CUDNN_PATH)/lib64/ -L $(CUDA_LIB64) -lcurand -lcudnn -L $(BLAS_PATH) -l$(BLAS_LIBRARY) $(CUDA_CPPFLAGS) -std=c++14
+	$(CUDA_PATH)/bin/$(NVCC) rnn_bench.cu -DUSE_TENSOR_CORES=1 -o $(BIN_DIR)/rnn_bench-tencore -I $(KERNELS_DIR) -I $(CUDA_PATH)/include -I $(CUDNN_PATH)/include/ -L $(CUDNN_PATH)/lib64/ -L $(CUDA_LIB64) -lcurand -lcudnn -L $(BLAS_PATH) -l$(BLAS_LIBRARY) $(CUDA_CPPFLAGS) 
 
 all_reduce: nccl_single nccl_mpi
 

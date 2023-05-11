@@ -34,14 +34,6 @@ clean: clean_rodinia clean_lonestar2 clean_parboil clean_ispass clean_polybench 
 # data:
 # 	mkdir -p $(BINDIR)/
 # 	cd ../ && bash ./get_data.sh
-data:
-	cp -r ../hdd/data_dirs .
-#	mv data_dirs/tango/AlexNet/data $(BINDIR)/tango/AlexNet/
-#	mv data_dirs/tango/CifarNet/data $(BINDIR)/tango/CifarNet/
-#	mv data_dirs/tango/GRU/data $(BINDIR)/tango/GRU/
-#	mv data_dirs/tango/LSTM/data $(BINDIR)/tango/LSTM/
-#	mv data_dirs/tango/ResNet/data $(BINDIR)/tango/ResNet
-#	mv data_dirs/tango/SqueezeNet/data $(BINDIR)/tango/SqueezeNet
 
 lonestar6:
 	mkdir -p $(BINDIR)/lonestargpu-6.0
@@ -190,7 +182,7 @@ ispass:
 
 lonestar2:
 	mkdir -p $(BINDIR)/lonestargpu-2.0
-	$(setenv) make $(make_args) noinline=$(noinline) -C lonestargpu-2.0 all
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C lonestargpu-2.0 all
 	mv lonestargpu-2.0/apps/bfs/bfs $(BINDIR)/lonestargpu-2.0/lonestar-bfs
 	mv lonestargpu-2.0/apps/bfs/bfs-atomic $(BINDIR)/lonestargpu-2.0/lonestar-bfs-atomic
 	mv lonestargpu-2.0/apps/bfs/bfs-wlc $(BINDIR)/lonestargpu-2.0/lonestar-bfs-wlc
@@ -287,7 +279,7 @@ clean_parboil:
 	$(SETENV) cd Parboil; ./parboil clean tpacf cuda
 
 clean_lonestar2:
-	$(setenv) make $(make_args) noinline=$(noinline) -C lonestargpu-2.0 clean
+	$(SETENV) make $(MAKE_ARGS) noinline=$(noinline) -C lonestargpu-2.0 clean
 
 clean_ispass:
 	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C ispass-2009/AES
