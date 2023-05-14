@@ -67,7 +67,7 @@ main(int argc, char** argv)
 void InitHostMem(double *Layer1_Weights_CPU, double *Layer2_Weights_CPU, double *Layer3_Weights_CPU, double *Layer4_Weights_CPU, double *Layer5_Weights_CPU)
 {
 	// initial layer 1 weight
-	FILE * pFile1 = fopen ("data/conv1.txt","rb");
+	FILE * pFile1 = fopen ("data/CN/conv1.txt","rb");
 	if (pFile1 != NULL)
 	{
 		printf("File Opened\n");
@@ -101,7 +101,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *Layer2_Weights_CPU, double 
 		exit(1);
 	}
 	//Layer 2 Weights
-	FILE * pFile2 = fopen ("data/conv2.txt","rb");
+	FILE * pFile2 = fopen ("data/CN/conv2.txt","rb");
 	if (pFile2 != NULL)
 	{
 		printf("File 2 Opened\n");
@@ -135,7 +135,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *Layer2_Weights_CPU, double 
 		exit(1);
 	}
 	//Layer 3 Weights
-	FILE * pFile3 = fopen ("data/conv3.txt","rb");
+	FILE * pFile3 = fopen ("data/CN/conv3.txt","rb");
 	if (pFile3 != NULL)
 	{
 		printf("File 3 Opened\n");
@@ -169,7 +169,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *Layer2_Weights_CPU, double 
 		exit(1);
 	}
 	//Layer 4 Weights
-	FILE * pFile4 = fopen ("data/ip1.txt","rb");
+	FILE * pFile4 = fopen ("data/CN/ip1.txt","rb");
 	if (pFile4 != NULL)
 	{
 		printf("File 4 Opened\n");
@@ -203,7 +203,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *Layer2_Weights_CPU, double 
 		exit(1);
 	}
 	//Layer 5 Weights
-	FILE * pFile5 = fopen ("data/ip2.txt","rb");
+	FILE * pFile5 = fopen ("data/CN/ip2.txt","rb");
 	if (pFile5 != NULL)
 	{
 		printf("File 5 Opened\n");
@@ -240,7 +240,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *Layer2_Weights_CPU, double 
 
 void LoadInput(int *Data_Layer_CPU)
 {
-	FILE * pFile1 = fopen ("data/speed-limit-35.txt","rb");
+	FILE * pFile1 = fopen ("data/CN/speed-limit-35.txt","rb");
 	if (pFile1 != NULL)
 	{
 		printf("File Opened\n");

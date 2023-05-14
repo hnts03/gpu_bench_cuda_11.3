@@ -99,6 +99,7 @@ deepbench:
 
 tango:
 	mkdir -p $(BINDIR)/tango
+	ln -s $(STORAGE_PATH)/data_dirs/tango $(BINDIR)/tango/data
 	$(SETENV) cd Tango/GPU; ./compile.sh
 	mv Tango/GPU/AlexNet/AN $(BINDIR)/tango/
 	mv Tango/GPU/CifarNet/CN $(BINDIR)/tango/
@@ -106,6 +107,7 @@ tango:
 	mv Tango/GPU/LSTM/LSTM $(BINDIR)/tango/
 	mv Tango/GPU/ResNet/RN $(BINDIR)/tango/
 	mv Tango/GPU/SqueezeNet/SN $(BINDIR)/tango/
+
 
 rodinia:
 	mkdir -p $(BINDIR)/rodinia-3.1
@@ -211,17 +213,17 @@ parboil:
 	$(SETENV) cd Parboil; ./parboil compile spmv cuda
 	$(SETENV) cd Parboil; ./parboil compile stencil cuda
 	$(SETENV) cd Parboil; ./parboil compile tpacf cuda
-	mv ./parboil/benchmarks/lbm/build/cuda_default/lbm $(BINDIR)/parboil/lbm
-	mv ./parboil/benchmarks/cutcp/build/cuda_default/cutcp $(BINDIR)/parboil/cutcp
-	mv ./parboil/benchmarks/bfs/build/cuda_default/bfs $(BINDIR)/parboil/bfs
-	mv ./parboil/benchmarks/histo/build/cuda_default/histo $(BINDIR)/parboil/histo
-	mv ./parboil/benchmarks/mri-gridding/build/cuda_default/mri-gridding $(BINDIR)/parboil/mri-gridding
-	mv ./parboil/benchmarks/mri-q/build/cuda_default/mri-q $(BINDIR)/parboil/mri-q
-	mv ./parboil/benchmarks/sad/build/cuda_default/sad $(BINDIR)/parboil/sad
-	mv ./parboil/benchmarks/sgemm/build/cuda_default/sgemm $(BINDIR)/parboil/sgemm
-	mv ./parboil/benchmarks/spmv/build/cuda_default/spmv $(BINDIR)/parboil/spmv
-	mv ./parboil/benchmarks/stencil/build/cuda_default/stencil $(BINDIR)/parboil/stencil
-	mv ./parboil/benchmarks/tpacf/build/cuda_default/tpacf $(BINDIR)/parboil/tpacf
+	mv ./Parboil/benchmarks/lbm/build/cuda_default/lbm $(BINDIR)/parboil/lbm
+	mv ./Parboil/benchmarks/cutcp/build/cuda_default/cutcp $(BINDIR)/parboil/cutcp
+	mv ./Parboil/benchmarks/bfs/build/cuda_default/bfs $(BINDIR)/parboil/bfs
+	mv ./Parboil/benchmarks/histo/build/cuda_default/histo $(BINDIR)/parboil/histo
+	mv ./Parboil/benchmarks/mri-gridding/build/cuda_default/mri-gridding $(BINDIR)/parboil/mri-gridding
+	mv ./Parboil/benchmarks/mri-q/build/cuda_default/mri-q $(BINDIR)/parboil/mri-q
+	mv ./Parboil/benchmarks/sad/build/cuda_default/sad $(BINDIR)/parboil/sad
+	mv ./Parboil/benchmarks/sgemm/build/cuda_default/sgemm $(BINDIR)/parboil/sgemm
+	mv ./Parboil/benchmarks/spmv/build/cuda_default/spmv $(BINDIR)/parboil/spmv
+	mv ./Parboil/benchmarks/stencil/build/cuda_default/stencil $(BINDIR)/parboil/stencil
+	mv ./Parboil/benchmarks/tpacf/build/cuda_default/tpacf $(BINDIR)/parboil/tpacf
 
 polybench:
 	mkdir -p $(BINDIR)/polybench

@@ -109,7 +109,7 @@ int main(int argc, char** argv)
 }
 void Fill_weights(float *Layer1_Weights_CPU,float *Layer2_Weights_CPU,float *Layer3_Weights_CPU,float *Layer4_Weights_CPU,float *Layer5_Weights_CPU,float *Layer6_Weights_CPU,float *Layer7_Weights_CPU,float *Layer8_Weights_CPU)
 {
-	extract_weights("data/conv1.txt",Layer1_Weights_CPU,false);
+	extract_weights("data/RN/conv1.txt",Layer1_Weights_CPU,false);
 	extract_weights("alexnet/conv2.txt",Layer2_Weights_CPU,false);
 	extract_weights("alexnet/conv3.txt",Layer3_Weights_CPU,false);
 	extract_weights("alexnet/conv4.txt",Layer4_Weights_CPU,false);
@@ -152,56 +152,56 @@ void executeLayer2(float *Layer2_pool_CPU,float *Layer2c_Neurons_CPU)
 	float *Layer2b_Neurons_CPU = (float *)malloc(sizeof(float) *(64*56*56));
 	float *Layer_ELtwise_Neurons = (float *)malloc(sizeof(float) *(256*56*56));
 
-	extract_weights("data/res2a_branch1.txt",Layer2c_Weights_CPU,false);     
+	extract_weights("data/RN/res2a_branch1.txt",Layer2c_Weights_CPU,false);     
 	execute3Dconvolution(NULL,Layer2_pool_CPU,Layer2c_Weights_CPU,Layer_ELtwise_Neurons,256,56,56,1,1,0,64,56);
 	/* Batch Norm */
-	extract_weights("data/bn2ab1_mean.txt",mean,false);
-	extract_weights("data/bn2ab1_var.txt",var,false);
+	extract_weights("data/RN/bn2ab1_mean.txt",mean,false);
+	extract_weights("data/RN/bn2ab1_var.txt",var,false);
         executeBnNormLayer(Layer_ELtwise_Neurons,mean,var,256,56*56);
         /* Scale */ 
-	extract_weights("data/sc2ab1_scale.txt",scale,false);
-	extract_weights("data/sc2ab1_bias.txt",bias,false);	
+	extract_weights("data/RN/sc2ab1_scale.txt",scale,false);
+	extract_weights("data/RN/sc2ab1_bias.txt",bias,false);	
 	executeScaleLayer(Layer_ELtwise_Neurons,scale,bias,256,56*56);
 
 	/* res2a_branch2a*/
-	extract_weights("data/res2a_branch2a.txt",Layer2a_Weights_CPU,false);     //4096 
+	extract_weights("data/RN/res2a_branch2a.txt",Layer2a_Weights_CPU,false);     //4096 
 	execute3Dconvolution(NULL,Layer2_pool_CPU,Layer2a_Weights_CPU,Layer2a_Neurons_CPU,64,56,56,1,1,0,64,56);
 	/* Batch Norm */
-	extract_weights("data/bn2a2a_mean.txt",mean,false);
-	extract_weights("data/bn2a2a_var.txt",var,false);
+	extract_weights("data/RN/bn2a2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn2a2a_var.txt",var,false);
         executeBnNormLayer(Layer2a_Neurons_CPU,mean,var,64,56*56);
         /* Scale */ 
-	extract_weights("data/sc2a2a_scale.txt",scale,false);
-	extract_weights("data/sc2a2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc2a2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc2a2a_bias.txt",bias,false);	
 	executeScaleLayer(Layer2a_Neurons_CPU,scale,bias,64,56*56);
 	/* ReLU */	
 	executeReLULayer(Layer2a_Neurons_CPU,(64*56*56));
 
 	/* res2a_branch2b*/
-	extract_weights("data/res2a_branch2b.txt",Layer2b_Weights_CPU,false);     //36864 
+	extract_weights("data/RN/res2a_branch2b.txt",Layer2b_Weights_CPU,false);     //36864 
 	execute3Dconvolution(NULL,Layer2a_Neurons_CPU,Layer2b_Weights_CPU,Layer2b_Neurons_CPU,64,56,56,1,3,1,64,56);
 	/* Batch Norm */
-	extract_weights("data/bn2a2b_mean.txt",mean,false);
-	extract_weights("data/bn2a2b_var.txt",var,false);
+	extract_weights("data/RN/bn2a2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn2a2b_var.txt",var,false);
         executeBnNormLayer(Layer2b_Neurons_CPU,mean,var,64,56*56);
         /* Scale */ 
-	extract_weights("data/sc2a2b_scale.txt",scale,false);
-	extract_weights("data/sc2a2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc2a2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc2a2b_bias.txt",bias,false);	
 	executeScaleLayer(Layer2b_Neurons_CPU,scale,bias,64,56*56);
 	/* ReLU */	
 	executeReLULayer(Layer2b_Neurons_CPU,(64*56*56));
 
 
 	/* res2a_branch2c*/
-	extract_weights("data/res2a_branch2c.txt",Layer2c_Weights_CPU,false);     //16384 
+	extract_weights("data/RN/res2a_branch2c.txt",Layer2c_Weights_CPU,false);     //16384 
 	execute3Dconvolution(NULL,Layer2b_Neurons_CPU,Layer2c_Weights_CPU,Layer2c_Neurons_CPU,256,56,56,1,1,0,64,56);
 	/* Batch Norm */
-	extract_weights("data/bn2a2c_mean.txt",mean,false);
-	extract_weights("data/bn2a2c_var.txt",var,false);
+	extract_weights("data/RN/bn2a2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn2a2c_var.txt",var,false);
         executeBnNormLayer(Layer2c_Neurons_CPU,mean,var,256,56*56);
         /* Scale */ 
-	extract_weights("data/sc2a2c_scale.txt",scale,false);
-	extract_weights("data/sc2a2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc2a2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc2a2c_bias.txt",bias,false);	
 	executeScaleLayer(Layer2c_Neurons_CPU,scale,bias,256,56*56);
 	/* Eltwise */
         executeEltWiseLayer(Layer_ELtwise_Neurons,Layer2c_Neurons_CPU,Layer_ELtwise_Neurons,256*56*56);
@@ -209,86 +209,86 @@ void executeLayer2(float *Layer2_pool_CPU,float *Layer2c_Neurons_CPU)
 	executeReLULayer(Layer_ELtwise_Neurons,(256*56*56));
 	
 	/* res2b_branch2a*/
-	extract_weights("data/res2b_branch2a.txt",Layer2c_Weights_CPU,false);      
+	extract_weights("data/RN/res2b_branch2a.txt",Layer2c_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer_ELtwise_Neurons,Layer2c_Weights_CPU,Layer2a_Neurons_CPU,64,56,56,1,1,0,256,56);
 	/* Batch Norm */
-	extract_weights("data/bn2b2a_mean.txt",mean,false);
-	extract_weights("data/bn2b2a_var.txt",var,false);
+	extract_weights("data/RN/bn2b2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn2b2a_var.txt",var,false);
         executeBnNormLayer(Layer2a_Neurons_CPU,mean,var,64,56*56);
         /* Scale */ 
-	extract_weights("data/sc2b2a_scale.txt",scale,false);
-	extract_weights("data/sc2b2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc2b2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc2b2a_bias.txt",bias,false);	
 	executeScaleLayer(Layer2a_Neurons_CPU,scale,bias,64,56*56);
 	/* ReLU */	
 	executeReLULayer(Layer2a_Neurons_CPU,(64*56*56));
 	
 	/* res2b_branch2b*/
-	extract_weights("data/res2b_branch2b.txt",Layer2b_Weights_CPU,false);      
+	extract_weights("data/RN/res2b_branch2b.txt",Layer2b_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer2a_Neurons_CPU,Layer2b_Weights_CPU,Layer2b_Neurons_CPU,64,56,56,1,3,1,64,56);
 	/* Batch Norm */
-	extract_weights("data/bn2b2b_mean.txt",mean,false);
-	extract_weights("data/bn2b2b_var.txt",var,false);
+	extract_weights("data/RN/bn2b2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn2b2b_var.txt",var,false);
         executeBnNormLayer(Layer2b_Neurons_CPU,mean,var,64,56*56);
         /* Scale */ 
-	extract_weights("data/sc2b2b_scale.txt",scale,false);
-	extract_weights("data/sc2b2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc2b2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc2b2b_bias.txt",bias,false);	
 	executeScaleLayer(Layer2b_Neurons_CPU,scale,bias,64,56*56);
 	/* ReLU */	
 	executeReLULayer(Layer2b_Neurons_CPU,(64*56*56));
 
 	/* res2b_branch2c*/
-	extract_weights("data/res2b_branch2c.txt",Layer2c_Weights_CPU,false);      
+	extract_weights("data/RN/res2b_branch2c.txt",Layer2c_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer2b_Neurons_CPU,Layer2c_Weights_CPU,Layer2c_Neurons_CPU,256,56,56,1,1,0,64,56);
 	/* Batch Norm */
-	extract_weights("data/bn2b2c_mean.txt",mean,false);
-	extract_weights("data/bn2b2c_var.txt",var,false);
+	extract_weights("data/RN/bn2b2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn2b2c_var.txt",var,false);
         executeBnNormLayer(Layer2c_Neurons_CPU,mean,var,256,56*56);
         /* Scale */ 
-	extract_weights("data/sc2b2c_scale.txt",scale,false);
-	extract_weights("data/sc2b2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc2b2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc2b2c_bias.txt",bias,false);	
 	executeScaleLayer(Layer2c_Neurons_CPU,scale,bias,256,56*56);
 	/* Eltwise */
         executeEltWiseLayer(Layer_ELtwise_Neurons,Layer2c_Neurons_CPU,Layer_ELtwise_Neurons,256*56*56);
 	/* ReLU */	
 	executeReLULayer(Layer_ELtwise_Neurons,(256*56*56));
 	/* res2c_branch2a*/
-	extract_weights("data/res2c_branch2a.txt",Layer2c_Weights_CPU,false);      
+	extract_weights("data/RN/res2c_branch2a.txt",Layer2c_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer_ELtwise_Neurons,Layer2c_Weights_CPU,Layer2a_Neurons_CPU,64,56,56,1,1,0,256,56);
 	/* Batch Norm */
-	extract_weights("data/bn2c2a_mean.txt",mean,false);
-	extract_weights("data/bn2c2a_var.txt",var,false);
+	extract_weights("data/RN/bn2c2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn2c2a_var.txt",var,false);
         executeBnNormLayer(Layer2a_Neurons_CPU,mean,var,64,56*56);
         /* Scale */ 
-	extract_weights("data/sc2c2a_scale.txt",scale,false);
-	extract_weights("data/sc2c2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc2c2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc2c2a_bias.txt",bias,false);	
 	executeScaleLayer(Layer2a_Neurons_CPU,scale,bias,64,56*56);
 	/* ReLU */	
 	executeReLULayer(Layer2a_Neurons_CPU,(64*56*56));
 
 	/* res2c_branch2b*/
-	extract_weights("data/res2c_branch2b.txt",Layer2b_Weights_CPU,false);      
+	extract_weights("data/RN/res2c_branch2b.txt",Layer2b_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer2a_Neurons_CPU,Layer2b_Weights_CPU,Layer2b_Neurons_CPU,64,56,56,1,3,1,64,56);
 	/* Batch Norm */
-	extract_weights("data/bn2c2b_mean.txt",mean,false);
-	extract_weights("data/bn2c2b_var.txt",var,false);
+	extract_weights("data/RN/bn2c2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn2c2b_var.txt",var,false);
         executeBnNormLayer(Layer2b_Neurons_CPU,mean,var,64,56*56);
         /* Scale */ 
-	extract_weights("data/sc2c2b_scale.txt",scale,false);
-	extract_weights("data/sc2c2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc2c2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc2c2b_bias.txt",bias,false);	
 	executeScaleLayer(Layer2b_Neurons_CPU,scale,bias,64,56*56);
 	/* ReLU */	
 	executeReLULayer(Layer2b_Neurons_CPU,(64*56*56));
 
 	/* res2c_branch2c*/
-	extract_weights("data/res2c_branch2c.txt",Layer2c_Weights_CPU,false);      
+	extract_weights("data/RN/res2c_branch2c.txt",Layer2c_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer2b_Neurons_CPU,Layer2c_Weights_CPU,Layer2c_Neurons_CPU,256,56,56,1,1,0,64,56);
 	/* Batch Norm */
-	extract_weights("data/bn2c2c_mean.txt",mean,false);
-	extract_weights("data/bn2c2c_var.txt",var,false);
+	extract_weights("data/RN/bn2c2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn2c2c_var.txt",var,false);
         executeBnNormLayer(Layer2c_Neurons_CPU,mean,var,256,56*56);
         /* Scale */ 
-	extract_weights("data/sc2c2c_scale.txt",scale,false);
-	extract_weights("data/sc2c2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc2c2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc2c2c_bias.txt",bias,false);	
 	executeScaleLayer(Layer2c_Neurons_CPU,scale,bias,256,56*56);
 	/* Eltwise */
         executeEltWiseLayer(Layer_ELtwise_Neurons,Layer2c_Neurons_CPU,Layer2c_Neurons_CPU,256*56*56);
@@ -315,55 +315,55 @@ void executeLayer3(float *Layer2c_Neurons_CPU,float *Layer3c_Neurons_CPU)
 	float *Layer3c2_Neurons_CPU = (float *)malloc(sizeof(float) *(512*28*28));
 	float *Layer_ELtwise_Neurons = (float *)malloc(sizeof(float) *(512*28*28));
 	
-	extract_weights("data/res3a_branch1.txt",Layer3c_Weights_CPU,false);      
+	extract_weights("data/RN/res3a_branch1.txt",Layer3c_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer2c_Neurons_CPU,Layer3c_Weights_CPU,Layer3b1_Neurons_CPU,512,28,28,2,1,0,256,56);
 	/* Batch Norm */
-	extract_weights("data/bn3ab1_mean.txt",mean,false);
-	extract_weights("data/bn3ab1_var.txt",var,false);
+	extract_weights("data/RN/bn3ab1_mean.txt",mean,false);
+	extract_weights("data/RN/bn3ab1_var.txt",var,false);
         executeBnNormLayer(Layer3b1_Neurons_CPU,mean,var,512,28*28);
         /* Scale */ 
-	extract_weights("data/sc3ab1_scale.txt",scale,false);
-	extract_weights("data/sc3ab1_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3ab1_scale.txt",scale,false);
+	extract_weights("data/RN/sc3ab1_bias.txt",bias,false);	
 	executeScaleLayer(Layer3b1_Neurons_CPU,scale,bias,512,28*28);
 
 	/* res3a_branch2a*/
-	extract_weights("data/res3a_branch2a.txt",Layer3a_Weights_CPU,false);      
+	extract_weights("data/RN/res3a_branch2a.txt",Layer3a_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer2c_Neurons_CPU,Layer3a_Weights_CPU,Layer3a_Neurons_CPU,128,28,28,2,1,0,256,56);
 	/* Batch Norm */
-	extract_weights("data/bn3a2a_mean.txt",mean,false);
-	extract_weights("data/bn3a2a_var.txt",var,false);
+	extract_weights("data/RN/bn3a2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn3a2a_var.txt",var,false);
         executeBnNormLayer(Layer3a_Neurons_CPU,mean,var,128,28*28);
         /* Scale */ 
-	extract_weights("data/sc3a2a_scale.txt",scale,false);
-	extract_weights("data/sc3a2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3a2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc3a2a_bias.txt",bias,false);	
 	executeScaleLayer(Layer3a_Neurons_CPU,scale,bias,128,28*28);
 	/* ReLU */	
 	executeReLULayer(Layer3a_Neurons_CPU,(128*28*28));
          
 	/* res3a_branch2b*/
-	extract_weights("data/res3a_branch2b.txt",Layer3b_Weights_CPU,false);      
+	extract_weights("data/RN/res3a_branch2b.txt",Layer3b_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer3a_Neurons_CPU,Layer3b_Weights_CPU,Layer3b_Neurons_CPU,128,28,28,1,3,1,128,28);
 	/* Batch Norm */
-	extract_weights("data/bn3a2b_mean.txt",mean,false);
-	extract_weights("data/bn3a2b_var.txt",var,false);
+	extract_weights("data/RN/bn3a2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn3a2b_var.txt",var,false);
         executeBnNormLayer(Layer3b_Neurons_CPU,mean,var,128,28*28);
         /* Scale */ 
-	extract_weights("data/sc3a2b_scale.txt",scale,false);
-	extract_weights("data/sc3a2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3a2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc3a2b_bias.txt",bias,false);	
 	executeScaleLayer(Layer3b_Neurons_CPU,scale,bias,128,28*28);
 	/* ReLU */	
 	executeReLULayer(Layer3b_Neurons_CPU,(128*28*28));
 
 	/* res3a_branch2c*/
-	extract_weights("data/res3a_branch2c.txt",Layer3c_Weights_CPU,false);      
+	extract_weights("data/RN/res3a_branch2c.txt",Layer3c_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer3b_Neurons_CPU,Layer3c_Weights_CPU,Layer3c_Neurons_CPU,512,28,28,1,1,0,128,28);
 	/* Batch Norm */
-	extract_weights("data/bn3a2c_mean.txt",mean,false);
-	extract_weights("data/bn3a2c_var.txt",var,false);
+	extract_weights("data/RN/bn3a2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn3a2c_var.txt",var,false);
         executeBnNormLayer(Layer3c_Neurons_CPU,mean,var,512,28*28);
         /* Scale */ 
-	extract_weights("data/sc3a2c_scale.txt",scale,false);
-	extract_weights("data/sc3a2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3a2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc3a2c_bias.txt",bias,false);	
 	executeScaleLayer(Layer3c_Neurons_CPU,scale,bias,512,28*28);
 	/* Eltwise */
         executeEltWiseLayer(Layer3b1_Neurons_CPU,Layer3c_Neurons_CPU,Layer_ELtwise_Neurons,512*28*28);
@@ -371,43 +371,43 @@ void executeLayer3(float *Layer2c_Neurons_CPU,float *Layer3c_Neurons_CPU)
 	executeReLULayer(Layer_ELtwise_Neurons,(512*28*28));
 
 	/* res3b_branch2a*/
-	extract_weights("data/res3b_branch2a.txt",Layer3c1_Weights_CPU,false);      
+	extract_weights("data/RN/res3b_branch2a.txt",Layer3c1_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer_ELtwise_Neurons,Layer3c1_Weights_CPU,Layer3a_Neurons_CPU,128,28,28,1,1,0,512,28);
 	/* Batch Norm */
-	extract_weights("data/bn3b2a_mean.txt",mean,false);
-	extract_weights("data/bn3b2a_var.txt",var,false);
+	extract_weights("data/RN/bn3b2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn3b2a_var.txt",var,false);
         executeBnNormLayer(Layer3a_Neurons_CPU,mean,var,128,28*28);
         /* Scale */ 
-	extract_weights("data/sc3b2a_scale.txt",scale,false);
-	extract_weights("data/sc3b2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3b2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc3b2a_bias.txt",bias,false);	
 	executeScaleLayer(Layer3a_Neurons_CPU,scale,bias,128,28*28);
 	/* ReLU */	
 	executeReLULayer(Layer3a_Neurons_CPU,(128*28*28));
 
 	/* res3b_branch2b*/
-	extract_weights("data/res3b_branch2b.txt",Layer3b_Weights_CPU,false);      
+	extract_weights("data/RN/res3b_branch2b.txt",Layer3b_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer3a_Neurons_CPU,Layer3b_Weights_CPU,Layer3b_Neurons_CPU,128,28,28,1,3,1,128,28);
 	/* Batch Norm */
-	extract_weights("data/bn3b2b_mean.txt",mean,false);
-	extract_weights("data/bn3b2b_var.txt",var,false);
+	extract_weights("data/RN/bn3b2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn3b2b_var.txt",var,false);
         executeBnNormLayer(Layer3b_Neurons_CPU,mean,var,128,28*28);
         /* Scale */ 
-	extract_weights("data/sc3b2b_scale.txt",scale,false);
-	extract_weights("data/sc3b2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3b2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc3b2b_bias.txt",bias,false);	
 	executeScaleLayer(Layer3b_Neurons_CPU,scale,bias,128,28*28);
 	/* ReLU */	
 	executeReLULayer(Layer3b_Neurons_CPU,(128*28*28));
 
 	/* res3b_branch2c*/
-	extract_weights("data/res3b_branch2c.txt",Layer3c_Weights_CPU,false);      
+	extract_weights("data/RN/res3b_branch2c.txt",Layer3c_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer3b_Neurons_CPU,Layer3c_Weights_CPU,Layer3c2_Neurons_CPU,512,28,28,1,1,0,128,28);
 	/* Batch Norm */
-	extract_weights("data/bn3b2c_mean.txt",mean,false);
-	extract_weights("data/bn3b2c_var.txt",var,false);
+	extract_weights("data/RN/bn3b2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn3b2c_var.txt",var,false);
         executeBnNormLayer(Layer3c2_Neurons_CPU,mean,var,512,28*28);
         /* Scale */ 
-	extract_weights("data/sc3b2c_scale.txt",scale,false);
-	extract_weights("data/sc3b2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3b2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc3b2c_bias.txt",bias,false);	
 	executeScaleLayer(Layer3c2_Neurons_CPU,scale,bias,512,28*28);
 	/* Eltwise */
         executeEltWiseLayer(Layer_ELtwise_Neurons,Layer3c2_Neurons_CPU,Layer_ELtwise_Neurons,512*28*28);
@@ -415,43 +415,43 @@ void executeLayer3(float *Layer2c_Neurons_CPU,float *Layer3c_Neurons_CPU)
 	executeReLULayer(Layer_ELtwise_Neurons,(512*28*28));
 
 	/* res3c_branch2a*/
-	extract_weights("data/res3c_branch2a.txt",Layer3c1_Weights_CPU,false);      
+	extract_weights("data/RN/res3c_branch2a.txt",Layer3c1_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer_ELtwise_Neurons,Layer3c1_Weights_CPU,Layer3a_Neurons_CPU,128,28,28,1,1,0,512,28);
 	/* Batch Norm */
-	extract_weights("data/bn3c2a_mean.txt",mean,false);
-	extract_weights("data/bn3c2a_var.txt",var,false);
+	extract_weights("data/RN/bn3c2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn3c2a_var.txt",var,false);
         executeBnNormLayer(Layer3a_Neurons_CPU,mean,var,128,28*28);
         /* Scale */ 
-	extract_weights("data/sc3c2a_scale.txt",scale,false);
-	extract_weights("data/sc3c2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3c2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc3c2a_bias.txt",bias,false);	
 	executeScaleLayer(Layer3a_Neurons_CPU,scale,bias,128,28*28);
 	/* ReLU */	
 	executeReLULayer(Layer3a_Neurons_CPU,(128*28*28));
 
 	/* res3c_branch2b*/
-	extract_weights("data/res3c_branch2b.txt",Layer3b_Weights_CPU,false);      
+	extract_weights("data/RN/res3c_branch2b.txt",Layer3b_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer3a_Neurons_CPU,Layer3b_Weights_CPU,Layer3b_Neurons_CPU,128,28,28,1,3,1,128,28);
 	/* Batch Norm */
-	extract_weights("data/bn3c2b_mean.txt",mean,false);
-	extract_weights("data/bn3c2b_var.txt",var,false);
+	extract_weights("data/RN/bn3c2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn3c2b_var.txt",var,false);
         executeBnNormLayer(Layer3b_Neurons_CPU,mean,var,128,28*28);
         /* Scale */ 
-	extract_weights("data/sc3c2b_scale.txt",scale,false);
-	extract_weights("data/sc3c2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3c2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc3c2b_bias.txt",bias,false);	
 	executeScaleLayer(Layer3b_Neurons_CPU,scale,bias,128,28*28);
 	/* ReLU */	
 	executeReLULayer(Layer3b_Neurons_CPU,(128*28*28));
 	
 	/* res3c_branch2c*/
-	extract_weights("data/res3c_branch2c.txt",Layer3c_Weights_CPU,false);      
+	extract_weights("data/RN/res3c_branch2c.txt",Layer3c_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer3b_Neurons_CPU,Layer3c_Weights_CPU,Layer3c_Neurons_CPU,512,28,28,1,1,0,128,28);
 	/* Batch Norm */
-	extract_weights("data/bn3c2c_mean.txt",mean,false);
-	extract_weights("data/bn3c2c_var.txt",var,false);
+	extract_weights("data/RN/bn3c2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn3c2c_var.txt",var,false);
         executeBnNormLayer(Layer3c_Neurons_CPU,mean,var,512,28*28);
         /* Scale */ 
-	extract_weights("data/sc3c2c_scale.txt",scale,false);
-	extract_weights("data/sc3c2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3c2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc3c2c_bias.txt",bias,false);	
 	executeScaleLayer(Layer3c_Neurons_CPU,scale,bias,512,28*28);
 	/* Eltwise */
         executeEltWiseLayer(Layer_ELtwise_Neurons,Layer3c_Neurons_CPU,Layer_ELtwise_Neurons,512*28*28);
@@ -459,43 +459,43 @@ void executeLayer3(float *Layer2c_Neurons_CPU,float *Layer3c_Neurons_CPU)
 	executeReLULayer(Layer_ELtwise_Neurons,(512*28*28));
         
 	/* res3d_branch2a*/
-	extract_weights("data/res3d_branch2a.txt",Layer3c1_Weights_CPU,false);      
+	extract_weights("data/RN/res3d_branch2a.txt",Layer3c1_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer_ELtwise_Neurons,Layer3c1_Weights_CPU,Layer3a_Neurons_CPU,128,28,28,1,1,0,512,28);
 	/* Batch Norm */
-	extract_weights("data/bn3d2a_mean.txt",mean,false);
-	extract_weights("data/bn3d2a_var.txt",var,false);
+	extract_weights("data/RN/bn3d2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn3d2a_var.txt",var,false);
         executeBnNormLayer(Layer3a_Neurons_CPU,mean,var,128,28*28);
         /* Scale */ 
-	extract_weights("data/sc3d2a_scale.txt",scale,false);
-	extract_weights("data/sc3d2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3d2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc3d2a_bias.txt",bias,false);	
 	executeScaleLayer(Layer3a_Neurons_CPU,scale,bias,128,28*28);
 	/* ReLU */	
 	executeReLULayer(Layer3a_Neurons_CPU,(128*28*28));
 
 	/* res3d_branch2b*/
-	extract_weights("data/res3d_branch2b.txt",Layer3b_Weights_CPU,false);      
+	extract_weights("data/RN/res3d_branch2b.txt",Layer3b_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer3a_Neurons_CPU,Layer3b_Weights_CPU,Layer3b_Neurons_CPU,128,28,28,1,3,1,128,28);
 	/* Batch Norm */
-	extract_weights("data/bn3d2b_mean.txt",mean,false);
-	extract_weights("data/bn3d2b_var.txt",var,false);
+	extract_weights("data/RN/bn3d2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn3d2b_var.txt",var,false);
         executeBnNormLayer(Layer3b_Neurons_CPU,mean,var,128,28*28);
         /* Scale */ 
-	extract_weights("data/sc3d2b_scale.txt",scale,false);
-	extract_weights("data/sc3d2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3d2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc3d2b_bias.txt",bias,false);	
 	executeScaleLayer(Layer3b_Neurons_CPU,scale,bias,128,28*28);
 	/* ReLU */	
 	executeReLULayer(Layer3b_Neurons_CPU,(128*28*28));
 	
 	/* res3d_branch2c*/
-	extract_weights("data/res3d_branch2c.txt",Layer3c_Weights_CPU,false);      
+	extract_weights("data/RN/res3d_branch2c.txt",Layer3c_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer3b_Neurons_CPU,Layer3c_Weights_CPU,Layer3c_Neurons_CPU,512,28,28,1,1,0,128,28);
 	/* Batch Norm */
-	extract_weights("data/bn3d2c_mean.txt",mean,false);
-	extract_weights("data/bn3d2c_var.txt",var,false);
+	extract_weights("data/RN/bn3d2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn3d2c_var.txt",var,false);
         executeBnNormLayer(Layer3c_Neurons_CPU,mean,var,512,28*28);
         /* Scale */ 
-	extract_weights("data/sc3d2c_scale.txt",scale,false);
-	extract_weights("data/sc3d2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3d2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc3d2c_bias.txt",bias,false);	
 	executeScaleLayer(Layer3c_Neurons_CPU,scale,bias,512,28*28);
 	/* Eltwise */
         executeEltWiseLayer(Layer_ELtwise_Neurons,Layer3c_Neurons_CPU,Layer3c_Neurons_CPU,512*28*28);
@@ -523,55 +523,55 @@ void executeLayer4(float *Layer3c_Neurons_CPU,float *Layer4c_Neurons_CPU)
 	float *Layer4b_Neurons_CPU = (float *)malloc(sizeof(float) *(256*14*14));
 	float *Layer_ELtwise_Neurons = (float *)malloc(sizeof(float) *(1024*14*14));
 	
-	extract_weights("data/res4a_branch1.txt",Layer4c_Weights_CPU,false);      
+	extract_weights("data/RN/res4a_branch1.txt",Layer4c_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer3c_Neurons_CPU,Layer4c_Weights_CPU,Layer4b1_Neurons_CPU,1024,14,14,2,1,0,512,28);
 	/* Batch Norm */
-	extract_weights("data/bn4ab1_mean.txt",mean,false);
-	extract_weights("data/bn4ab1_var.txt",var,false);
+	extract_weights("data/RN/bn4ab1_mean.txt",mean,false);
+	extract_weights("data/RN/bn4ab1_var.txt",var,false);
         executeBnNormLayer(Layer4b1_Neurons_CPU,mean,var,1024,14*14);
         /* Scale */ 
-	extract_weights("data/sc4ab1_scale.txt",scale,false);
-	extract_weights("data/sc4ab1_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4ab1_scale.txt",scale,false);
+	extract_weights("data/RN/sc4ab1_bias.txt",bias,false);	
 	executeScaleLayer(Layer4b1_Neurons_CPU,scale,bias,1024,14*14);
           
 	/* res4a_branch2a*/
-	extract_weights("data/res4a_branch2a.txt",Layer4a_Weights_CPU,false);      
+	extract_weights("data/RN/res4a_branch2a.txt",Layer4a_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer3c_Neurons_CPU,Layer4a_Weights_CPU,Layer4a_Neurons_CPU,256,14,14,2,1,0,512,28);
 	/* Batch Norm */
-	extract_weights("data/bn4a2a_mean.txt",mean,false);
-	extract_weights("data/bn4a2a_var.txt",var,false);
+	extract_weights("data/RN/bn4a2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn4a2a_var.txt",var,false);
         executeBnNormLayer(Layer4a_Neurons_CPU,mean,var,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4a2a_scale.txt",scale,false);
-	extract_weights("data/sc4a2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4a2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc4a2a_bias.txt",bias,false);	
 	executeScaleLayer(Layer4a_Neurons_CPU,scale,bias,256,14*14);
 	/* ReLU */	
 	executeReLULayer(Layer4a_Neurons_CPU,(256*14*14));
 	
 	/* res4a_branch2b*/
-	extract_weights("data/res4a_branch2b.txt",Layer4b_Weights_CPU,false);
+	extract_weights("data/RN/res4a_branch2b.txt",Layer4b_Weights_CPU,false);
 	execute3Dconvolution(NULL,Layer4a_Neurons_CPU,Layer4b_Weights_CPU,Layer4b_Neurons_CPU,256,14,14,1,3,1,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4a2b_mean.txt",mean,false);
-	extract_weights("data/bn4a2b_var.txt",var,false);
+	extract_weights("data/RN/bn4a2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn4a2b_var.txt",var,false);
         executeBnNormLayer(Layer4b_Neurons_CPU,mean,var,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4a2b_scale.txt",scale,false);
-	extract_weights("data/sc4a2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4a2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc4a2b_bias.txt",bias,false);	
 	executeScaleLayer(Layer4b_Neurons_CPU,scale,bias,256,14*14);
 	/* ReLU */	
 	executeReLULayer(Layer4b_Neurons_CPU,(256*14*14));
 
 	/* res4a_branch2c*/
-	extract_weights("data/res4a_branch2c.txt",Layer4c_Weights_CPU,false);      
+	extract_weights("data/RN/res4a_branch2c.txt",Layer4c_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer4b_Neurons_CPU,Layer4c_Weights_CPU,Layer4c_Neurons_CPU,1024,14,14,1,1,0,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4a2c_mean.txt",mean,false);
-	extract_weights("data/bn4a2c_var.txt",var,false);
+	extract_weights("data/RN/bn4a2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn4a2c_var.txt",var,false);
         executeBnNormLayer(Layer4c_Neurons_CPU,mean,var,1024,14*14);
         /* Scale */ 
-	extract_weights("data/sc4a2c_scale.txt",scale,false);
-	extract_weights("data/sc4a2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4a2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc4a2c_bias.txt",bias,false);	
 	executeScaleLayer(Layer4c_Neurons_CPU,scale,bias,1024,14*14);
 	/* Eltwise */
         executeEltWiseLayer(Layer4b1_Neurons_CPU,Layer4c_Neurons_CPU,Layer_ELtwise_Neurons,1024*14*14);
@@ -579,43 +579,43 @@ void executeLayer4(float *Layer3c_Neurons_CPU,float *Layer4c_Neurons_CPU)
 	executeReLULayer(Layer_ELtwise_Neurons,(1024*14*14));
 
 	/* res4b_branch2a*/
-	extract_weights("data/res4b_branch2a.txt",Layer4a1_Weights_CPU,false);      
+	extract_weights("data/RN/res4b_branch2a.txt",Layer4a1_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer_ELtwise_Neurons,Layer4a1_Weights_CPU,Layer4a_Neurons_CPU,256,14,14,1,1,0,1024,14);
 	/* Batch Norm */
-	extract_weights("data/bn4b2a_mean.txt",mean,false);
-	extract_weights("data/bn4b2a_var.txt",var,false);
+	extract_weights("data/RN/bn4b2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn4b2a_var.txt",var,false);
         executeBnNormLayer(Layer4a_Neurons_CPU,mean,var,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4b2a_scale.txt",scale,false);
-	extract_weights("data/sc4b2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4b2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc4b2a_bias.txt",bias,false);	
 	executeScaleLayer(Layer4a_Neurons_CPU,scale,bias,256,14*14);
 	/* ReLU */	
 	executeReLULayer(Layer4a_Neurons_CPU,(256*14*14));
          
 	/* res4b_branch2b*/
-	extract_weights("data/res4b_branch2b.txt",Layer4b_Weights_CPU,false);      
+	extract_weights("data/RN/res4b_branch2b.txt",Layer4b_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer4a_Neurons_CPU,Layer4b_Weights_CPU,Layer4b_Neurons_CPU,256,14,14,1,3,1,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4b2b_mean.txt",mean,false);
-	extract_weights("data/bn4b2b_var.txt",var,false);
+	extract_weights("data/RN/bn4b2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn4b2b_var.txt",var,false);
         executeBnNormLayer(Layer4b_Neurons_CPU,mean,var,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4b2b_scale.txt",scale,false);
-	extract_weights("data/sc4b2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4b2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc4b2b_bias.txt",bias,false);	
 	executeScaleLayer(Layer4b_Neurons_CPU,scale,bias,256,14*14);
 	/* ReLU */	
 	executeReLULayer(Layer4b_Neurons_CPU,(256*14*14));
 
 	/* res4b_branch2c*/
-	extract_weights("data/res4b_branch2c.txt",Layer4c_Weights_CPU,false);      
+	extract_weights("data/RN/res4b_branch2c.txt",Layer4c_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer4b_Neurons_CPU,Layer4c_Weights_CPU,Layer4c_Neurons_CPU,1024,14,14,1,1,0,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4b2c_mean.txt",mean,false);
-	extract_weights("data/bn4b2c_var.txt",var,false);
+	extract_weights("data/RN/bn4b2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn4b2c_var.txt",var,false);
         executeBnNormLayer(Layer4c_Neurons_CPU,mean,var,1024,14*14);
         /* Scale */ 
-	extract_weights("data/sc4b2c_scale.txt",scale,false);
-	extract_weights("data/sc4b2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4b2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc4b2c_bias.txt",bias,false);	
 	executeScaleLayer(Layer4c_Neurons_CPU,scale,bias,1024,14*14);
 	/* Eltwise */
         executeEltWiseLayer(Layer_ELtwise_Neurons,Layer4c_Neurons_CPU,Layer_ELtwise_Neurons,1024*14*14);
@@ -623,43 +623,43 @@ void executeLayer4(float *Layer3c_Neurons_CPU,float *Layer4c_Neurons_CPU)
 	executeReLULayer(Layer_ELtwise_Neurons,(1024*14*14));
 	
 	/* res4c_branch2a*/
-	extract_weights("data/res4c_branch2a.txt",Layer4a1_Weights_CPU,false);      
+	extract_weights("data/RN/res4c_branch2a.txt",Layer4a1_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer_ELtwise_Neurons,Layer4a1_Weights_CPU,Layer4a_Neurons_CPU,256,14,14,1,1,0,1024,14);
 	/* Batch Norm */
-	extract_weights("data/bn4c2a_mean.txt",mean,false);
-	extract_weights("data/bn4c2a_var.txt",var,false);
+	extract_weights("data/RN/bn4c2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn4c2a_var.txt",var,false);
         executeBnNormLayer(Layer4a_Neurons_CPU,mean,var,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4c2a_scale.txt",scale,false);
-	extract_weights("data/sc4c2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4c2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc4c2a_bias.txt",bias,false);	
 	executeScaleLayer(Layer4a_Neurons_CPU,scale,bias,256,14*14);
 	/* ReLU */	
 	executeReLULayer(Layer4a_Neurons_CPU,(256*14*14));
          
 	/* res4c_branch2b*/
-	extract_weights("data/res4c_branch2b.txt",Layer4b_Weights_CPU,false);      
+	extract_weights("data/RN/res4c_branch2b.txt",Layer4b_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer4a_Neurons_CPU,Layer4b_Weights_CPU,Layer4b_Neurons_CPU,256,14,14,1,3,1,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4c2b_mean.txt",mean,false);
-	extract_weights("data/bn4c2b_var.txt",var,false);
+	extract_weights("data/RN/bn4c2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn4c2b_var.txt",var,false);
         executeBnNormLayer(Layer4b_Neurons_CPU,mean,var,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4c2b_scale.txt",scale,false);
-	extract_weights("data/sc4c2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4c2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc4c2b_bias.txt",bias,false);	
 	executeScaleLayer(Layer4b_Neurons_CPU,scale,bias,256,14*14);
 	/* ReLU */	
 	executeReLULayer(Layer4b_Neurons_CPU,(256*14*14));
 
 	/* res4c_branch2c*/
-	extract_weights("data/res4c_branch2c.txt",Layer4c_Weights_CPU,false);      
+	extract_weights("data/RN/res4c_branch2c.txt",Layer4c_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer4b_Neurons_CPU,Layer4c_Weights_CPU,Layer4c_Neurons_CPU,1024,14,14,1,1,0,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4c2c_mean.txt",mean,false);
-	extract_weights("data/bn4c2c_var.txt",var,false);
+	extract_weights("data/RN/bn4c2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn4c2c_var.txt",var,false);
         executeBnNormLayer(Layer4c_Neurons_CPU,mean,var,1024,14*14);
         /* Scale */ 
-	extract_weights("data/sc4c2c_scale.txt",scale,false);
-	extract_weights("data/sc4c2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4c2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc4c2c_bias.txt",bias,false);	
 	executeScaleLayer(Layer4c_Neurons_CPU,scale,bias,1024,14*14);
 	/* Eltwise */
         executeEltWiseLayer(Layer_ELtwise_Neurons,Layer4c_Neurons_CPU,Layer_ELtwise_Neurons,1024*14*14);
@@ -667,43 +667,43 @@ void executeLayer4(float *Layer3c_Neurons_CPU,float *Layer4c_Neurons_CPU)
 	executeReLULayer(Layer_ELtwise_Neurons,(1024*14*14));
 
 	/* res4d_branch2a*/
-	extract_weights("data/res4d_branch2a.txt",Layer4a1_Weights_CPU,false);      
+	extract_weights("data/RN/res4d_branch2a.txt",Layer4a1_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer_ELtwise_Neurons,Layer4a1_Weights_CPU,Layer4a_Neurons_CPU,256,14,14,1,1,0,1024,14);
 	/* Batch Norm */
-	extract_weights("data/bn4d2a_mean.txt",mean,false);
-	extract_weights("data/bn4d2a_var.txt",var,false);
+	extract_weights("data/RN/bn4d2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn4d2a_var.txt",var,false);
         executeBnNormLayer(Layer4a_Neurons_CPU,mean,var,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4d2a_scale.txt",scale,false);
-	extract_weights("data/sc4d2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4d2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc4d2a_bias.txt",bias,false);	
 	executeScaleLayer(Layer4a_Neurons_CPU,scale,bias,256,14*14);
 	/* ReLU */	
 	executeReLULayer(Layer4a_Neurons_CPU,(256*14*14));
          
 	/* res4d_branch2b*/
-	extract_weights("data/res4d_branch2b.txt",Layer4b_Weights_CPU,false);      
+	extract_weights("data/RN/res4d_branch2b.txt",Layer4b_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer4a_Neurons_CPU,Layer4b_Weights_CPU,Layer4b_Neurons_CPU,256,14,14,1,3,1,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4d2b_mean.txt",mean,false);
-	extract_weights("data/bn4d2b_var.txt",var,false);
+	extract_weights("data/RN/bn4d2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn4d2b_var.txt",var,false);
         executeBnNormLayer(Layer4b_Neurons_CPU,mean,var,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4d2b_scale.txt",scale,false);
-	extract_weights("data/sc4d2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4d2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc4d2b_bias.txt",bias,false);	
 	executeScaleLayer(Layer4b_Neurons_CPU,scale,bias,256,14*14);
 	/* ReLU */	
 	executeReLULayer(Layer4b_Neurons_CPU,(256*14*14));
 
 	/* res4d_branch2c*/
-	extract_weights("data/res4d_branch2c.txt",Layer4c_Weights_CPU,false);      
+	extract_weights("data/RN/res4d_branch2c.txt",Layer4c_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer4b_Neurons_CPU,Layer4c_Weights_CPU,Layer4c_Neurons_CPU,1024,14,14,1,1,0,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4d2c_mean.txt",mean,false);
-	extract_weights("data/bn4d2c_var.txt",var,false);
+	extract_weights("data/RN/bn4d2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn4d2c_var.txt",var,false);
         executeBnNormLayer(Layer4c_Neurons_CPU,mean,var,1024,14*14);
         /* Scale */ 
-	extract_weights("data/sc4d2c_scale.txt",scale,false);
-	extract_weights("data/sc4d2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4d2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc4d2c_bias.txt",bias,false);	
 	executeScaleLayer(Layer4c_Neurons_CPU,scale,bias,1024,14*14);
 	/* Eltwise */
         executeEltWiseLayer(Layer_ELtwise_Neurons,Layer4c_Neurons_CPU,Layer_ELtwise_Neurons,1024*14*14);
@@ -711,43 +711,43 @@ void executeLayer4(float *Layer3c_Neurons_CPU,float *Layer4c_Neurons_CPU)
 	executeReLULayer(Layer_ELtwise_Neurons,(1024*14*14));
 	
 	/* res4e_branch2a*/
-	extract_weights("data/res4e_branch2a.txt",Layer4a1_Weights_CPU,false);      
+	extract_weights("data/RN/res4e_branch2a.txt",Layer4a1_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer_ELtwise_Neurons,Layer4a1_Weights_CPU,Layer4a_Neurons_CPU,256,14,14,1,1,0,1024,14);
 	/* Batch Norm */
-	extract_weights("data/bn4e2a_mean.txt",mean,false);
-	extract_weights("data/bn4e2a_var.txt",var,false);
+	extract_weights("data/RN/bn4e2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn4e2a_var.txt",var,false);
         executeBnNormLayer(Layer4a_Neurons_CPU,mean,var,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4e2a_scale.txt",scale,false);
-	extract_weights("data/sc4e2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4e2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc4e2a_bias.txt",bias,false);	
 	executeScaleLayer(Layer4a_Neurons_CPU,scale,bias,256,14*14);
 	/* ReLU */	
 	executeReLULayer(Layer4a_Neurons_CPU,(256*14*14));
 
 	/* res4e_branch2b*/
-	extract_weights("data/res4e_branch2b.txt",Layer4b_Weights_CPU,false);      
+	extract_weights("data/RN/res4e_branch2b.txt",Layer4b_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer4a_Neurons_CPU,Layer4b_Weights_CPU,Layer4b_Neurons_CPU,256,14,14,1,3,1,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4e2b_mean.txt",mean,false);
-	extract_weights("data/bn4e2b_var.txt",var,false);
+	extract_weights("data/RN/bn4e2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn4e2b_var.txt",var,false);
         executeBnNormLayer(Layer4b_Neurons_CPU,mean,var,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4e2b_scale.txt",scale,false);
-	extract_weights("data/sc4e2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4e2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc4e2b_bias.txt",bias,false);	
 	executeScaleLayer(Layer4b_Neurons_CPU,scale,bias,256,14*14);
 	/* ReLU */	
 	executeReLULayer(Layer4b_Neurons_CPU,(256*14*14));
 
 	/* res4e_branch2c*/
-	extract_weights("data/res4e_branch2c.txt",Layer4c_Weights_CPU,false);      
+	extract_weights("data/RN/res4e_branch2c.txt",Layer4c_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer4b_Neurons_CPU,Layer4c_Weights_CPU,Layer4c_Neurons_CPU,1024,14,14,1,1,0,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4e2c_mean.txt",mean,false);
-	extract_weights("data/bn4e2c_var.txt",var,false);
+	extract_weights("data/RN/bn4e2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn4e2c_var.txt",var,false);
         executeBnNormLayer(Layer4c_Neurons_CPU,mean,var,1024,14*14);
         /* Scale */ 
-	extract_weights("data/sc4e2c_scale.txt",scale,false);
-	extract_weights("data/sc4e2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4e2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc4e2c_bias.txt",bias,false);	
 	executeScaleLayer(Layer4c_Neurons_CPU,scale,bias,1024,14*14);
 	/* Eltwise */
         executeEltWiseLayer(Layer_ELtwise_Neurons,Layer4c_Neurons_CPU,Layer_ELtwise_Neurons,1024*14*14);
@@ -755,43 +755,43 @@ void executeLayer4(float *Layer3c_Neurons_CPU,float *Layer4c_Neurons_CPU)
 	executeReLULayer(Layer_ELtwise_Neurons,(1024*14*14));
 	
 	/* res4f_branch2a*/
-	extract_weights("data/res4f_branch2a.txt",Layer4a1_Weights_CPU,false);      
+	extract_weights("data/RN/res4f_branch2a.txt",Layer4a1_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer_ELtwise_Neurons,Layer4a1_Weights_CPU,Layer4a_Neurons_CPU,256,14,14,1,1,0,1024,14);
 	/* Batch Norm */
-	extract_weights("data/bn4f2a_mean.txt",mean,false);
-	extract_weights("data/bn4f2a_var.txt",var,false);
+	extract_weights("data/RN/bn4f2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn4f2a_var.txt",var,false);
         executeBnNormLayer(Layer4a_Neurons_CPU,mean,var,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4f2a_scale.txt",scale,false);
-	extract_weights("data/sc4f2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4f2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc4f2a_bias.txt",bias,false);	
 	executeScaleLayer(Layer4a_Neurons_CPU,scale,bias,256,14*14);
 	/* ReLU */	
 	executeReLULayer(Layer4a_Neurons_CPU,(256*14*14));
 
 	/* res4f_branch2b*/
-	extract_weights("data/res4f_branch2b.txt",Layer4b_Weights_CPU,false);      
+	extract_weights("data/RN/res4f_branch2b.txt",Layer4b_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer4a_Neurons_CPU,Layer4b_Weights_CPU,Layer4b_Neurons_CPU,256,14,14,1,3,1,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4f2b_mean.txt",mean,false);
-	extract_weights("data/bn4f2b_var.txt",var,false);
+	extract_weights("data/RN/bn4f2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn4f2b_var.txt",var,false);
         executeBnNormLayer(Layer4b_Neurons_CPU,mean,var,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4f2b_scale.txt",scale,false);
-	extract_weights("data/sc4f2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4f2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc4f2b_bias.txt",bias,false);	
 	executeScaleLayer(Layer4b_Neurons_CPU,scale,bias,256,14*14);
 	/* ReLU */	
 	executeReLULayer(Layer4b_Neurons_CPU,(256*14*14));
 
 	/* res4f_branch2c*/
-	extract_weights("data/res4f_branch2c.txt",Layer4c_Weights_CPU,false);      
+	extract_weights("data/RN/res4f_branch2c.txt",Layer4c_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer4b_Neurons_CPU,Layer4c_Weights_CPU,Layer4c_Neurons_CPU,1024,14,14,1,1,0,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4f2c_mean.txt",mean,false);
-	extract_weights("data/bn4f2c_var.txt",var,false);
+	extract_weights("data/RN/bn4f2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn4f2c_var.txt",var,false);
         executeBnNormLayer(Layer4c_Neurons_CPU,mean,var,1024,14*14);
         /* Scale */ 
-	extract_weights("data/sc4f2c_scale.txt",scale,false);
-	extract_weights("data/sc4f2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4f2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc4f2c_bias.txt",bias,false);	
 	executeScaleLayer(Layer4c_Neurons_CPU,scale,bias,1024,14*14);
 	/* Eltwise */
         executeEltWiseLayer(Layer_ELtwise_Neurons,Layer4c_Neurons_CPU,Layer4c_Neurons_CPU,1024*14*14);
@@ -819,55 +819,55 @@ void executeLayer5(float *Layer4c_Neurons_CPU,float *Layer5c_Neurons_CPU)
 	float *Layer5b_Neurons_CPU = (float *)malloc(sizeof(float) *(512*7*7));
 	float *Layer_ELtwise_Neurons = (float *)malloc(sizeof(float) *(2048*7*7));
 	
-	extract_weights("data/res5a_branch1.txt",Layer5c_Weights_CPU,false);      
+	extract_weights("data/RN/res5a_branch1.txt",Layer5c_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer4c_Neurons_CPU,Layer5c_Weights_CPU,Layer5b1_Neurons_CPU,2048,7,7,2,1,0,1024,14);
 	/* Batch Norm */
-	extract_weights("data/bn5ab1_mean.txt",mean,false);
-	extract_weights("data/bn5ab1_var.txt",var,false);
+	extract_weights("data/RN/bn5ab1_mean.txt",mean,false);
+	extract_weights("data/RN/bn5ab1_var.txt",var,false);
         executeBnNormLayer(Layer5b1_Neurons_CPU,mean,var,2048,7*7);
         /* Scale */ 
-	extract_weights("data/sc5ab1_scale.txt",scale,false);
-	extract_weights("data/sc5ab1_bias.txt",bias,false);	
+	extract_weights("data/RN/sc5ab1_scale.txt",scale,false);
+	extract_weights("data/RN/sc5ab1_bias.txt",bias,false);	
 	executeScaleLayer(Layer5b1_Neurons_CPU,scale,bias,2048,7*7);
 	
 	/* res5a_branch2a*/
-	extract_weights("data/res5a_branch2a.txt",Layer5a_Weights_CPU,false);      
+	extract_weights("data/RN/res5a_branch2a.txt",Layer5a_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer4c_Neurons_CPU,Layer5a_Weights_CPU,Layer5a_Neurons_CPU,512,7,7,2,1,0,1024,14);
 	/* Batch Norm */
-	extract_weights("data/bn5a2a_mean.txt",mean,false);
-	extract_weights("data/bn5a2a_var.txt",var,false);
+	extract_weights("data/RN/bn5a2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn5a2a_var.txt",var,false);
         executeBnNormLayer(Layer5a_Neurons_CPU,mean,var,512,7*7);
         /* Scale */ 
-	extract_weights("data/sc5a2a_scale.txt",scale,false);
-	extract_weights("data/sc5a2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc5a2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc5a2a_bias.txt",bias,false);	
 	executeScaleLayer(Layer5a_Neurons_CPU,scale,bias,512,7*7);
 	/* ReLU */	
 	executeReLULayer(Layer5a_Neurons_CPU,(512*7*7));
          
 	/* res5a_branch2b*/
-	extract_weights("data/res5a_branch2b.txt",Layer5b_Weights_CPU,false);      
+	extract_weights("data/RN/res5a_branch2b.txt",Layer5b_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer5a_Neurons_CPU,Layer5b_Weights_CPU,Layer5b_Neurons_CPU,512,7,7,1,3,1,512,7);
 	/* Batch Norm */
-	extract_weights("data/bn5a2b_mean.txt",mean,false);
-	extract_weights("data/bn5a2b_var.txt",var,false);
+	extract_weights("data/RN/bn5a2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn5a2b_var.txt",var,false);
         executeBnNormLayer(Layer5b_Neurons_CPU,mean,var,512,7*7);
         /* Scale */ 
-	extract_weights("data/sc5a2b_scale.txt",scale,false);
-	extract_weights("data/sc5a2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc5a2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc5a2b_bias.txt",bias,false);	
 	executeScaleLayer(Layer5b_Neurons_CPU,scale,bias,512,7*7);
 	/* ReLU */	
 	executeReLULayer(Layer5b_Neurons_CPU,(512*7*7));
 
 	/* res5a_branch2c*/
-	extract_weights("data/res5a_branch2c.txt",Layer5c_Weights_CPU,false);      
+	extract_weights("data/RN/res5a_branch2c.txt",Layer5c_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer5b_Neurons_CPU,Layer5c_Weights_CPU,Layer5c_Neurons_CPU,2048,7,7,1,1,0,512,7);
 	/* Batch Norm */
-	extract_weights("data/bn5a2c_mean.txt",mean,false);
-	extract_weights("data/bn5a2c_var.txt",var,false);
+	extract_weights("data/RN/bn5a2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn5a2c_var.txt",var,false);
         executeBnNormLayer(Layer5c_Neurons_CPU,mean,var,2048,7*7);
         /* Scale */ 
-	extract_weights("data/sc5a2c_scale.txt",scale,false);
-	extract_weights("data/sc5a2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc5a2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc5a2c_bias.txt",bias,false);	
 	executeScaleLayer(Layer5c_Neurons_CPU,scale,bias,2048,7*7);
 	/* Eltwise */
         executeEltWiseLayer(Layer5b1_Neurons_CPU,Layer5c_Neurons_CPU,Layer_ELtwise_Neurons,2048*7*7);
@@ -875,43 +875,43 @@ void executeLayer5(float *Layer4c_Neurons_CPU,float *Layer5c_Neurons_CPU)
 	executeReLULayer(Layer_ELtwise_Neurons,(2048*7*7));
 
 	/* res5b_branch2a*/
-	extract_weights("data/res5b_branch2a.txt",Layer5a1_Weights_CPU,false);      
+	extract_weights("data/RN/res5b_branch2a.txt",Layer5a1_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer_ELtwise_Neurons,Layer5a1_Weights_CPU,Layer5a_Neurons_CPU,512,7,7,1,1,0,2048,7);
 	/* Batch Norm */
-	extract_weights("data/bn5b2a_mean.txt",mean,false);
-	extract_weights("data/bn5b2a_var.txt",var,false);
+	extract_weights("data/RN/bn5b2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn5b2a_var.txt",var,false);
         executeBnNormLayer(Layer5a_Neurons_CPU,mean,var,512,7*7);
         /* Scale */ 
-	extract_weights("data/sc5b2a_scale.txt",scale,false);
-	extract_weights("data/sc5b2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc5b2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc5b2a_bias.txt",bias,false);	
 	executeScaleLayer(Layer5a_Neurons_CPU,scale,bias,512,7*7);
 	/* ReLU */	
 	executeReLULayer(Layer5a_Neurons_CPU,(512*7*7));
 
 	/* res5b_branch2b*/
-	extract_weights("data/res5b_branch2b.txt",Layer5b_Weights_CPU,false);      
+	extract_weights("data/RN/res5b_branch2b.txt",Layer5b_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer5a_Neurons_CPU,Layer5b_Weights_CPU,Layer5b_Neurons_CPU,512,7,7,1,3,1,512,7);
 	/* Batch Norm */
-	extract_weights("data/bn5b2b_mean.txt",mean,false);
-	extract_weights("data/bn5b2b_var.txt",var,false);
+	extract_weights("data/RN/bn5b2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn5b2b_var.txt",var,false);
         executeBnNormLayer(Layer5b_Neurons_CPU,mean,var,512,7*7);
         /* Scale */ 
-	extract_weights("data/sc5b2b_scale.txt",scale,false);
-	extract_weights("data/sc5b2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc5b2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc5b2b_bias.txt",bias,false);	
 	executeScaleLayer(Layer5b_Neurons_CPU,scale,bias,512,7*7);
 	/* ReLU */	
 	executeReLULayer(Layer5b_Neurons_CPU,(512*7*7));
 
 	/* res5b_branch2c*/
-	extract_weights("data/res5b_branch2c.txt",Layer5c_Weights_CPU,false);      
+	extract_weights("data/RN/res5b_branch2c.txt",Layer5c_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer5b_Neurons_CPU,Layer5c_Weights_CPU,Layer5c_Neurons_CPU,2048,7,7,1,1,0,512,7);
 	/* Batch Norm */
-	extract_weights("data/bn5b2c_mean.txt",mean,false);
-	extract_weights("data/bn5b2c_var.txt",var,false);
+	extract_weights("data/RN/bn5b2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn5b2c_var.txt",var,false);
         executeBnNormLayer(Layer5c_Neurons_CPU,mean,var,2048,7*7);
         /* Scale */
-	extract_weights("data/sc5b2c_scale.txt",scale,false);
-	extract_weights("data/sc5b2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc5b2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc5b2c_bias.txt",bias,false);	
 	executeScaleLayer(Layer5c_Neurons_CPU,scale,bias,2048,7*7);
 	/* Eltwise */
         executeEltWiseLayer(Layer_ELtwise_Neurons,Layer5c_Neurons_CPU,Layer_ELtwise_Neurons,2048*7*7);
@@ -919,49 +919,49 @@ void executeLayer5(float *Layer4c_Neurons_CPU,float *Layer5c_Neurons_CPU)
 	executeReLULayer(Layer_ELtwise_Neurons,(2048*7*7));
 
 	/* res5c_branch2a*/
-	extract_weights("data/res5c_branch2a.txt",Layer5a1_Weights_CPU,false);      
+	extract_weights("data/RN/res5c_branch2a.txt",Layer5a1_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer_ELtwise_Neurons,Layer5a1_Weights_CPU,Layer5a_Neurons_CPU,512,7,7,1,1,0,2048,7);
 	/* Batch Norm */
-	extract_weights("data/bn5c2a_mean.txt",mean,false);
-	extract_weights("data/bn5c2a_var.txt",var,false);
+	extract_weights("data/RN/bn5c2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn5c2a_var.txt",var,false);
         executeBnNormLayer(Layer5a_Neurons_CPU,mean,var,512,7*7);
         /* Scale */ 
-	extract_weights("data/sc5c2a_scale.txt",scale,false);
-	extract_weights("data/sc5c2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc5c2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc5c2a_bias.txt",bias,false);	
 	executeScaleLayer(Layer5a_Neurons_CPU,scale,bias,512,7*7);
 	/* ReLU */	
 	executeReLULayer(Layer5a_Neurons_CPU,(512*7*7));
 
 	/* res5c_branch2b*/
-	extract_weights("data/res5c_branch2b.txt",Layer5b_Weights_CPU,false);      
+	extract_weights("data/RN/res5c_branch2b.txt",Layer5b_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer5a_Neurons_CPU,Layer5b_Weights_CPU,Layer5b_Neurons_CPU,512,7,7,1,3,1,512,7);
 	/* Batch Norm */
-	extract_weights("data/bn5c2b_mean.txt",mean,false);
-	extract_weights("data/bn5c2b_var.txt",var,false);
+	extract_weights("data/RN/bn5c2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn5c2b_var.txt",var,false);
         executeBnNormLayer(Layer5b_Neurons_CPU,mean,var,512,7*7);
         /* Scale */ 
-	extract_weights("data/sc5c2b_scale.txt",scale,false);
-	extract_weights("data/sc5c2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc5c2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc5c2b_bias.txt",bias,false);	
 	executeScaleLayer(Layer5b_Neurons_CPU,scale,bias,512,7*7);
 	/* ReLU */	
 	executeReLULayer(Layer5b_Neurons_CPU,(512*7*7));
 
 	/* res5c_branch2c*/
-	extract_weights("data/res5c_branch2c.txt",Layer5c_Weights_CPU,false);      
+	extract_weights("data/RN/res5c_branch2c.txt",Layer5c_Weights_CPU,false);      
 	execute3Dconvolution(NULL,Layer5b_Neurons_CPU,Layer5c_Weights_CPU,Layer5c_Neurons_CPU,2048,7,7,1,1,0,512,7);
 	/* Batch Norm */
-	extract_weights("data/bn5c2c_mean.txt",mean,false);
-	extract_weights("data/bn5c2c_var.txt",var,false);
+	extract_weights("data/RN/bn5c2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn5c2c_var.txt",var,false);
         executeBnNormLayer(Layer5c_Neurons_CPU,mean,var,2048,7*7);
         /* Scale */ 
-	extract_weights("data/sc5c2c_scale.txt",scale,false);
-	extract_weights("data/sc5c2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc5c2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc5c2c_bias.txt",bias,false);	
 	executeScaleLayer(Layer5c_Neurons_CPU,scale,bias,2048,7*7);
 	/* Eltwise */
         executeEltWiseLayer(Layer_ELtwise_Neurons,Layer5c_Neurons_CPU,Layer5c_Neurons_CPU,2048*7*7);
 	/* ReLU */	
 	executeReLULayer(Layer5c_Neurons_CPU,(2048*7*7));
-	//extract_weights("data/res5c_out.txt",Layer5c_Neurons_CPU,false);      
+	//extract_weights("data/RN/res5c_out.txt",Layer5c_Neurons_CPU,false);      
 
 	freeMemory(Layer5a_Weights_CPU);
 	freeMemory(Layer5a1_Weights_CPU);
@@ -1045,35 +1045,35 @@ void executeLayer2_CUDA(float *Layer2_pool_GPU,float *Layer2c_Neurons_GPU)
 	int tfactor = ceil(val);
 	DEBUGPRINT((" Split Factor :: %d\n", tfactor));
 	
-	extract_weights("data/res2a_branch1.txt",Layer2c_Weights_CPU,false);      
+	extract_weights("data/RN/res2a_branch1.txt",Layer2c_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer2c_Weights_GPU,Layer2c_Weights_CPU, sizeof(float)*256*64);
 	execute3DconvolutionCuda_split<<<numBlocks,numThreads>>>(NULL,Layer2_pool_GPU,Layer2c_Weights_GPU,Layer_ELtwise_Neurons_GPU,256,56,56,1,1,0,64,56,tfactor);
 	/* Batch Norm */
-	extract_weights("data/bn2ab1_mean.txt",mean,false);
-	extract_weights("data/bn2ab1_var.txt",var,false);
+	extract_weights("data/RN/bn2ab1_mean.txt",mean,false);
+	extract_weights("data/RN/bn2ab1_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*256);
         executeBnNormLayerCUDA_split<<<numBlocks,numThreads>>>(Layer_ELtwise_Neurons_GPU,mean_GPU,var_GPU,256,56,tfactor);
         /* Scale */ 
-	extract_weights("data/sc2ab1_scale.txt",scale,false);
-	extract_weights("data/sc2ab1_bias.txt",bias,false);	
+	extract_weights("data/RN/sc2ab1_scale.txt",scale,false);
+	extract_weights("data/RN/sc2ab1_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*256);
 	executeScaleLayerCUDA_split<<<numBlocks,numThreads>>>(Layer_ELtwise_Neurons_GPU,scale_GPU,bias_GPU,256,56,tfactor);
 
 	/* res2a_branch2a*/
-	extract_weights("data/res2a_branch2a.txt",Layer2a_Weights_CPU,false);     //4096 
+	extract_weights("data/RN/res2a_branch2a.txt",Layer2a_Weights_CPU,false);     //4096 
 	Cuda_memcpyfromHostToDevice(Layer2a_Weights_GPU,Layer2a_Weights_CPU, sizeof(float)*64*64);
 	execute3DconvolutionCuda_split<<<numBlocks_res,numThreads_res>>>(NULL,Layer2_pool_GPU,Layer2a_Weights_GPU,Layer2a_Neurons_GPU,64,56,56,1,1,0,64,56,tfactor);
 	/* Batch Norm */
-	extract_weights("data/bn2a2a_mean.txt",mean,false);
-	extract_weights("data/bn2a2a_var.txt",var,false);
+	extract_weights("data/RN/bn2a2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn2a2a_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*64);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*64);
         executeBnNormLayerCUDA_split<<<numBlocks_res,numThreads_res>>>(Layer2a_Neurons_GPU,mean_GPU,var_GPU,64,56,tfactor);
         /* Scale */ 
-	extract_weights("data/sc2a2a_scale.txt",scale,false);
-	extract_weights("data/sc2a2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc2a2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc2a2a_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*64);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*64);
 	executeScaleLayerCUDA_split<<<numBlocks_res,numThreads_res>>>(Layer2a_Neurons_GPU,scale_GPU,bias_GPU,64,56,tfactor);
@@ -1081,18 +1081,18 @@ void executeLayer2_CUDA(float *Layer2_pool_GPU,float *Layer2c_Neurons_GPU)
 	executeReLULayerCUDA_split<<<numBlocks_res,numThreads_res>>>(Layer2a_Neurons_GPU,56,tfactor);
          
 	/* res2a_branch2b*/
-	extract_weights("data/res2a_branch2b.txt",Layer2b_Weights_CPU,false);     //36864 
+	extract_weights("data/RN/res2a_branch2b.txt",Layer2b_Weights_CPU,false);     //36864 
 	Cuda_memcpyfromHostToDevice(Layer2b_Weights_GPU,Layer2b_Weights_CPU, sizeof(float)*64*64*3*3);
 	execute3DconvolutionCuda_split<<<numBlocks_res,numThreads_res>>>(NULL,Layer2a_Neurons_GPU,Layer2b_Weights_GPU,Layer2b_Neurons_GPU,64,56,56,1,3,1,64,56,tfactor);
 	/* Batch Norm */
-	extract_weights("data/bn2a2b_mean.txt",mean,false);
-	extract_weights("data/bn2a2b_var.txt",var,false);
+	extract_weights("data/RN/bn2a2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn2a2b_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*64);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*64);
         executeBnNormLayerCUDA_split<<<numBlocks_res,numThreads_res>>>(Layer2b_Neurons_GPU,mean_GPU,var_GPU,64,56,tfactor);
         /* Scale */ 
-	extract_weights("data/sc2a2b_scale.txt",scale,false);
-	extract_weights("data/sc2a2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc2a2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc2a2b_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*64);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*64);
 	executeScaleLayerCUDA_split<<<numBlocks_res,numThreads_res>>>(Layer2b_Neurons_GPU,scale_GPU,bias_GPU,64,56,tfactor);
@@ -1100,18 +1100,18 @@ void executeLayer2_CUDA(float *Layer2_pool_GPU,float *Layer2c_Neurons_GPU)
 	executeReLULayerCUDA_split<<<numBlocks_res,numThreads_res>>>(Layer2b_Neurons_GPU,56,tfactor);
 
 	/* res2a_branch2c*/
-	extract_weights("data/res2a_branch2c.txt",Layer2c_Weights_CPU,false);     //16384 
+	extract_weights("data/RN/res2a_branch2c.txt",Layer2c_Weights_CPU,false);     //16384 
 	Cuda_memcpyfromHostToDevice(Layer2c_Weights_GPU,Layer2c_Weights_CPU, sizeof(float)*256*64);
 	execute3DconvolutionCuda_split<<<numBlocks,numThreads>>>(NULL,Layer2b_Neurons_GPU,Layer2c_Weights_GPU,Layer2c_Neurons_GPU,256,56,56,1,1,0,64,56,tfactor);
 	/* Batch Norm */
-	extract_weights("data/bn2a2c_mean.txt",mean,false);
-	extract_weights("data/bn2a2c_var.txt",var,false);
+	extract_weights("data/RN/bn2a2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn2a2c_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*256);
         executeBnNormLayerCUDA_split<<<numBlocks,numThreads>>>(Layer2c_Neurons_GPU,mean_GPU,var_GPU,256,56,tfactor);
         /* Scale */ 
-	extract_weights("data/sc2a2c_scale.txt",scale,false);
-	extract_weights("data/sc2a2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc2a2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc2a2c_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*256);
 	executeScaleLayerCUDA_split<<<numBlocks,numThreads>>>(Layer2c_Neurons_GPU,scale_GPU,bias_GPU,256,56,tfactor);
@@ -1121,18 +1121,18 @@ void executeLayer2_CUDA(float *Layer2_pool_GPU,float *Layer2c_Neurons_GPU)
 	executeReLULayerCUDA_split<<<numBlocks,numThreads>>>(Layer_ELtwise_Neurons_GPU,56,tfactor);
 
 	/* res2b_branch2a*/
-	extract_weights("data/res2b_branch2a.txt",Layer2c_Weights_CPU,false);      
+	extract_weights("data/RN/res2b_branch2a.txt",Layer2c_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer2c_Weights_GPU,Layer2c_Weights_CPU, sizeof(float)*256*64);
 	execute3DconvolutionCuda_split<<<numBlocks_res,numThreads_res>>>(NULL,Layer_ELtwise_Neurons_GPU,Layer2c_Weights_GPU,Layer2a_Neurons_GPU,64,56,56,1,1,0,256,56,tfactor);
 	/* Batch Norm */
-	extract_weights("data/bn2b2a_mean.txt",mean,false);
-	extract_weights("data/bn2b2a_var.txt",var,false);
+	extract_weights("data/RN/bn2b2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn2b2a_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*64);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*64);
         executeBnNormLayerCUDA_split<<<numBlocks_res,numThreads_res>>>(Layer2a_Neurons_GPU,mean_GPU,var_GPU,64,56,tfactor);
         /* Scale */ 
-	extract_weights("data/sc2b2a_scale.txt",scale,false);
-	extract_weights("data/sc2b2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc2b2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc2b2a_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*64);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*64);
 	executeScaleLayerCUDA_split<<<numBlocks_res,numThreads_res>>>(Layer2a_Neurons_GPU,scale_GPU,bias_GPU,64,56,tfactor);
@@ -1140,18 +1140,18 @@ void executeLayer2_CUDA(float *Layer2_pool_GPU,float *Layer2c_Neurons_GPU)
 	executeReLULayerCUDA_split<<<numBlocks_res,numThreads_res>>>(Layer2a_Neurons_GPU,56,tfactor);
 
 	/* res2b_branch2b*/
-	extract_weights("data/res2b_branch2b.txt",Layer2b_Weights_CPU,false);      
+	extract_weights("data/RN/res2b_branch2b.txt",Layer2b_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer2b_Weights_GPU,Layer2b_Weights_CPU, sizeof(float)*64*64*3*3);
 	execute3DconvolutionCuda_split<<<numBlocks_res,numThreads_res>>>(NULL,Layer2a_Neurons_GPU,Layer2b_Weights_GPU,Layer2b_Neurons_GPU,64,56,56,1,3,1,64,56,tfactor);
 	/* Batch Norm */
-	extract_weights("data/bn2b2b_mean.txt",mean,false);
-	extract_weights("data/bn2b2b_var.txt",var,false);
+	extract_weights("data/RN/bn2b2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn2b2b_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*64);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*64);
         executeBnNormLayerCUDA_split<<<numBlocks_res,numThreads_res>>>(Layer2b_Neurons_GPU,mean_GPU,var_GPU,64,56,tfactor);
         /* Scale */ 
-	extract_weights("data/sc2b2b_scale.txt",scale,false);
-	extract_weights("data/sc2b2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc2b2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc2b2b_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*64);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*64);
 	executeScaleLayerCUDA_split<<<numBlocks_res,numThreads_res>>>(Layer2b_Neurons_GPU,scale_GPU,bias_GPU,64,56,tfactor);
@@ -1159,18 +1159,18 @@ void executeLayer2_CUDA(float *Layer2_pool_GPU,float *Layer2c_Neurons_GPU)
 	executeReLULayerCUDA_split<<<numBlocks_res,numThreads_res>>>(Layer2b_Neurons_GPU,56,tfactor);
 
 	/* res2b_branch2c*/
-	extract_weights("data/res2b_branch2c.txt",Layer2c_Weights_CPU,false);      
+	extract_weights("data/RN/res2b_branch2c.txt",Layer2c_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer2c_Weights_GPU,Layer2c_Weights_CPU, sizeof(float)*256*64);
 	execute3DconvolutionCuda_split<<<numBlocks,numThreads>>>(NULL,Layer2b_Neurons_GPU,Layer2c_Weights_GPU,Layer2c_Neurons_GPU,256,56,56,1,1,0,64,56,tfactor);
 	/* Batch Norm */
-	extract_weights("data/bn2b2c_mean.txt",mean,false);
-	extract_weights("data/bn2b2c_var.txt",var,false);
+	extract_weights("data/RN/bn2b2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn2b2c_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*256);
         executeBnNormLayerCUDA_split<<<numBlocks,numThreads>>>(Layer2c_Neurons_GPU,mean_GPU,var_GPU,256,56,tfactor);
         /* Scale */ 
-	extract_weights("data/sc2b2c_scale.txt",scale,false);
-	extract_weights("data/sc2b2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc2b2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc2b2c_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*256);
 	executeScaleLayerCUDA_split<<<numBlocks,numThreads>>>(Layer2c_Neurons_GPU,scale_GPU,bias_GPU,256,56,tfactor);
@@ -1180,18 +1180,18 @@ void executeLayer2_CUDA(float *Layer2_pool_GPU,float *Layer2c_Neurons_GPU)
 	executeReLULayerCUDA_split<<<numBlocks,numThreads>>>(Layer_ELtwise_Neurons_GPU,56,tfactor);
 
 	/* res2c_branch2a*/
-	extract_weights("data/res2c_branch2a.txt",Layer2c_Weights_CPU,false);      
+	extract_weights("data/RN/res2c_branch2a.txt",Layer2c_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer2c_Weights_GPU,Layer2c_Weights_CPU, sizeof(float)*256*64);
 	execute3DconvolutionCuda_split<<<numBlocks_res,numThreads_res>>>(NULL,Layer_ELtwise_Neurons_GPU,Layer2c_Weights_GPU,Layer2a_Neurons_GPU,64,56,56,1,1,0,256,56,tfactor);
 	/* Batch Norm */
-	extract_weights("data/bn2c2a_mean.txt",mean,false);
-	extract_weights("data/bn2c2a_var.txt",var,false);
+	extract_weights("data/RN/bn2c2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn2c2a_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*64);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*64);
         executeBnNormLayerCUDA_split<<<numBlocks_res,numThreads_res>>>(Layer2a_Neurons_GPU,mean_GPU,var_GPU,64,56,tfactor);
         /* Scale */ 
-	extract_weights("data/sc2c2a_scale.txt",scale,false);
-	extract_weights("data/sc2c2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc2c2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc2c2a_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*64);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*64);
 	executeScaleLayerCUDA_split<<<numBlocks_res,numThreads_res>>>(Layer2a_Neurons_GPU,scale_GPU,bias_GPU,64,56,tfactor);
@@ -1199,18 +1199,18 @@ void executeLayer2_CUDA(float *Layer2_pool_GPU,float *Layer2c_Neurons_GPU)
 	executeReLULayerCUDA_split<<<numBlocks_res,numThreads_res>>>(Layer2a_Neurons_GPU,56,tfactor);
 
 	/* res2c_branch2b*/
-	extract_weights("data/res2c_branch2b.txt",Layer2b_Weights_CPU,false);      
+	extract_weights("data/RN/res2c_branch2b.txt",Layer2b_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer2b_Weights_GPU,Layer2b_Weights_CPU, sizeof(float)*64*64*3*3);
 	execute3DconvolutionCuda_split<<<numBlocks_res,numThreads_res>>>(NULL,Layer2a_Neurons_GPU,Layer2b_Weights_GPU,Layer2b_Neurons_GPU,64,56,56,1,3,1,64,56,tfactor);
 	/* Batch Norm */
-	extract_weights("data/bn2c2b_mean.txt",mean,false);
-	extract_weights("data/bn2c2b_var.txt",var,false);
+	extract_weights("data/RN/bn2c2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn2c2b_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*64);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*64);
         executeBnNormLayerCUDA_split<<<numBlocks_res,numThreads_res>>>(Layer2b_Neurons_GPU,mean_GPU,var_GPU,64,56,tfactor);
         /* Scale */ 
-	extract_weights("data/sc2c2b_scale.txt",scale,false);
-	extract_weights("data/sc2c2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc2c2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc2c2b_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*64);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*64);
 	executeScaleLayerCUDA_split<<<numBlocks_res,numThreads_res>>>(Layer2b_Neurons_GPU,scale_GPU,bias_GPU,64,56,tfactor);
@@ -1218,18 +1218,18 @@ void executeLayer2_CUDA(float *Layer2_pool_GPU,float *Layer2c_Neurons_GPU)
 	executeReLULayerCUDA_split<<<numBlocks_res,numThreads_res>>>(Layer2b_Neurons_GPU,56,tfactor);
 
 	/* res2c_branch2c*/
-	extract_weights("data/res2c_branch2c.txt",Layer2c_Weights_CPU,false);      
+	extract_weights("data/RN/res2c_branch2c.txt",Layer2c_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer2c_Weights_GPU,Layer2c_Weights_CPU, sizeof(float)*256*64);
 	execute3DconvolutionCuda_split<<<numBlocks,numThreads>>>(NULL,Layer2b_Neurons_GPU,Layer2c_Weights_GPU,Layer2c_Neurons_GPU,256,56,56,1,1,0,64,56,tfactor);
 	/* Batch Norm */
-	extract_weights("data/bn2c2c_mean.txt",mean,false);
-	extract_weights("data/bn2c2c_var.txt",var,false);
+	extract_weights("data/RN/bn2c2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn2c2c_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*256);
         executeBnNormLayerCUDA_split<<<numBlocks,numThreads>>>(Layer2c_Neurons_GPU,mean_GPU,var_GPU,256,56,tfactor);
         /* Scale */ 
-	extract_weights("data/sc2c2c_scale.txt",scale,false);
-	extract_weights("data/sc2c2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc2c2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc2c2c_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*256);
 	executeScaleLayerCUDA_split<<<numBlocks,numThreads>>>(Layer2c_Neurons_GPU,scale_GPU,bias_GPU,256,56,tfactor);
@@ -1297,35 +1297,35 @@ void executeLayer3_CUDA(float *Layer2c_Neurons_GPU,float *Layer3c_Neurons_GPU)
         dim3 numBlocks_res(128,1,1);
         dim3 numThreads_res(28,28);
 	
-	extract_weights("data/res3a_branch1.txt",Layer3c_Weights_CPU,false);      
+	extract_weights("data/RN/res3a_branch1.txt",Layer3c_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer3c_Weights_GPU,Layer3c_Weights_CPU, sizeof(float)*512*256);
 	execute3DconvolutionCuda<<<numBlocks, numThreads>>>(NULL,Layer2c_Neurons_GPU,Layer3c_Weights_GPU,Layer3b1_Neurons_GPU,512,28,28,2,1,0,256,56);
 	/* Batch Norm */
-	extract_weights("data/bn3ab1_mean.txt",mean,false);
-	extract_weights("data/bn3ab1_var.txt",var,false);
+	extract_weights("data/RN/bn3ab1_mean.txt",mean,false);
+	extract_weights("data/RN/bn3ab1_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*512);
         executeBnNormLayerCUDA<<<numBlocks, numThreads>>>(Layer3b1_Neurons_GPU,mean_GPU,var_GPU,512,28*28);
         /* Scale */ 
-	extract_weights("data/sc3ab1_scale.txt",scale,false);
-	extract_weights("data/sc3ab1_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3ab1_scale.txt",scale,false);
+	extract_weights("data/RN/sc3ab1_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*512);
 	executeScaleLayerCUDA<<<numBlocks, numThreads>>>(Layer3b1_Neurons_GPU,scale_GPU,bias_GPU,512,28*28);
 
 	/* res3a_branch2a*/
-	extract_weights("data/res3a_branch2a.txt",Layer3a_Weights_CPU,false);      
+	extract_weights("data/RN/res3a_branch2a.txt",Layer3a_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer3a_Weights_GPU,Layer3a_Weights_CPU, sizeof(float)*128*256);
 	execute3DconvolutionCuda<<<numBlocks_res, numThreads_res>>>(NULL,Layer2c_Neurons_GPU,Layer3a_Weights_GPU,Layer3a_Neurons_GPU,128,28,28,2,1,0,256,56);
 	/* Batch Norm */
-	extract_weights("data/bn3a2a_mean.txt",mean,false);
-	extract_weights("data/bn3a2a_var.txt",var,false);
+	extract_weights("data/RN/bn3a2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn3a2a_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*128);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*128);
         executeBnNormLayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3a_Neurons_GPU,mean_GPU,var_GPU,128,28*28);
         /* Scale */ 
-	extract_weights("data/sc3a2a_scale.txt",scale,false);
-	extract_weights("data/sc3a2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3a2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc3a2a_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*128);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*128);
 	executeScaleLayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3a_Neurons_GPU,scale_GPU,bias_GPU,128,28*28);
@@ -1333,18 +1333,18 @@ void executeLayer3_CUDA(float *Layer2c_Neurons_GPU,float *Layer3c_Neurons_GPU)
 	executeReLULayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3a_Neurons_GPU,(128*28*28));
          
 	/* res3a_branch2b*/
-	extract_weights("data/res3a_branch2b.txt",Layer3b_Weights_CPU,false);      
+	extract_weights("data/RN/res3a_branch2b.txt",Layer3b_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer3b_Weights_GPU,Layer3b_Weights_CPU, sizeof(float)*128*128*3*3);
 	execute3DconvolutionCuda<<<numBlocks_res, numThreads_res>>>(NULL,Layer3a_Neurons_GPU,Layer3b_Weights_GPU,Layer3b_Neurons_GPU,128,28,28,1,3,1,128,28);
 	/* Batch Norm */
-	extract_weights("data/bn3a2b_mean.txt",mean,false);
-	extract_weights("data/bn3a2b_var.txt",var,false);
+	extract_weights("data/RN/bn3a2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn3a2b_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*128);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*128);
         executeBnNormLayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3b_Neurons_GPU,mean_GPU,var_GPU,128,28*28);
         /* Scale */ 
-	extract_weights("data/sc3a2b_scale.txt",scale,false);
-	extract_weights("data/sc3a2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3a2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc3a2b_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*128);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*128);
 	executeScaleLayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3b_Neurons_GPU,scale_GPU,bias_GPU,128,28*28);
@@ -1352,18 +1352,18 @@ void executeLayer3_CUDA(float *Layer2c_Neurons_GPU,float *Layer3c_Neurons_GPU)
 	executeReLULayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3b_Neurons_GPU,(128*28*28));
 
 	/* res3a_branch2c*/
-	extract_weights("data/res3a_branch2c.txt",Layer3c_Weights_CPU,false);      
+	extract_weights("data/RN/res3a_branch2c.txt",Layer3c_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer3c_Weights_GPU,Layer3c_Weights_CPU, sizeof(float)*512*256);
 	execute3DconvolutionCuda<<<numBlocks, numThreads>>>(NULL,Layer3b_Neurons_GPU,Layer3c_Weights_GPU,Layer3c_Neurons_GPU,512,28,28,1,1,0,128,28);
 	/* Batch Norm */
-	extract_weights("data/bn3a2c_mean.txt",mean,false);
-	extract_weights("data/bn3a2c_var.txt",var,false);
+	extract_weights("data/RN/bn3a2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn3a2c_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*512);
         executeBnNormLayerCUDA<<<numBlocks, numThreads>>>(Layer3c_Neurons_GPU,mean_GPU,var_GPU,512,28*28);
         /* Scale */ 
-	extract_weights("data/sc3a2c_scale.txt",scale,false);
-	extract_weights("data/sc3a2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3a2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc3a2c_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*512);
 	executeScaleLayerCUDA<<<numBlocks, numThreads>>>(Layer3c_Neurons_GPU,scale_GPU,bias_GPU,512,28*28);
@@ -1373,18 +1373,18 @@ void executeLayer3_CUDA(float *Layer2c_Neurons_GPU,float *Layer3c_Neurons_GPU)
 	executeReLULayerCUDA<<<numBlocks, numThreads>>>(Layer_ELtwise_Neurons_GPU,(512*28*28));
 
 	/* res3b_branch2a*/
-	extract_weights("data/res3b_branch2a.txt",Layer3c1_Weights_CPU,false);      
+	extract_weights("data/RN/res3b_branch2a.txt",Layer3c1_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer3c1_Weights_GPU,Layer3c1_Weights_CPU, sizeof(float)*512*128);
 	execute3DconvolutionCuda<<<numBlocks_res, numThreads_res>>>(NULL,Layer_ELtwise_Neurons_GPU,Layer3c1_Weights_GPU,Layer3a_Neurons_GPU,128,28,28,1,1,0,512,28);
 	/* Batch Norm */
-	extract_weights("data/bn3b2a_mean.txt",mean,false);
-	extract_weights("data/bn3b2a_var.txt",var,false);
+	extract_weights("data/RN/bn3b2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn3b2a_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*128);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*128);
         executeBnNormLayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3a_Neurons_GPU,mean_GPU,var_GPU,128,28*28);
         /* Scale */ 
-	extract_weights("data/sc3b2a_scale.txt",scale,false);
-	extract_weights("data/sc3b2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3b2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc3b2a_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*128);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*128);
 	executeScaleLayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3a_Neurons_GPU,scale_GPU,bias_GPU,128,28*28);
@@ -1392,18 +1392,18 @@ void executeLayer3_CUDA(float *Layer2c_Neurons_GPU,float *Layer3c_Neurons_GPU)
 	executeReLULayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3a_Neurons_GPU,(128*28*28));
 
 	/* res3b_branch2b*/
-	extract_weights("data/res3b_branch2b.txt",Layer3b_Weights_CPU,false);      
+	extract_weights("data/RN/res3b_branch2b.txt",Layer3b_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer3b_Weights_GPU,Layer3b_Weights_CPU, sizeof(float)*128*128*3*3);
 	execute3DconvolutionCuda<<<numBlocks_res, numThreads_res>>>(NULL,Layer3a_Neurons_GPU,Layer3b_Weights_GPU,Layer3b_Neurons_GPU,128,28,28,1,3,1,128,28);
 	/* Batch Norm */
-	extract_weights("data/bn3b2b_mean.txt",mean,false);
-	extract_weights("data/bn3b2b_var.txt",var,false);
+	extract_weights("data/RN/bn3b2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn3b2b_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*128);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*128);
         executeBnNormLayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3b_Neurons_GPU,mean_GPU,var_GPU,128,28*28);
         /* Scale */ 
-	extract_weights("data/sc3b2b_scale.txt",scale,false);
-	extract_weights("data/sc3b2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3b2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc3b2b_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*128);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*128);
 	executeScaleLayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3b_Neurons_GPU,scale_GPU,bias_GPU,128,28*28);
@@ -1411,18 +1411,18 @@ void executeLayer3_CUDA(float *Layer2c_Neurons_GPU,float *Layer3c_Neurons_GPU)
 	executeReLULayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3b_Neurons_GPU,(128*28*28));
 
 	/* res3b_branch2c*/
-	extract_weights("data/res3b_branch2c.txt",Layer3c_Weights_CPU,false);      
+	extract_weights("data/RN/res3b_branch2c.txt",Layer3c_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer3c_Weights_GPU,Layer3c_Weights_CPU, sizeof(float)*512*256);
 	execute3DconvolutionCuda<<<numBlocks, numThreads>>>(NULL,Layer3b_Neurons_GPU,Layer3c_Weights_GPU,Layer3c2_Neurons_GPU,512,28,28,1,1,0,128,28);
 	/* Batch Norm */
-	extract_weights("data/bn3b2c_mean.txt",mean,false);
-	extract_weights("data/bn3b2c_var.txt",var,false);
+	extract_weights("data/RN/bn3b2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn3b2c_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*512);
         executeBnNormLayerCUDA<<<numBlocks, numThreads>>>(Layer3c2_Neurons_GPU,mean_GPU,var_GPU,512,28*28);
         /* Scale */ 
-	extract_weights("data/sc3b2c_scale.txt",scale,false);
-	extract_weights("data/sc3b2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3b2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc3b2c_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*512);
 	executeScaleLayerCUDA<<<numBlocks, numThreads>>>(Layer3c2_Neurons_GPU,scale_GPU,bias_GPU,512,28*28);
@@ -1432,18 +1432,18 @@ void executeLayer3_CUDA(float *Layer2c_Neurons_GPU,float *Layer3c_Neurons_GPU)
 	executeReLULayerCUDA<<<numBlocks, numThreads>>>(Layer_ELtwise_Neurons_GPU,(512*28*28));
 
 	/* res3c_branch2a*/
-	extract_weights("data/res3c_branch2a.txt",Layer3c1_Weights_CPU,false);      
+	extract_weights("data/RN/res3c_branch2a.txt",Layer3c1_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer3c1_Weights_GPU,Layer3c1_Weights_CPU, sizeof(float)*512*128);
 	execute3DconvolutionCuda<<<numBlocks_res, numThreads_res>>>(NULL,Layer_ELtwise_Neurons_GPU,Layer3c1_Weights_GPU,Layer3a_Neurons_GPU,128,28,28,1,1,0,512,28);
 	/* Batch Norm */
-	extract_weights("data/bn3c2a_mean.txt",mean,false);
-	extract_weights("data/bn3c2a_var.txt",var,false);
+	extract_weights("data/RN/bn3c2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn3c2a_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*128);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*128);
         executeBnNormLayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3a_Neurons_GPU,mean_GPU,var_GPU,128,28*28);
         /* Scale */ 
-	extract_weights("data/sc3c2a_scale.txt",scale,false);
-	extract_weights("data/sc3c2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3c2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc3c2a_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*128);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*128);
 	executeScaleLayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3a_Neurons_GPU,scale_GPU,bias_GPU,128,28*28);
@@ -1451,18 +1451,18 @@ void executeLayer3_CUDA(float *Layer2c_Neurons_GPU,float *Layer3c_Neurons_GPU)
 	executeReLULayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3a_Neurons_GPU,(128*28*28));
 
 	/* res3c_branch2b*/
-	extract_weights("data/res3c_branch2b.txt",Layer3b_Weights_CPU,false);      
+	extract_weights("data/RN/res3c_branch2b.txt",Layer3b_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer3b_Weights_GPU,Layer3b_Weights_CPU, sizeof(float)*128*128*3*3);
 	execute3DconvolutionCuda<<<numBlocks_res, numThreads_res>>>(NULL,Layer3a_Neurons_GPU,Layer3b_Weights_GPU,Layer3b_Neurons_GPU,128,28,28,1,3,1,128,28);
 	/* Batch Norm */
-	extract_weights("data/bn3c2b_mean.txt",mean,false);
-	extract_weights("data/bn3c2b_var.txt",var,false);
+	extract_weights("data/RN/bn3c2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn3c2b_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*128);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*128);
         executeBnNormLayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3b_Neurons_GPU,mean_GPU,var_GPU,128,28*28);
         /* Scale */ 
-	extract_weights("data/sc3c2b_scale.txt",scale,false);
-	extract_weights("data/sc3c2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3c2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc3c2b_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*128);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*128);
 	executeScaleLayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3b_Neurons_GPU,scale_GPU,bias_GPU,128,28*28);
@@ -1470,18 +1470,18 @@ void executeLayer3_CUDA(float *Layer2c_Neurons_GPU,float *Layer3c_Neurons_GPU)
 	executeReLULayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3b_Neurons_GPU,(128*28*28));
 	
 	/* res3c_branch2c*/
-	extract_weights("data/res3c_branch2c.txt",Layer3c_Weights_CPU,false);      
+	extract_weights("data/RN/res3c_branch2c.txt",Layer3c_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer3c_Weights_GPU,Layer3c_Weights_CPU, sizeof(float)*512*256);
 	execute3DconvolutionCuda<<<numBlocks, numThreads>>>(NULL,Layer3b_Neurons_GPU,Layer3c_Weights_GPU,Layer3c_Neurons_GPU,512,28,28,1,1,0,128,28);
 	/* Batch Norm */
-	extract_weights("data/bn3c2c_mean.txt",mean,false);
-	extract_weights("data/bn3c2c_var.txt",var,false);
+	extract_weights("data/RN/bn3c2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn3c2c_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*512);
         executeBnNormLayerCUDA<<<numBlocks, numThreads>>>(Layer3c_Neurons_GPU,mean_GPU,var_GPU,512,28*28);
         /* Scale */ 
-	extract_weights("data/sc3c2c_scale.txt",scale,false);
-	extract_weights("data/sc3c2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3c2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc3c2c_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*512);
 	executeScaleLayerCUDA<<<numBlocks, numThreads>>>(Layer3c_Neurons_GPU,scale_GPU,bias_GPU,512,28*28);
@@ -1491,18 +1491,18 @@ void executeLayer3_CUDA(float *Layer2c_Neurons_GPU,float *Layer3c_Neurons_GPU)
 	executeReLULayerCUDA<<<numBlocks, numThreads>>>(Layer_ELtwise_Neurons_GPU,(512*28*28));
         
 	/* res3d_branch2a*/
-	extract_weights("data/res3d_branch2a.txt",Layer3c1_Weights_CPU,false);      
+	extract_weights("data/RN/res3d_branch2a.txt",Layer3c1_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer3c1_Weights_GPU,Layer3c1_Weights_CPU, sizeof(float)*512*128);
 	execute3DconvolutionCuda<<<numBlocks_res, numThreads_res>>>(NULL,Layer_ELtwise_Neurons_GPU,Layer3c1_Weights_GPU,Layer3a_Neurons_GPU,128,28,28,1,1,0,512,28);
 	/* Batch Norm */
-	extract_weights("data/bn3d2a_mean.txt",mean,false);
-	extract_weights("data/bn3d2a_var.txt",var,false);
+	extract_weights("data/RN/bn3d2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn3d2a_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*128);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*128);
         executeBnNormLayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3a_Neurons_GPU,mean_GPU,var_GPU,128,28*28);
         /* Scale */ 
-	extract_weights("data/sc3d2a_scale.txt",scale,false);
-	extract_weights("data/sc3d2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3d2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc3d2a_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*128);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*128);
 	executeScaleLayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3a_Neurons_GPU,scale_GPU,bias_GPU,128,28*28);
@@ -1510,18 +1510,18 @@ void executeLayer3_CUDA(float *Layer2c_Neurons_GPU,float *Layer3c_Neurons_GPU)
 	executeReLULayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3a_Neurons_GPU,(128*28*28));
 
 	/* res3d_branch2b*/
-	extract_weights("data/res3d_branch2b.txt",Layer3b_Weights_CPU,false);      
+	extract_weights("data/RN/res3d_branch2b.txt",Layer3b_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer3b_Weights_GPU,Layer3b_Weights_CPU, sizeof(float)*128*128*3*3);
 	execute3DconvolutionCuda<<<numBlocks_res, numThreads_res>>>(NULL,Layer3a_Neurons_GPU,Layer3b_Weights_GPU,Layer3b_Neurons_GPU,128,28,28,1,3,1,128,28);
 	/* Batch Norm */
-	extract_weights("data/bn3d2b_mean.txt",mean,false);
-	extract_weights("data/bn3d2b_var.txt",var,false);
+	extract_weights("data/RN/bn3d2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn3d2b_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*128);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*128);
         executeBnNormLayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3b_Neurons_GPU,mean_GPU,var_GPU,128,28*28);
         /* Scale */ 
-	extract_weights("data/sc3d2b_scale.txt",scale,false);
-	extract_weights("data/sc3d2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3d2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc3d2b_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*128);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*128);
 	executeScaleLayerCUDA<<<numBlocks_res,numThreads_res>>>(Layer3b_Neurons_GPU,scale_GPU,bias_GPU,128,28*28);
@@ -1529,18 +1529,18 @@ void executeLayer3_CUDA(float *Layer2c_Neurons_GPU,float *Layer3c_Neurons_GPU)
 	executeReLULayerCUDA<<<numBlocks_res, numThreads_res>>>(Layer3b_Neurons_GPU,(128*28*28));
 	
 	/* res3d_branch2c*/
-	extract_weights("data/res3d_branch2c.txt",Layer3c_Weights_CPU,false);      
+	extract_weights("data/RN/res3d_branch2c.txt",Layer3c_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer3c_Weights_GPU,Layer3c_Weights_CPU, sizeof(float)*512*256);
 	execute3DconvolutionCuda<<<numBlocks, numThreads>>>(NULL,Layer3b_Neurons_GPU,Layer3c_Weights_GPU,Layer3c_Neurons_GPU,512,28,28,1,1,0,128,28);
 	/* Batch Norm */
-	extract_weights("data/bn3d2c_mean.txt",mean,false);
-	extract_weights("data/bn3d2c_var.txt",var,false);
+	extract_weights("data/RN/bn3d2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn3d2c_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*512);
         executeBnNormLayerCUDA<<<numBlocks, numThreads>>>(Layer3c_Neurons_GPU,mean_GPU,var_GPU,512,28*28);
         /* Scale */ 
-	extract_weights("data/sc3d2c_scale.txt",scale,false);
-	extract_weights("data/sc3d2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc3d2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc3d2c_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*512);
 	executeScaleLayerCUDA<<<numBlocks, numThreads>>>(Layer3c_Neurons_GPU,scale_GPU,bias_GPU,512,28*28);
@@ -1610,36 +1610,36 @@ void executeLayer4_CUDA(float *Layer3c_Neurons_GPU,float *Layer4c_Neurons_GPU)
         dim3 numBlocks_res(256,1,1);
         dim3 numThreads_res(14,14);
 	
-	extract_weights("data/res4a_branch1.txt",Layer4c_Weights_CPU,false);      
+	extract_weights("data/RN/res4a_branch1.txt",Layer4c_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer4c_Weights_GPU,Layer4c_Weights_CPU, sizeof(float)*1024*512);
 	
 	execute3DconvolutionCuda <<< numBlocks, numThreads >>>(NULL,Layer3c_Neurons_GPU,Layer4c_Weights_GPU,Layer4b1_Neurons_GPU,1024,14,14,2,1,0,512,28);
 	/* Batch Norm */
-	extract_weights("data/bn4ab1_mean.txt",mean,false);
-	extract_weights("data/bn4ab1_var.txt",var,false);
+	extract_weights("data/RN/bn4ab1_mean.txt",mean,false);
+	extract_weights("data/RN/bn4ab1_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*1024);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*1024);
         executeBnNormLayerCUDA<<< numBlocks, numThreads >>>(Layer4b1_Neurons_GPU,mean_GPU,var_GPU,1024,14*14);
         /* Scale */ 
-	extract_weights("data/sc4ab1_scale.txt",scale,false);
-	extract_weights("data/sc4ab1_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4ab1_scale.txt",scale,false);
+	extract_weights("data/RN/sc4ab1_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*1024);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*1024);
 	executeScaleLayerCUDA<<< numBlocks, numThreads >>>(Layer4b1_Neurons_GPU,scale_GPU,bias_GPU,1024,14*14);
           
 	/* res4a_branch2a*/
-	extract_weights("data/res4a_branch2a.txt",Layer4a_Weights_CPU,false);      
+	extract_weights("data/RN/res4a_branch2a.txt",Layer4a_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer4a_Weights_GPU,Layer4a_Weights_CPU, sizeof(float)*256*512);
 	execute3DconvolutionCuda<<< numBlocks_res, numThreads_res >>>(NULL,Layer3c_Neurons_GPU,Layer4a_Weights_GPU,Layer4a_Neurons_GPU,256,14,14,2,1,0,512,28);
 	/* Batch Norm */
-	extract_weights("data/bn4a2a_mean.txt",mean,false);
-	extract_weights("data/bn4a2a_var.txt",var,false);
+	extract_weights("data/RN/bn4a2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn4a2a_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*256);
         executeBnNormLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4a_Neurons_GPU,mean_GPU,var_GPU,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4a2a_scale.txt",scale,false);
-	extract_weights("data/sc4a2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4a2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc4a2a_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*256);
 	executeScaleLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4a_Neurons_GPU,scale_GPU,bias_GPU,256,14*14);
@@ -1647,18 +1647,18 @@ void executeLayer4_CUDA(float *Layer3c_Neurons_GPU,float *Layer4c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4a_Neurons_GPU,(256*14*14));
 	
 	/* res4a_branch2b*/
-	extract_weights("data/res4a_branch2b.txt",Layer4b_Weights_CPU,false);
+	extract_weights("data/RN/res4a_branch2b.txt",Layer4b_Weights_CPU,false);
 	Cuda_memcpyfromHostToDevice(Layer4b_Weights_GPU,Layer4b_Weights_CPU, sizeof(float)*(256*256*3*3));
 	execute3DconvolutionCuda<<< numBlocks_res, numThreads_res >>>(NULL,Layer4a_Neurons_GPU,Layer4b_Weights_GPU,Layer4b_Neurons_GPU,256,14,14,1,3,1,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4a2b_mean.txt",mean,false);
-	extract_weights("data/bn4a2b_var.txt",var,false);
+	extract_weights("data/RN/bn4a2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn4a2b_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*256);
         executeBnNormLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4b_Neurons_GPU,mean_GPU,var_GPU,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4a2b_scale.txt",scale,false);
-	extract_weights("data/sc4a2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4a2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc4a2b_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*256);
 	executeScaleLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4b_Neurons_GPU,scale_GPU,bias_GPU,256,14*14);
@@ -1666,18 +1666,18 @@ void executeLayer4_CUDA(float *Layer3c_Neurons_GPU,float *Layer4c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4b_Neurons_GPU,(256*14*14));
 
 	/* res4a_branch2c*/
-	extract_weights("data/res4a_branch2c.txt",Layer4c_Weights_CPU,false);      
+	extract_weights("data/RN/res4a_branch2c.txt",Layer4c_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer4c_Weights_GPU,Layer4c_Weights_CPU, sizeof(float)*1024*512);
 	execute3DconvolutionCuda<<< numBlocks, numThreads >>>(NULL,Layer4b_Neurons_GPU,Layer4c_Weights_GPU,Layer4c_Neurons_GPU,1024,14,14,1,1,0,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4a2c_mean.txt",mean,false);
-	extract_weights("data/bn4a2c_var.txt",var,false);
+	extract_weights("data/RN/bn4a2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn4a2c_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*1024);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*1024);
         executeBnNormLayerCUDA<<< numBlocks, numThreads >>>(Layer4c_Neurons_GPU,mean_GPU,var_GPU,1024,14*14);
         /* Scale */ 
-	extract_weights("data/sc4a2c_scale.txt",scale,false);
-	extract_weights("data/sc4a2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4a2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc4a2c_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*1024);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*1024);
 	executeScaleLayerCUDA<<< numBlocks, numThreads >>>(Layer4c_Neurons_GPU,scale_GPU,bias_GPU,1024,14*14);
@@ -1687,18 +1687,18 @@ void executeLayer4_CUDA(float *Layer3c_Neurons_GPU,float *Layer4c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks, numThreads >>>(Layer_ELtwise_Neurons_GPU,(1024*14*14));
 
 	/* res4b_branch2a*/
-	extract_weights("data/res4b_branch2a.txt",Layer4a1_Weights_CPU,false);      
+	extract_weights("data/RN/res4b_branch2a.txt",Layer4a1_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer4a1_Weights_GPU,Layer4a1_Weights_CPU, sizeof(float)*1024*256);
 	execute3DconvolutionCuda<<< numBlocks_res, numThreads_res >>>(NULL,Layer_ELtwise_Neurons_GPU,Layer4a1_Weights_GPU,Layer4a_Neurons_GPU,256,14,14,1,1,0,1024,14);
 	/* Batch Norm */
-	extract_weights("data/bn4b2a_mean.txt",mean,false);
-	extract_weights("data/bn4b2a_var.txt",var,false);
+	extract_weights("data/RN/bn4b2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn4b2a_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*256);
         executeBnNormLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4a_Neurons_GPU,mean_GPU,var_GPU,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4b2a_scale.txt",scale,false);
-	extract_weights("data/sc4b2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4b2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc4b2a_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*256);
 	executeScaleLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4a_Neurons_GPU,scale_GPU,bias_GPU,256,14*14);
@@ -1706,18 +1706,18 @@ void executeLayer4_CUDA(float *Layer3c_Neurons_GPU,float *Layer4c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4a_Neurons_GPU,(256*14*14));
          
 	/* res4b_branch2b*/
-	extract_weights("data/res4b_branch2b.txt",Layer4b_Weights_CPU,false);      
+	extract_weights("data/RN/res4b_branch2b.txt",Layer4b_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer4b_Weights_GPU,Layer4b_Weights_CPU, sizeof(float)*(256*256*3*3));
 	execute3DconvolutionCuda<<< numBlocks_res, numThreads_res >>>(NULL,Layer4a_Neurons_GPU,Layer4b_Weights_GPU,Layer4b_Neurons_GPU,256,14,14,1,3,1,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4b2b_mean.txt",mean,false);
-	extract_weights("data/bn4b2b_var.txt",var,false);
+	extract_weights("data/RN/bn4b2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn4b2b_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*256);
         executeBnNormLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4b_Neurons_GPU,mean_GPU,var_GPU,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4b2b_scale.txt",scale,false);
-	extract_weights("data/sc4b2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4b2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc4b2b_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*256);
 	executeScaleLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4b_Neurons_GPU,scale_GPU,bias_GPU,256,14*14);
@@ -1725,18 +1725,18 @@ void executeLayer4_CUDA(float *Layer3c_Neurons_GPU,float *Layer4c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4b_Neurons_GPU,(256*14*14));
 
 	/* res4b_branch2c*/
-	extract_weights("data/res4b_branch2c.txt",Layer4c_Weights_CPU,false);      
+	extract_weights("data/RN/res4b_branch2c.txt",Layer4c_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer4c_Weights_GPU,Layer4c_Weights_CPU, sizeof(float)*1024*512);
 	execute3DconvolutionCuda<<< numBlocks, numThreads >>>(NULL,Layer4b_Neurons_GPU,Layer4c_Weights_GPU,Layer4c_Neurons_GPU,1024,14,14,1,1,0,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4b2c_mean.txt",mean,false);
-	extract_weights("data/bn4b2c_var.txt",var,false);
+	extract_weights("data/RN/bn4b2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn4b2c_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*1024);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*1024);
         executeBnNormLayerCUDA<<< numBlocks, numThreads >>>(Layer4c_Neurons_GPU,mean_GPU,var_GPU,1024,14*14);
         /* Scale */ 
-	extract_weights("data/sc4b2c_scale.txt",scale,false);
-	extract_weights("data/sc4b2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4b2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc4b2c_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*1024);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*1024);
 	executeScaleLayerCUDA<<< numBlocks, numThreads >>>(Layer4c_Neurons_GPU,scale_GPU,bias_GPU,1024,14*14);
@@ -1746,18 +1746,18 @@ void executeLayer4_CUDA(float *Layer3c_Neurons_GPU,float *Layer4c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks, numThreads >>>(Layer_ELtwise_Neurons_GPU,(1024*14*14));
 	
 	/* res4c_branch2a*/
-	extract_weights("data/res4c_branch2a.txt",Layer4a1_Weights_CPU,false);      
+	extract_weights("data/RN/res4c_branch2a.txt",Layer4a1_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer4a1_Weights_GPU,Layer4a1_Weights_CPU, sizeof(float)*1024*256);
 	execute3DconvolutionCuda<<< numBlocks_res, numThreads_res >>>(NULL,Layer_ELtwise_Neurons_GPU,Layer4a1_Weights_GPU,Layer4a_Neurons_GPU,256,14,14,1,1,0,1024,14);
 	/* Batch Norm */
-	extract_weights("data/bn4c2a_mean.txt",mean,false);
-	extract_weights("data/bn4c2a_var.txt",var,false);
+	extract_weights("data/RN/bn4c2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn4c2a_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*256);
         executeBnNormLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4a_Neurons_GPU,mean_GPU,var_GPU,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4c2a_scale.txt",scale,false);
-	extract_weights("data/sc4c2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4c2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc4c2a_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*256);
 	executeScaleLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4a_Neurons_GPU,scale_GPU,bias_GPU,256,14*14);
@@ -1765,18 +1765,18 @@ void executeLayer4_CUDA(float *Layer3c_Neurons_GPU,float *Layer4c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4a_Neurons_GPU,(256*14*14));
          
 	/* res4c_branch2b*/
-	extract_weights("data/res4c_branch2b.txt",Layer4b_Weights_CPU,false);      
+	extract_weights("data/RN/res4c_branch2b.txt",Layer4b_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer4b_Weights_GPU,Layer4b_Weights_CPU, sizeof(float)*(256*256*3*3));
 	execute3DconvolutionCuda<<< numBlocks_res, numThreads_res >>>(NULL,Layer4a_Neurons_GPU,Layer4b_Weights_GPU,Layer4b_Neurons_GPU,256,14,14,1,3,1,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4c2b_mean.txt",mean,false);
-	extract_weights("data/bn4c2b_var.txt",var,false);
+	extract_weights("data/RN/bn4c2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn4c2b_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*256);
         executeBnNormLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4b_Neurons_GPU,mean_GPU,var_GPU,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4c2b_scale.txt",scale,false);
-	extract_weights("data/sc4c2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4c2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc4c2b_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*256);
 	executeScaleLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4b_Neurons_GPU,scale_GPU,bias_GPU,256,14*14);
@@ -1784,18 +1784,18 @@ void executeLayer4_CUDA(float *Layer3c_Neurons_GPU,float *Layer4c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4b_Neurons_GPU,(256*14*14));
 
 	/* res4c_branch2c*/
-	extract_weights("data/res4c_branch2c.txt",Layer4c_Weights_CPU,false);      
+	extract_weights("data/RN/res4c_branch2c.txt",Layer4c_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer4c_Weights_GPU,Layer4c_Weights_CPU, sizeof(float)*1024*512);
 	execute3DconvolutionCuda<<< numBlocks, numThreads >>>(NULL,Layer4b_Neurons_GPU,Layer4c_Weights_GPU,Layer4c_Neurons_GPU,1024,14,14,1,1,0,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4c2c_mean.txt",mean,false);
-	extract_weights("data/bn4c2c_var.txt",var,false);
+	extract_weights("data/RN/bn4c2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn4c2c_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*1024);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*1024);
         executeBnNormLayerCUDA<<< numBlocks, numThreads >>>(Layer4c_Neurons_GPU,mean_GPU,var_GPU,1024,14*14);
         /* Scale */ 
-	extract_weights("data/sc4c2c_scale.txt",scale,false);
-	extract_weights("data/sc4c2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4c2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc4c2c_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*1024);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*1024);
 	executeScaleLayerCUDA<<< numBlocks, numThreads >>>(Layer4c_Neurons_GPU,scale_GPU,bias_GPU,1024,14*14);
@@ -1805,18 +1805,18 @@ void executeLayer4_CUDA(float *Layer3c_Neurons_GPU,float *Layer4c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks, numThreads >>>(Layer_ELtwise_Neurons_GPU,(1024*14*14));
 
 	/* res4d_branch2a*/
-	extract_weights("data/res4d_branch2a.txt",Layer4a1_Weights_CPU,false);      
+	extract_weights("data/RN/res4d_branch2a.txt",Layer4a1_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer4a1_Weights_GPU,Layer4a1_Weights_CPU, sizeof(float)*1024*256);
 	execute3DconvolutionCuda<<< numBlocks_res, numThreads_res >>>(NULL,Layer_ELtwise_Neurons_GPU,Layer4a1_Weights_GPU,Layer4a_Neurons_GPU,256,14,14,1,1,0,1024,14);
 	/* Batch Norm */
-	extract_weights("data/bn4d2a_mean.txt",mean,false);
-	extract_weights("data/bn4d2a_var.txt",var,false);
+	extract_weights("data/RN/bn4d2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn4d2a_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*256);
         executeBnNormLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4a_Neurons_GPU,mean_GPU,var_GPU,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4d2a_scale.txt",scale,false);
-	extract_weights("data/sc4d2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4d2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc4d2a_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*256);
 	executeScaleLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4a_Neurons_GPU,scale_GPU,bias_GPU,256,14*14);
@@ -1824,18 +1824,18 @@ void executeLayer4_CUDA(float *Layer3c_Neurons_GPU,float *Layer4c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4a_Neurons_GPU,(256*14*14));
          
 	/* res4d_branch2b*/
-	extract_weights("data/res4d_branch2b.txt",Layer4b_Weights_CPU,false);      
+	extract_weights("data/RN/res4d_branch2b.txt",Layer4b_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer4b_Weights_GPU,Layer4b_Weights_CPU, sizeof(float)*(256*256*3*3));
 	execute3DconvolutionCuda<<< numBlocks_res, numThreads_res >>>(NULL,Layer4a_Neurons_GPU,Layer4b_Weights_GPU,Layer4b_Neurons_GPU,256,14,14,1,3,1,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4d2b_mean.txt",mean,false);
-	extract_weights("data/bn4d2b_var.txt",var,false);
+	extract_weights("data/RN/bn4d2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn4d2b_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*256);
         executeBnNormLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4b_Neurons_GPU,mean_GPU,var_GPU,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4d2b_scale.txt",scale,false);
-	extract_weights("data/sc4d2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4d2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc4d2b_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*256);
 	executeScaleLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4b_Neurons_GPU,scale_GPU,bias_GPU,256,14*14);
@@ -1843,18 +1843,18 @@ void executeLayer4_CUDA(float *Layer3c_Neurons_GPU,float *Layer4c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4b_Neurons_GPU,(256*14*14));
 
 	/* res4d_branch2c*/
-	extract_weights("data/res4d_branch2c.txt",Layer4c_Weights_CPU,false);      
+	extract_weights("data/RN/res4d_branch2c.txt",Layer4c_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer4c_Weights_GPU,Layer4c_Weights_CPU, sizeof(float)*1024*512);
 	execute3DconvolutionCuda<<< numBlocks, numThreads >>>(NULL,Layer4b_Neurons_GPU,Layer4c_Weights_GPU,Layer4c_Neurons_GPU,1024,14,14,1,1,0,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4d2c_mean.txt",mean,false);
-	extract_weights("data/bn4d2c_var.txt",var,false);
+	extract_weights("data/RN/bn4d2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn4d2c_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*1024);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*1024);
         executeBnNormLayerCUDA<<< numBlocks, numThreads >>>(Layer4c_Neurons_GPU,mean_GPU,var_GPU,1024,14*14);
         /* Scale */ 
-	extract_weights("data/sc4d2c_scale.txt",scale,false);
-	extract_weights("data/sc4d2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4d2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc4d2c_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*1024);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*1024);
 	executeScaleLayerCUDA<<< numBlocks, numThreads >>>(Layer4c_Neurons_GPU,scale_GPU,bias_GPU,1024,14*14);
@@ -1864,18 +1864,18 @@ void executeLayer4_CUDA(float *Layer3c_Neurons_GPU,float *Layer4c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks, numThreads >>>(Layer_ELtwise_Neurons_GPU,(1024*14*14));
 	
 	/* res4e_branch2a*/
-	extract_weights("data/res4e_branch2a.txt",Layer4a1_Weights_CPU,false);      
+	extract_weights("data/RN/res4e_branch2a.txt",Layer4a1_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer4a1_Weights_GPU,Layer4a1_Weights_CPU, sizeof(float)*1024*256);
 	execute3DconvolutionCuda<<< numBlocks_res, numThreads_res >>>(NULL,Layer_ELtwise_Neurons_GPU,Layer4a1_Weights_GPU,Layer4a_Neurons_GPU,256,14,14,1,1,0,1024,14);
 	/* Batch Norm */
-	extract_weights("data/bn4e2a_mean.txt",mean,false);
-	extract_weights("data/bn4e2a_var.txt",var,false);
+	extract_weights("data/RN/bn4e2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn4e2a_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*256);
         executeBnNormLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4a_Neurons_GPU,mean_GPU,var_GPU,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4e2a_scale.txt",scale,false);
-	extract_weights("data/sc4e2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4e2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc4e2a_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*256);
 	executeScaleLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4a_Neurons_GPU,scale_GPU,bias_GPU,256,14*14);
@@ -1883,18 +1883,18 @@ void executeLayer4_CUDA(float *Layer3c_Neurons_GPU,float *Layer4c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4a_Neurons_GPU,(256*14*14));
 
 	/* res4e_branch2b*/
-	extract_weights("data/res4e_branch2b.txt",Layer4b_Weights_CPU,false);      
+	extract_weights("data/RN/res4e_branch2b.txt",Layer4b_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer4b_Weights_GPU,Layer4b_Weights_CPU, sizeof(float)*(256*256*3*3));
 	execute3DconvolutionCuda<<< numBlocks_res, numThreads_res >>>(NULL,Layer4a_Neurons_GPU,Layer4b_Weights_GPU,Layer4b_Neurons_GPU,256,14,14,1,3,1,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4e2b_mean.txt",mean,false);
-	extract_weights("data/bn4e2b_var.txt",var,false);
+	extract_weights("data/RN/bn4e2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn4e2b_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*256);
         executeBnNormLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4b_Neurons_GPU,mean_GPU,var_GPU,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4e2b_scale.txt",scale,false);
-	extract_weights("data/sc4e2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4e2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc4e2b_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*256);
 	executeScaleLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4b_Neurons_GPU,scale_GPU,bias_GPU,256,14*14);
@@ -1902,18 +1902,18 @@ void executeLayer4_CUDA(float *Layer3c_Neurons_GPU,float *Layer4c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4b_Neurons_GPU,(256*14*14));
 
 	/* res4e_branch2c*/
-	extract_weights("data/res4e_branch2c.txt",Layer4c_Weights_CPU,false);      
+	extract_weights("data/RN/res4e_branch2c.txt",Layer4c_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer4c_Weights_GPU,Layer4c_Weights_CPU, sizeof(float)*1024*512);
 	execute3DconvolutionCuda<<< numBlocks, numThreads >>>(NULL,Layer4b_Neurons_GPU,Layer4c_Weights_GPU,Layer4c_Neurons_GPU,1024,14,14,1,1,0,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4e2c_mean.txt",mean,false);
-	extract_weights("data/bn4e2c_var.txt",var,false);
+	extract_weights("data/RN/bn4e2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn4e2c_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*1024);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*1024);
         executeBnNormLayerCUDA<<< numBlocks, numThreads >>>(Layer4c_Neurons_GPU,mean_GPU,var_GPU,1024,14*14);
         /* Scale */ 
-	extract_weights("data/sc4e2c_scale.txt",scale,false);
-	extract_weights("data/sc4e2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4e2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc4e2c_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*1024);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*1024);
 	executeScaleLayerCUDA<<< numBlocks, numThreads >>>(Layer4c_Neurons_GPU,scale_GPU,bias_GPU,1024,14*14);
@@ -1923,18 +1923,18 @@ void executeLayer4_CUDA(float *Layer3c_Neurons_GPU,float *Layer4c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks, numThreads >>>(Layer_ELtwise_Neurons_GPU,(1024*14*14));
 	
 	/* res4f_branch2a*/
-	extract_weights("data/res4f_branch2a.txt",Layer4a1_Weights_CPU,false);      
+	extract_weights("data/RN/res4f_branch2a.txt",Layer4a1_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer4a1_Weights_GPU,Layer4a1_Weights_CPU, sizeof(float)*1024*256);
 	execute3DconvolutionCuda<<< numBlocks_res, numThreads_res >>>(NULL,Layer_ELtwise_Neurons_GPU,Layer4a1_Weights_GPU,Layer4a_Neurons_GPU,256,14,14,1,1,0,1024,14);
 	/* Batch Norm */
-	extract_weights("data/bn4f2a_mean.txt",mean,false);
-	extract_weights("data/bn4f2a_var.txt",var,false);
+	extract_weights("data/RN/bn4f2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn4f2a_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*256);
         executeBnNormLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4a_Neurons_GPU,mean_GPU,var_GPU,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4f2a_scale.txt",scale,false);
-	extract_weights("data/sc4f2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4f2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc4f2a_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*256);
 	executeScaleLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4a_Neurons_GPU,scale_GPU,bias_GPU,256,14*14);
@@ -1942,18 +1942,18 @@ void executeLayer4_CUDA(float *Layer3c_Neurons_GPU,float *Layer4c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4a_Neurons_GPU,(256*14*14));
 
 	/* res4f_branch2b*/
-	extract_weights("data/res4f_branch2b.txt",Layer4b_Weights_CPU,false);      
+	extract_weights("data/RN/res4f_branch2b.txt",Layer4b_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer4b_Weights_GPU,Layer4b_Weights_CPU, sizeof(float)*(256*256*3*3));
 	execute3DconvolutionCuda<<< numBlocks_res, numThreads_res >>>(NULL,Layer4a_Neurons_GPU,Layer4b_Weights_GPU,Layer4b_Neurons_GPU,256,14,14,1,3,1,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4f2b_mean.txt",mean,false);
-	extract_weights("data/bn4f2b_var.txt",var,false);
+	extract_weights("data/RN/bn4f2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn4f2b_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*256);
         executeBnNormLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4b_Neurons_GPU,mean_GPU,var_GPU,256,14*14);
         /* Scale */ 
-	extract_weights("data/sc4f2b_scale.txt",scale,false);
-	extract_weights("data/sc4f2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4f2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc4f2b_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*256);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*256);
 	executeScaleLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4b_Neurons_GPU,scale_GPU,bias_GPU,256,14*14);
@@ -1961,18 +1961,18 @@ void executeLayer4_CUDA(float *Layer3c_Neurons_GPU,float *Layer4c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer4b_Neurons_GPU,(256*14*14));
 
 	/* res4f_branch2c*/
-	extract_weights("data/res4f_branch2c.txt",Layer4c_Weights_CPU,false);      
+	extract_weights("data/RN/res4f_branch2c.txt",Layer4c_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer4c_Weights_GPU,Layer4c_Weights_CPU, sizeof(float)*1024*512);
 	execute3DconvolutionCuda<<< numBlocks, numThreads >>>(NULL,Layer4b_Neurons_GPU,Layer4c_Weights_GPU,Layer4c_Neurons_GPU,1024,14,14,1,1,0,256,14);
 	/* Batch Norm */
-	extract_weights("data/bn4f2c_mean.txt",mean,false);
-	extract_weights("data/bn4f2c_var.txt",var,false);
+	extract_weights("data/RN/bn4f2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn4f2c_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*1024);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*1024);
         executeBnNormLayerCUDA<<< numBlocks, numThreads >>>(Layer4c_Neurons_GPU,mean_GPU,var_GPU,1024,14*14);
         /* Scale */ 
-	extract_weights("data/sc4f2c_scale.txt",scale,false);
-	extract_weights("data/sc4f2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc4f2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc4f2c_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*1024);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*1024);
 	executeScaleLayerCUDA<<< numBlocks, numThreads >>>(Layer4c_Neurons_GPU,scale_GPU,bias_GPU,1024,14*14);
@@ -2040,28 +2040,28 @@ void executeLayer5_CUDA(float *Layer4c_Neurons_GPU,float *Layer5c_Neurons_GPU)
 	Cuda_allocateMemory(&Layer5b_Neurons_GPU,sizeof(float) * (512*7*7));
 	Cuda_allocateMemory(&Layer_ELtwise_Neurons_GPU,sizeof(float) * (2048*7*7));
 	
-	extract_weights("data/res5a_branch1.txt",Layer5c_Weights_CPU,false);
+	extract_weights("data/RN/res5a_branch1.txt",Layer5c_Weights_CPU,false);
 	Cuda_memcpyfromHostToDevice(Layer5c_Weights_GPU,Layer5c_Weights_CPU, sizeof(float)*1024*2048);
       
         dim3 numBlocks(2048,1,1);
         dim3 numThreads(7,7);
 	execute3DconvolutionCuda<<< numBlocks,numThreads>>>(NULL,Layer4c_Neurons_GPU,Layer5c_Weights_GPU,Layer5b1_Neurons_GPU,2048,7,7,2,1,0,1024,14);
 	/* Batch Norm */
-	extract_weights("data/bn5ab1_mean.txt",mean,false);
-	extract_weights("data/bn5ab1_var.txt",var,false);
+	extract_weights("data/RN/bn5ab1_mean.txt",mean,false);
+	extract_weights("data/RN/bn5ab1_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*2048);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*2048);
 
         executeBnNormLayerCUDA<<< numBlocks, numThreads>>>(Layer5b1_Neurons_GPU,mean_GPU,var_GPU, 2048 , (7*7));
         /* Scale */ 
-	extract_weights("data/sc5ab1_scale.txt",scale,false);
-	extract_weights("data/sc5ab1_bias.txt",bias,false);	
+	extract_weights("data/RN/sc5ab1_scale.txt",scale,false);
+	extract_weights("data/RN/sc5ab1_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*2048);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*2048);
 	executeScaleLayerCUDA<<<numBlocks, numThreads>>> (Layer5b1_Neurons_GPU,scale_GPU,bias_GPU, 2048, (7*7));
 	
 	/* res5a_branch2a*/
-	extract_weights("data/res5a_branch2a.txt",Layer5a_Weights_CPU,false);      
+	extract_weights("data/RN/res5a_branch2a.txt",Layer5a_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer5a_Weights_GPU,Layer5a_Weights_CPU, sizeof(float)*512*1024);
 
         dim3 numBlocks_res(512,1,1);
@@ -2069,15 +2069,15 @@ void executeLayer5_CUDA(float *Layer4c_Neurons_GPU,float *Layer5c_Neurons_GPU)
 	
 	execute3DconvolutionCuda<<< numBlocks_res , numThreads_res >>>(NULL,Layer4c_Neurons_GPU,Layer5a_Weights_GPU,Layer5a_Neurons_GPU,512,7,7,2,1,0,1024,14);
 	/* Batch Norm */
-	extract_weights("data/bn5a2a_mean.txt",mean,false);
-	extract_weights("data/bn5a2a_var.txt",var,false);
+	extract_weights("data/RN/bn5a2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn5a2a_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*512);
         
 	executeBnNormLayerCUDA<<< numBlocks_res, numThreads_res >>> (Layer5a_Neurons_GPU,mean_GPU,var_GPU,512,7*7);
         /* Scale */ 
-	extract_weights("data/sc5a2a_scale.txt",scale,false);
-	extract_weights("data/sc5a2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc5a2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc5a2a_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*512);
 	
@@ -2086,19 +2086,19 @@ void executeLayer5_CUDA(float *Layer4c_Neurons_GPU,float *Layer5c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks_res, numThreads_res>>> (Layer5a_Neurons_GPU,(512*7*7));
          
 	/* res5a_branch2b*/
-	extract_weights("data/res5a_branch2b.txt",Layer5b_Weights_CPU,false);      
+	extract_weights("data/RN/res5a_branch2b.txt",Layer5b_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer5b_Weights_GPU,Layer5b_Weights_CPU, sizeof(float)*512*512*3*3);
 	
 	execute3DconvolutionCuda<<< numBlocks_res, numThreads_res >>> (NULL,Layer5a_Neurons_GPU,Layer5b_Weights_GPU,Layer5b_Neurons_GPU,512,7,7,1,3,1,512,7);
 	/* Batch Norm */
-	extract_weights("data/bn5a2b_mean.txt",mean,false);
-	extract_weights("data/bn5a2b_var.txt",var,false);
+	extract_weights("data/RN/bn5a2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn5a2b_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*512);
         executeBnNormLayerCUDA<<< numBlocks_res, numThreads_res >>> (Layer5b_Neurons_GPU,mean_GPU,var_GPU,512,7*7);
         /* Scale */ 
-	extract_weights("data/sc5a2b_scale.txt",scale,false);
-	extract_weights("data/sc5a2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc5a2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc5a2b_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*512);
 	executeScaleLayerCUDA<<< numBlocks_res, numThreads_res >>> (Layer5b_Neurons_GPU,scale_GPU,bias_GPU,512,7*7);
@@ -2107,19 +2107,19 @@ void executeLayer5_CUDA(float *Layer4c_Neurons_GPU,float *Layer5c_Neurons_GPU)
 
 
 	/* res5a_branch2c*/
-	extract_weights("data/res5a_branch2c.txt",Layer5c_Weights_CPU,false);      
+	extract_weights("data/RN/res5a_branch2c.txt",Layer5c_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer5c_Weights_GPU,Layer5c_Weights_CPU, sizeof(float)*512*2048);
 	
 	execute3DconvolutionCuda<<< numBlocks, numThreads>>>(NULL,Layer5b_Neurons_GPU,Layer5c_Weights_GPU,Layer5c_Neurons_GPU,2048,7,7,1,1,0,512,7);
 	/* Batch Norm */
-	extract_weights("data/bn5a2c_mean.txt",mean,false);
-	extract_weights("data/bn5a2c_var.txt",var,false);
+	extract_weights("data/RN/bn5a2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn5a2c_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*2048);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*2048);
         executeBnNormLayerCUDA<<< numBlocks, numThreads >>>(Layer5c_Neurons_GPU,mean_GPU,var_GPU,2048,7*7);
         /* Scale */ 
-	extract_weights("data/sc5a2c_scale.txt",scale,false);
-	extract_weights("data/sc5a2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc5a2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc5a2c_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*2048);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*2048);
 	executeScaleLayerCUDA<<< numBlocks, numThreads >>>(Layer5c_Neurons_GPU,scale_GPU,bias_GPU,2048,7*7);
@@ -2130,19 +2130,19 @@ void executeLayer5_CUDA(float *Layer4c_Neurons_GPU,float *Layer5c_Neurons_GPU)
 
 
 	/* res5b_branch2a*/
-//	extract_weights("data/res5a_out.txt",Layer_ELtwise_Neurons,false);      
-	extract_weights("data/res5b_branch2a.txt",Layer5a1_Weights_CPU,false);      
+//	extract_weights("data/RN/res5a_out.txt",Layer_ELtwise_Neurons,false);      
+	extract_weights("data/RN/res5b_branch2a.txt",Layer5a1_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer5a1_Weights_GPU,Layer5a1_Weights_CPU, sizeof(float)*512*2048);
 	execute3DconvolutionCuda<<< numBlocks_res, numThreads_res >>>(NULL,Layer_ELtwise_Neurons_GPU,Layer5a1_Weights_GPU,Layer5a_Neurons_GPU,512,7,7,1,1,0,2048,7);
 	/* Batch Norm */
-	extract_weights("data/bn5b2a_mean.txt",mean,false);
-	extract_weights("data/bn5b2a_var.txt",var,false);
+	extract_weights("data/RN/bn5b2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn5b2a_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*512);
         executeBnNormLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer5a_Neurons_GPU,mean_GPU,var_GPU,512,7*7);
         /* Scale */ 
-	extract_weights("data/sc5b2a_scale.txt",scale,false);
-	extract_weights("data/sc5b2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc5b2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc5b2a_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*512);
 	executeScaleLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer5a_Neurons_GPU,scale_GPU,bias_GPU,512,7*7);
@@ -2150,18 +2150,18 @@ void executeLayer5_CUDA(float *Layer4c_Neurons_GPU,float *Layer5c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer5a_Neurons_GPU,(512*7*7));
 
 	/* res5b_branch2b*/
-	extract_weights("data/res5b_branch2b.txt",Layer5b_Weights_CPU,false);      
+	extract_weights("data/RN/res5b_branch2b.txt",Layer5b_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer5b_Weights_GPU,Layer5b_Weights_CPU, sizeof(float)*512*512*3*3);
 	execute3DconvolutionCuda<<< numBlocks_res, numThreads_res >>>(NULL,Layer5a_Neurons_GPU,Layer5b_Weights_GPU,Layer5b_Neurons_GPU,512,7,7,1,3,1,512,7);
 	/* Batch Norm */
-	extract_weights("data/bn5b2b_mean.txt",mean,false);
-	extract_weights("data/bn5b2b_var.txt",var,false);
+	extract_weights("data/RN/bn5b2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn5b2b_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*512);
         executeBnNormLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer5b_Neurons_GPU,mean_GPU,var_GPU,512,7*7);
         /* Scale */ 
-	extract_weights("data/sc5b2b_scale.txt",scale,false);
-	extract_weights("data/sc5b2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc5b2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc5b2b_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*512);
 	executeScaleLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer5b_Neurons_GPU,scale_GPU,bias_GPU,512,7*7);
@@ -2169,41 +2169,41 @@ void executeLayer5_CUDA(float *Layer4c_Neurons_GPU,float *Layer5c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer5b_Neurons_GPU,(512*7*7));
 
 	/* res5b_branch2c*/
-	extract_weights("data/res5b_branch2c.txt",Layer5c_Weights_CPU,false);      
+	extract_weights("data/RN/res5b_branch2c.txt",Layer5c_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer5c_Weights_GPU,Layer5c_Weights_CPU, sizeof(float)*512*2048);
 	execute3DconvolutionCuda<<< numBlocks, numThreads >>>(NULL,Layer5b_Neurons_GPU,Layer5c_Weights_GPU,Layer5c_Neurons_GPU,2048,7,7,1,1,0,512,7);
 	/* Batch Norm */
-	extract_weights("data/bn5b2c_mean.txt",mean,false);
-	extract_weights("data/bn5b2c_var.txt",var,false);
+	extract_weights("data/RN/bn5b2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn5b2c_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*2048);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*2048);
         executeBnNormLayerCUDA<<< numBlocks, numThreads >>>(Layer5c_Neurons_GPU,mean_GPU,var_GPU,2048,7*7);
         /* Scale */
-	extract_weights("data/sc5b2c_scale.txt",scale,false);
-	extract_weights("data/sc5b2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc5b2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc5b2c_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*2048);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*2048);
 	executeScaleLayerCUDA<<< numBlocks, numThreads >>>(Layer5c_Neurons_GPU,scale_GPU,bias_GPU,2048,7*7);
 	/* Eltwise */
-	//extract_weights("data/res5b_branch2c_out.txt",Layer5c_Neurons_CPU,false);      
+	//extract_weights("data/RN/res5b_branch2c_out.txt",Layer5c_Neurons_CPU,false);      
         executeEltWiseLayerCUDA<<< numBlocks, numThreads >>>(Layer_ELtwise_Neurons_GPU,Layer5c_Neurons_GPU,Layer_ELtwise_Neurons_GPU,2048*7*7);
 	/* ReLU */	
 	executeReLULayerCUDA<<< numBlocks, numThreads >>>(Layer_ELtwise_Neurons_GPU,(2048*7*7));
 
 	/* res5c_branch2a*/
-//	extract_weights("data/res5b_out.txt",Layer_ELtwise_Neurons,false);      
-	extract_weights("data/res5c_branch2a.txt",Layer5a1_Weights_CPU,false);      
+//	extract_weights("data/RN/res5b_out.txt",Layer_ELtwise_Neurons,false);      
+	extract_weights("data/RN/res5c_branch2a.txt",Layer5a1_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer5a1_Weights_GPU,Layer5a1_Weights_CPU, sizeof(float)*512*2048);
 	execute3DconvolutionCuda<<< numBlocks_res, numThreads_res >>>(NULL,Layer_ELtwise_Neurons_GPU,Layer5a1_Weights_GPU,Layer5a_Neurons_GPU,512,7,7,1,1,0,2048,7);
 	/* Batch Norm */
-	extract_weights("data/bn5c2a_mean.txt",mean,false);
-	extract_weights("data/bn5c2a_var.txt",var,false);
+	extract_weights("data/RN/bn5c2a_mean.txt",mean,false);
+	extract_weights("data/RN/bn5c2a_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*512);
         executeBnNormLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer5a_Neurons_GPU,mean_GPU,var_GPU,512,7*7);
         /* Scale */ 
-	extract_weights("data/sc5c2a_scale.txt",scale,false);
-	extract_weights("data/sc5c2a_bias.txt",bias,false);	
+	extract_weights("data/RN/sc5c2a_scale.txt",scale,false);
+	extract_weights("data/RN/sc5c2a_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*512);
 	executeScaleLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer5a_Neurons_GPU,scale_GPU,bias_GPU,512,7*7);
@@ -2211,19 +2211,19 @@ void executeLayer5_CUDA(float *Layer4c_Neurons_GPU,float *Layer5c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer5a_Neurons_GPU,(512*7*7));
 
 	/* res5c_branch2b*/
-	//extract_weights("data/res5c_branch2a_out.txt",Layer5a_Neurons_CPU,false);      
-	extract_weights("data/res5c_branch2b.txt",Layer5b_Weights_CPU,false);      
+	//extract_weights("data/RN/res5c_branch2a_out.txt",Layer5a_Neurons_CPU,false);      
+	extract_weights("data/RN/res5c_branch2b.txt",Layer5b_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer5b_Weights_GPU,Layer5b_Weights_CPU, sizeof(float)*512*512*3*3);
 	execute3DconvolutionCuda<<< numBlocks_res, numThreads_res >>>(NULL,Layer5a_Neurons_GPU,Layer5b_Weights_GPU,Layer5b_Neurons_GPU,512,7,7,1,3,1,512,7);
 	/* Batch Norm */
-	extract_weights("data/bn5c2b_mean.txt",mean,false);
-	extract_weights("data/bn5c2b_var.txt",var,false);
+	extract_weights("data/RN/bn5c2b_mean.txt",mean,false);
+	extract_weights("data/RN/bn5c2b_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*512);
         executeBnNormLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer5b_Neurons_GPU,mean_GPU,var_GPU,512,7*7);
         /* Scale */ 
-	extract_weights("data/sc5c2b_scale.txt",scale,false);
-	extract_weights("data/sc5c2b_bias.txt",bias,false);	
+	extract_weights("data/RN/sc5c2b_scale.txt",scale,false);
+	extract_weights("data/RN/sc5c2b_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*512);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*512);
 	executeScaleLayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer5b_Neurons_GPU,scale_GPU,bias_GPU,512,7*7);
@@ -2231,18 +2231,18 @@ void executeLayer5_CUDA(float *Layer4c_Neurons_GPU,float *Layer5c_Neurons_GPU)
 	executeReLULayerCUDA<<< numBlocks_res, numThreads_res >>>(Layer5b_Neurons_GPU,(512*7*7));
 
 	/* res5c_branch2c*/
-	extract_weights("data/res5c_branch2c.txt",Layer5c_Weights_CPU,false);      
+	extract_weights("data/RN/res5c_branch2c.txt",Layer5c_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer5c_Weights_GPU,Layer5c_Weights_CPU, sizeof(float)*512*2048);
 	execute3DconvolutionCuda<<< numBlocks, numThreads >>>(NULL,Layer5b_Neurons_GPU,Layer5c_Weights_GPU,Layer5c_Neurons_GPU,2048,7,7,1,1,0,512,7);
 	/* Batch Norm */
-	extract_weights("data/bn5c2c_mean.txt",mean,false);
-	extract_weights("data/bn5c2c_var.txt",var,false);
+	extract_weights("data/RN/bn5c2c_mean.txt",mean,false);
+	extract_weights("data/RN/bn5c2c_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*2048);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*2048);
         executeBnNormLayerCUDA<<< numBlocks, numThreads >>>(Layer5c_Neurons_GPU,mean_GPU,var_GPU,2048,7*7);
         /* Scale */ 
-	extract_weights("data/sc5c2c_scale.txt",scale,false);
-	extract_weights("data/sc5c2c_bias.txt",bias,false);	
+	extract_weights("data/RN/sc5c2c_scale.txt",scale,false);
+	extract_weights("data/RN/sc5c2c_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*2048);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*2048);
 	executeScaleLayerCUDA<<< numBlocks, numThreads >>>(Layer5c_Neurons_GPU,scale_GPU,bias_GPU,2048,7*7);
@@ -2278,7 +2278,7 @@ void executeLayer5_CUDA(float *Layer4c_Neurons_GPU,float *Layer5c_Neurons_GPU)
 
 void readIn(float *layer1)
 {
-	FILE *fp = fopen ("data/input.txt","rb");
+	FILE *fp = fopen ("data/RN/input.txt","rb");
 	size_t len;
         char delim[1];
         delim[0] = '\n';
@@ -2342,15 +2342,15 @@ void NeuralNetwork()
 	float *Layer1_Weights_CPU = (float *)malloc(sizeof(float) *(64*7*7*3));
         float *Layer2_Neurons_CPU = (float *)malloc(sizeof(float) *(64*112*112));
         /* Convolution 1 */	
-	extract_weights("data/conv1.txt",Layer1_Weights_CPU,false);      
+	extract_weights("data/RN/conv1.txt",Layer1_Weights_CPU,false);      
 	executeFirstLayer(NULL,Layer1_Neurons_CPU,Layer1_Weights_CPU,Layer2_Neurons_CPU,2,3,224,112,112,64);
         /* Batch Normalisation 1 */	
-	extract_weights("data/bn1_mean.txt",mean,false);
-	extract_weights("data/bn1_var.txt",var,false);
+	extract_weights("data/RN/bn1_mean.txt",mean,false);
+	extract_weights("data/RN/bn1_var.txt",var,false);
         executeBnNormLayer(Layer2_Neurons_CPU,mean,var,64,112*112);
         /* Scale 1 */ 
-	extract_weights("data/sc1_scale.txt",scale,false);
-	extract_weights("data/sc1_bias.txt",bias,false);	
+	extract_weights("data/RN/sc1_scale.txt",scale,false);
+	extract_weights("data/RN/sc1_bias.txt",bias,false);	
 	executeScaleLayer(Layer2_Neurons_CPU,scale,bias,64,112*112);
         /* RELU 1 */	
 	executeReLULayer(Layer2_Neurons_CPU,(64*112*112));
@@ -2374,7 +2374,7 @@ void NeuralNetwork()
 /************************************5*********************************************/
         float *Layer_FC_Weights = (float *)malloc(sizeof(float)* 1000 * 2048);
         float *Layer_OutNeurons_CPU = (float *)malloc(sizeof(float)* 1000);
-	extract_weights("data/fc.txt",Layer_FC_Weights,false);	
+	extract_weights("data/RN/fc.txt",Layer_FC_Weights,false);	
 	executeFCLayer(NULL,Layer5c_pool_CPU,Layer_FC_Weights,Layer_OutNeurons_CPU,1000,2048,false,false);
 #else
 
@@ -2405,19 +2405,19 @@ void NeuralNetwork()
 	Cuda_allocateMemory(&Layer2_pool_GPU,sizeof(float) * 64*56*56);
 
 	/* Convolution 1 */	
-	extract_weights("data/conv1.txt",Layer1_Weights_CPU,false);      
+	extract_weights("data/RN/conv1.txt",Layer1_Weights_CPU,false);      
 	Cuda_memcpyfromHostToDevice(Layer1_Weights_GPU,Layer1_Weights_CPU, sizeof(float)*64*7*7*3);
 	Cuda_memcpyfromHostToDevice(Layer1_Neurons_GPU,Layer1_Neurons_CPU, sizeof(float)*INPUT_SIZE);
 	executeFirstLayerCUDA<<<numBlocks,numThreads>>>(NULL,Layer1_Neurons_GPU,Layer1_Weights_GPU,Layer2_Neurons_GPU,2,3,224,112,112,64,tfactor);
         /* Batch Normalisation 1 */	
-	extract_weights("data/bn1_mean.txt",mean,false);
-	extract_weights("data/bn1_var.txt",var,false);
+	extract_weights("data/RN/bn1_mean.txt",mean,false);
+	extract_weights("data/RN/bn1_var.txt",var,false);
 	Cuda_memcpyfromHostToDevice(mean_GPU,mean, sizeof(float)*64);
 	Cuda_memcpyfromHostToDevice(var_GPU,var, sizeof(float)*64);
         executeBnNormLayerCUDA_split<<<numBlocks, numThreads>>>(Layer2_Neurons_GPU,mean_GPU,var_GPU,64,112,tfactor);
         /* Scale 1 */ 
-	extract_weights("data/sc1_scale.txt",scale,false);
-	extract_weights("data/sc1_bias.txt",bias,false);	
+	extract_weights("data/RN/sc1_scale.txt",scale,false);
+	extract_weights("data/RN/sc1_bias.txt",bias,false);	
 	Cuda_memcpyfromHostToDevice(scale_GPU,scale, sizeof(float)*64);
 	Cuda_memcpyfromHostToDevice(bias_GPU,bias, sizeof(float)*64);
 	executeScaleLayerCUDA_split<<<numBlocks, numThreads>>>(Layer2_Neurons_GPU,scale_GPU,bias_GPU,64,112,tfactor);
@@ -2453,7 +2453,7 @@ void NeuralNetwork()
 /************************************5*********************************************/
         float *Layer_FC_Weights = (float *)malloc(sizeof(float)* 1000 * 2048);
         float *Layer_OutNeurons_CPU = (float *)malloc(sizeof(float)* 1000);
-	extract_weights("data/fc.txt",Layer_FC_Weights,false);	
+	extract_weights("data/RN/fc.txt",Layer_FC_Weights,false);	
         
 	float *Layer_FC_Weights_GPU,*Layer_FC_Out_GPU;
 	Cuda_allocateMemory(&Layer_FC_Weights_GPU,sizeof(float)*2048*1000);
