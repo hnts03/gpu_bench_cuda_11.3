@@ -67,7 +67,7 @@ main(int argc, char** argv)
 /////////////////////////////////////////////////////////////////////////////////////////
 /*void LoadInput(int *Data_Layer_CPU)
 {
-	FILE * pFile1 = fopen ("data/SN/cat.txt","rb");
+	FILE * pFile1 = fopen ("data/cat.txt","rb");
 	if (pFile1 != NULL)
 	{
 		printf("File Opened\n");
@@ -111,7 +111,7 @@ main(int argc, char** argv)
 
 void LoadInput(int *Data_Layer_CPU)
 {
-	FILE *fp = fopen ("data/SN/cat.txt","rb");
+	FILE *fp = fopen ("data/cat.txt","rb");
 	size_t len;
         char delim[1];
         delim[0] = '\n';
@@ -161,7 +161,7 @@ void ConvertInput(int *Data_Layer_CPU_R, int *Data_Layer_CPU_G, int *Data_Layer_
 void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU, double *fire2expand1x1_Weights_CPU, double *fire2expand3x3_Weights_CPU, double *fire3squeeze1x1_Weights_CPU, double *fire3expand1x1_Weights_CPU, double *fire3expand3x3_Weights_CPU, double *fire4squeeze1x1_Weights_CPU, double *fire4expand1x1_Weights_CPU, double *fire4expand3x3_Weights_CPU, double *fire5squeeze1x1_Weights_CPU, double *fire5expand1x1_Weights_CPU, double *fire5expand3x3_Weights_CPU, double *fire6squeeze1x1_Weights_CPU, double *fire6expand1x1_Weights_CPU, double *fire6expand3x3_Weights_CPU, double *fire7squeeze1x1_Weights_CPU, double *fire7expand1x1_Weights_CPU, double *fire7expand3x3_Weights_CPU, double *fire8squeeze1x1_Weights_CPU, double *fire8expand1x1_Weights_CPU, double *fire8expand3x3_Weights_CPU, double *fire9squeeze1x1_Weights_CPU, double *fire9expand1x1_Weights_CPU, double *fire9expand3x3_Weights_CPU, double *Layer10_Weights_CPU)
 {
 	// initial layer 1 weight
-	FILE * pFile1 = fopen ("data/SN/conv1_s.txt","rb");
+	FILE * pFile1 = fopen ("data/conv1_s.txt","rb");
 	if (pFile1 != NULL)
 	{
 		//printf("File Opened\n");
@@ -194,7 +194,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile2 = fopen ("data/SN/fire2_squeeze1x1.txt","rb");
+	FILE * pFile2 = fopen ("data/fire2_squeeze1x1.txt","rb");
 	if (pFile2 != NULL)
 	{
 		//printf("File2 Opened\n");
@@ -227,7 +227,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile3 = fopen ("data/SN/fire2_expand1x1.txt","rb");
+	FILE * pFile3 = fopen ("data/fire2_expand1x1.txt","rb");
 	if (pFile3 != NULL)
 	{
 		//printf("File3 Opened\n");
@@ -261,7 +261,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile4 = fopen ("data/SN/fire2_expand3x3.txt","rb");
+	FILE * pFile4 = fopen ("data/fire2_expand3x3.txt","rb");
 	if (pFile4 != NULL)
 	{
 		//printf("File4 Opened\n");
@@ -296,7 +296,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile5 = fopen ("data/SN/fire3_squeeze1x1.txt","rb");
+	FILE * pFile5 = fopen ("data/fire3_squeeze1x1.txt","rb");
 	if (pFile5 != NULL)
 	{
 		//printf("File5 Opened\n");
@@ -329,7 +329,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile6 = fopen ("data/SN/fire3_expand1x1.txt","rb");
+	FILE * pFile6 = fopen ("data/fire3_expand1x1.txt","rb");
 	if (pFile6 != NULL)
 	{
 		//printf("File6 Opened\n");
@@ -363,7 +363,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile7 = fopen ("data/SN/fire3_expand3x3.txt","rb");
+	FILE * pFile7 = fopen ("data/fire3_expand3x3.txt","rb");
 	if (pFile7 != NULL)
 	{
 		//printf("File7 Opened\n");
@@ -398,7 +398,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile8 = fopen ("data/SN/fire4_squeeze1x1.txt","rb");
+	FILE * pFile8 = fopen ("data/fire4_squeeze1x1.txt","rb");
 	if (pFile8 != NULL)
 	{
 		//printf("File8 Opened\n");
@@ -431,7 +431,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile9 = fopen ("data/SN/fire4_expand1x1.txt","rb");
+	FILE * pFile9 = fopen ("data/fire4_expand1x1.txt","rb");
 	if (pFile9 != NULL)
 	{
 		//printf("File9 Opened\n");
@@ -465,7 +465,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile10 = fopen ("data/SN/fire4_expand3x3.txt","rb");
+	FILE * pFile10 = fopen ("data/fire4_expand3x3.txt","rb");
 	if (pFile10 != NULL)
 	{
 		//printf("File10 Opened\n");
@@ -500,7 +500,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile11 = fopen ("data/SN/fire5_squeeze1x1.txt","rb");
+	FILE * pFile11 = fopen ("data/fire5_squeeze1x1.txt","rb");
 	if (pFile11 != NULL)
 	{
 		//printf("File11 Opened\n");
@@ -533,7 +533,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile12 = fopen ("data/SN/fire5_expand1x1.txt","rb");
+	FILE * pFile12 = fopen ("data/fire5_expand1x1.txt","rb");
 	if (pFile12 != NULL)
 	{
 		//printf("File12 Opened\n");
@@ -567,7 +567,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile13 = fopen ("data/SN/fire5_expand3x3.txt","rb");
+	FILE * pFile13 = fopen ("data/fire5_expand3x3.txt","rb");
 	if (pFile13 != NULL)
 	{
 		//printf("File13 Opened\n");
@@ -602,7 +602,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile14 = fopen ("data/SN/fire6_squeeze1x1.txt","rb");
+	FILE * pFile14 = fopen ("data/fire6_squeeze1x1.txt","rb");
 	if (pFile14 != NULL)
 	{
 		//printf("File14 Opened\n");
@@ -635,7 +635,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile15 = fopen ("data/SN/fire6_expand1x1.txt","rb");
+	FILE * pFile15 = fopen ("data/fire6_expand1x1.txt","rb");
 	if (pFile15 != NULL)
 	{
 		//printf("File15 Opened\n");
@@ -669,7 +669,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile16 = fopen ("data/SN/fire6_expand3x3.txt","rb");
+	FILE * pFile16 = fopen ("data/fire6_expand3x3.txt","rb");
 	if (pFile16 != NULL)
 	{
 		//printf("File16 Opened\n");
@@ -704,7 +704,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile17 = fopen ("data/SN/fire7_squeeze1x1.txt","rb");
+	FILE * pFile17 = fopen ("data/fire7_squeeze1x1.txt","rb");
 	if (pFile17 != NULL)
 	{
 		//printf("File17 Opened\n");
@@ -737,7 +737,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile18 = fopen ("data/SN/fire7_expand1x1.txt","rb");
+	FILE * pFile18 = fopen ("data/fire7_expand1x1.txt","rb");
 	if (pFile18 != NULL)
 	{
 		//printf("File18 Opened\n");
@@ -771,7 +771,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile19 = fopen ("data/SN/fire7_expand3x3.txt","rb");
+	FILE * pFile19 = fopen ("data/fire7_expand3x3.txt","rb");
 	if (pFile19 != NULL)
 	{
 		//printf("File19 Opened\n");
@@ -806,7 +806,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile20 = fopen ("data/SN/fire8_squeeze1x1.txt","rb");
+	FILE * pFile20 = fopen ("data/fire8_squeeze1x1.txt","rb");
 	if (pFile20 != NULL)
 	{
 		//printf("File18 Opened\n");
@@ -839,7 +839,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	/*FILE * pFile20 = fopen ("data/SN/fire8_squeeze1x1.txt","rb");
+	/*FILE * pFile20 = fopen ("data/fire8_squeeze1x1.txt","rb");
 	if (pFile20 != NULL)
 	{
 		printf("File20 Opened\n");
@@ -873,7 +873,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}*/
-	FILE * pFile21 = fopen ("data/SN/fire8_expand1x1.txt","rb");
+	FILE * pFile21 = fopen ("data/fire8_expand1x1.txt","rb");
 	if (pFile21 != NULL)
 	{
 		//printf("File21 Opened\n");
@@ -908,7 +908,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile22 = fopen ("data/SN/fire8_expand3x3.txt","rb");
+	FILE * pFile22 = fopen ("data/fire8_expand3x3.txt","rb");
 	if (pFile22 != NULL)
 	{
 		//printf("File22 Opened\n");
@@ -943,7 +943,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile23 = fopen ("data/SN/fire9_squeeze1x1.txt","rb");
+	FILE * pFile23 = fopen ("data/fire9_squeeze1x1.txt","rb");
 	if (pFile23 != NULL)
 	{
 		//printf("File23 Opened\n");
@@ -976,7 +976,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile24 = fopen ("data/SN/fire9_expand1x1.txt","rb");
+	FILE * pFile24 = fopen ("data/fire9_expand1x1.txt","rb");
 	if (pFile24 != NULL)
 	{
 		//printf("File24 Opened\n");
@@ -1011,7 +1011,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile25 = fopen ("data/SN/fire9_expand3x3.txt","rb");
+	FILE * pFile25 = fopen ("data/fire9_expand3x3.txt","rb");
 	if (pFile25 != NULL)
 	{
 		//printf("File25 Opened\n");
@@ -1047,7 +1047,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		exit(1);
 	}
 
-	FILE * pFile26 = fopen ("data/SN/conv10_s_p1.txt","rb");
+	FILE * pFile26 = fopen ("data/conv10_s_p1.txt","rb");
 	if (pFile26 != NULL)
 	{
 		//printf("File 26 Opened\n");
@@ -1077,7 +1077,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		//printf("Elements read p1: %ld\n",i);
 		fclose (pFile26);
 	}
-	FILE * pFile27 = fopen ("data/SN/conv10_s_p2.txt","rb");
+	FILE * pFile27 = fopen ("data/conv10_s_p2.txt","rb");
 	if (pFile27 != NULL)
 	{
 		//printf("File 27 Opened\n");
@@ -1108,7 +1108,7 @@ void InitHostMem(double *Layer1_Weights_CPU, double *fire2squeeze1x1_Weights_CPU
 		fclose (pFile27);
 	}
 	
-	/*FILE *pFile26 = fopen ("data/SN/conv10_s.txt","rb");
+	/*FILE *pFile26 = fopen ("data/conv10_s.txt","rb");
 	size_t len;
         char delim[1];
         delim[0] = '\n';

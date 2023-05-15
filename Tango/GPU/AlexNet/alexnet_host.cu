@@ -137,30 +137,30 @@ int main(int argc, char** argv)
 }
 void Fill_weights(float *Layer1_Weights_CPU,float *Layer2_Weights_CPU,float *Layer3_Weights_CPU,float *Layer4_Weights_CPU,float *Layer5_Weights_CPU,float *Layer6_Weights_CPU,float *Layer7_Weights_CPU,float *Layer8_Weights_CPU)
 {
-	extract_weights("data/AN/conv1.txt",Layer1_Weights_CPU,false);
-	extract_weights("data/AN/conv2.txt",Layer2_Weights_CPU,false);
-	extract_weights("data/AN/conv3.txt",Layer3_Weights_CPU,false);
-	extract_weights("data/AN/conv4.txt",Layer4_Weights_CPU,false);
-	extract_weights("data/AN/conv5.txt",Layer5_Weights_CPU,false);
-	extract_weights("data/AN/fc6.txt",Layer6_Weights_CPU,false);
-	extract_weights("data/AN/fc7.txt",Layer7_Weights_CPU,false);
-	extract_weights("data/AN/fc8.txt",Layer8_Weights_CPU,false);
+	extract_weights("data/conv1.txt",Layer1_Weights_CPU,false);
+	extract_weights("data/conv2.txt",Layer2_Weights_CPU,false);
+	extract_weights("data/conv3.txt",Layer3_Weights_CPU,false);
+	extract_weights("data/conv4.txt",Layer4_Weights_CPU,false);
+	extract_weights("data/conv5.txt",Layer5_Weights_CPU,false);
+	extract_weights("data/fc6.txt",Layer6_Weights_CPU,false);
+	extract_weights("data/fc7.txt",Layer7_Weights_CPU,false);
+	extract_weights("data/fc8.txt",Layer8_Weights_CPU,false);
 	printf("Extracted Weights and Bias successfully\n");
 }
 void Fill_bias(float *bias_1,float *bias_2,float *bias_3,float *bias_4,float *bias_5,float *bias_6,float *bias_7,float *bias_8)
 {
-	extract_weights("data/AN/bias1.txt",bias_1,true);
-	extract_weights("data/AN/bias2.txt",bias_2,true);
-	extract_weights("data/AN/bias3.txt",bias_3,true);
-	extract_weights("data/AN/bias4.txt",bias_4,true);
-	extract_weights("data/AN/bias5.txt",bias_5,true);
-	extract_weights("data/AN/bias6.txt",bias_6,true);
-	extract_weights("data/AN/bias7.txt",bias_7,true);
-	extract_weights("data/AN/bias8.txt",bias_8,true);
+	extract_weights("data/bias1.txt",bias_1,true);
+	extract_weights("data/bias2.txt",bias_2,true);
+	extract_weights("data/bias3.txt",bias_3,true);
+	extract_weights("data/bias4.txt",bias_4,true);
+	extract_weights("data/bias5.txt",bias_5,true);
+	extract_weights("data/bias6.txt",bias_6,true);
+	extract_weights("data/bias7.txt",bias_7,true);
+	extract_weights("data/bias8.txt",bias_8,true);
 }
 void readIn(float *layer1)
 {
-	FILE *fp = fopen ("data/AN/input.txt","rb");
+	FILE *fp = fopen ("data/input.txt","rb");
 	size_t len;
         char delim[1];
         delim[0] = '\n';
@@ -501,7 +501,7 @@ void NeuralNetwork()
     free(Layer8_Weights_CPU);
 #endif
 	/* SoftMax */
-	//Confirm the functionality of SoftMax ,extract_weights("data/AN/fc8_out.txt",fc9_Neurons_CPU,false);
+	//Confirm the functionality of SoftMax ,extract_weights("data/fc8_out.txt",fc9_Neurons_CPU,false);
 	//executeSoftMax(fc9_Neurons_CPU);
 	exit(0);
 }

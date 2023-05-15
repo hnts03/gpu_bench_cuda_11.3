@@ -69,7 +69,7 @@ main(int argc, char** argv)
 void InitHostMem(double *w_i, double *u_i, double *b_i, double *w_f, double *u_f, double *b_f, double *w_c, double *u_c, double *b_c, double *w_o, double *u_o, double *b_o, double *weight, double *bias)
 {
 	// Input Gate Weights and Bias
-	FILE * pFile1 = fopen ("data/LSTM/w_i.txt","rb");
+	FILE * pFile1 = fopen ("data/w_i.txt","rb");
 	if (pFile1 != NULL)
 	{
 		//printf("File Opened\n");
@@ -102,7 +102,7 @@ void InitHostMem(double *w_i, double *u_i, double *b_i, double *w_f, double *u_f
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile2 = fopen ("data/LSTM/b_i.txt","rb");
+	FILE * pFile2 = fopen ("data/b_i.txt","rb");
 	if (pFile2 != NULL)
 	{
 		//printf("File Opened\n");
@@ -136,7 +136,7 @@ void InitHostMem(double *w_i, double *u_i, double *b_i, double *w_f, double *u_f
 		exit(1);
 	}
 	// Forget gate Weights and Bias
-	FILE * pFile3 = fopen ("data/LSTM/w_f.txt","rb");
+	FILE * pFile3 = fopen ("data/w_f.txt","rb");
 	if (pFile3 != NULL)
 	{
 		//printf("File Opened\n");
@@ -169,7 +169,7 @@ void InitHostMem(double *w_i, double *u_i, double *b_i, double *w_f, double *u_f
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile4 = fopen ("data/LSTM/b_f.txt","rb");
+	FILE * pFile4 = fopen ("data/b_f.txt","rb");
 	if (pFile4 != NULL)
 	{
 		//printf("File Opened\n");
@@ -203,7 +203,7 @@ void InitHostMem(double *w_i, double *u_i, double *b_i, double *w_f, double *u_f
 		exit(1);
 	}
 	// Cell gate Weights and Bias
-	FILE * pFile5 = fopen ("data/LSTM/w_c.txt","rb");
+	FILE * pFile5 = fopen ("data/w_c.txt","rb");
 	if (pFile5 != NULL)
 	{
 		//printf("File Opened\n");
@@ -236,7 +236,7 @@ void InitHostMem(double *w_i, double *u_i, double *b_i, double *w_f, double *u_f
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile6 = fopen ("data/LSTM/b_c.txt","rb");
+	FILE * pFile6 = fopen ("data/b_c.txt","rb");
 	if (pFile6 != NULL)
 	{
 		//printf("File Opened\n");
@@ -270,7 +270,7 @@ void InitHostMem(double *w_i, double *u_i, double *b_i, double *w_f, double *u_f
 		exit(1);
 	}
 	// Output gate Weights and Bias
-	FILE * pFile7 = fopen ("data/LSTM/w_o.txt","rb");
+	FILE * pFile7 = fopen ("data/w_o.txt","rb");
 	if (pFile7 != NULL)
 	{
 		//printf("File Opened\n");
@@ -303,7 +303,7 @@ void InitHostMem(double *w_i, double *u_i, double *b_i, double *w_f, double *u_f
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile8 = fopen ("data/LSTM/b_o.txt","rb");
+	FILE * pFile8 = fopen ("data/b_o.txt","rb");
 	if (pFile8 != NULL)
 	{
 		//printf("File Opened\n");
@@ -336,7 +336,7 @@ void InitHostMem(double *w_i, double *u_i, double *b_i, double *w_f, double *u_f
 		printf("FAIL! INPUT WEIGHTS NOT FOUND!\n");
 		exit(1);
 	}
-	FILE * pFile9 = fopen ("data/LSTM/W.txt","rb");
+	FILE * pFile9 = fopen ("data/W.txt","rb");
 	if (pFile9 != NULL)
 	{
 		//printf("File Opened\n");
@@ -371,7 +371,7 @@ void InitHostMem(double *w_i, double *u_i, double *b_i, double *w_f, double *u_f
 		exit(1);
 	}
 	//Recurrent weights of output gate
-	FILE * pFile10 = fopen ("data/LSTM/u_o.txt","rb");
+	FILE * pFile10 = fopen ("data/u_o.txt","rb");
 	if (pFile10 != NULL)
 	{
 		//printf("File Opened\n");
@@ -405,7 +405,7 @@ void InitHostMem(double *w_i, double *u_i, double *b_i, double *w_f, double *u_f
 		exit(1);
 	}
 	//Recurrent weights of input gate
-	FILE * pFile11 = fopen ("data/LSTM/u_i.txt","rb");
+	FILE * pFile11 = fopen ("data/u_i.txt","rb");
 	if (pFile11 != NULL)
 	{
 		//printf("File Opened\n");
@@ -439,7 +439,7 @@ void InitHostMem(double *w_i, double *u_i, double *b_i, double *w_f, double *u_f
 		exit(1);
 	}
 	//Recurrent weights of cell gate
-	FILE * pFile12 = fopen ("data/LSTM/u_c.txt","rb");
+	FILE * pFile12 = fopen ("data/u_c.txt","rb");
 	if (pFile12 != NULL)
 	{
 		//printf("File Opened\n");
@@ -473,7 +473,7 @@ void InitHostMem(double *w_i, double *u_i, double *b_i, double *w_f, double *u_f
 		exit(1);
 	}
 	//Recurrent weights of forget gate
-	FILE * pFile13 = fopen ("data/LSTM/u_f.txt","rb");
+	FILE * pFile13 = fopen ("data/u_f.txt","rb");
 	if (pFile13 != NULL)
 	{
 		//printf("File Opened\n");

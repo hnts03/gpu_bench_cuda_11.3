@@ -127,17 +127,17 @@ int main()
     float rec_h_w[num_units * num_units],rec_z_w[ num_units * num_units],rec_r_w[ num_units * num_units];
     float dense_kernel[num_units],dense_bias[1];	
 
-	extract_weights("data/GRU/kernel_h.txt",kernel_h_w);
-	extract_weights("data/GRU/kernel_r.txt",kernel_r_w);
-	extract_weights("data/GRU/kernel_z.txt",kernel_z_w);
-	extract_weights("data/GRU/bias_h.txt",bias_h);
-	extract_weights("data/GRU/bias_r.txt",bias_r);
-	extract_weights("data/GRU/bias_z.txt",bias_z);
-	extract_weights("data/GRU/recurrent_kernel_h.txt",rec_h_w);
-	extract_weights("data/GRU/recurrent_kernel_r.txt",rec_r_w);
-	extract_weights("data/GRU/recurrent_kernel_z.txt",rec_z_w);
-	extract_weights("data/GRU/dense_kernel.txt",dense_kernel);
-	extract_weights("data/GRU/dense_bias.txt",dense_bias);
+	extract_weights("data/kernel_h.txt",kernel_h_w);
+	extract_weights("data/kernel_r.txt",kernel_r_w);
+	extract_weights("data/kernel_z.txt",kernel_z_w);
+	extract_weights("data/bias_h.txt",bias_h);
+	extract_weights("data/bias_r.txt",bias_r);
+	extract_weights("data/bias_z.txt",bias_z);
+	extract_weights("data/recurrent_kernel_h.txt",rec_h_w);
+	extract_weights("data/recurrent_kernel_r.txt",rec_r_w);
+	extract_weights("data/recurrent_kernel_z.txt",rec_z_w);
+	extract_weights("data/dense_kernel.txt",dense_kernel);
+	extract_weights("data/dense_bias.txt",dense_bias);
 
     float CPU_states[num_units];
     float x[input_dim];

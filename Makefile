@@ -26,7 +26,7 @@ endif
 #Disable clean for now, It has a bug!
 # clean_dragon-naive clean_pannotia clean_proxy-apps
 #clean: clean_rodinia_2.0-ft clean_dragon-cdp  clean_ispass-2009 clean_lonestargpu-2.0 clean_custom_apps clean_parboil clean_cutlass clean_rodinia clean_heterosync
-clean: clean_rodinia clean_lonestar2 clean_parboil clean_ispass clean_polybench clean_tango clean_graphbig clean_cutlass
+clean: clean_rodinia clean_lonestar2 clean_parboil clean_ispass clean_polybench clean_tango clean_graphbig clean_cutlass clean_tango
 
 # clean_data:
 # 	./clean_data.sh
@@ -99,7 +99,7 @@ deepbench:
 
 tango:
 	mkdir -p $(BINDIR)/tango
-	ln -s $(STORAGE_PATH)/data_dirs/tango $(BINDIR)/tango/data
+#	ln -s $(STORAGE_PATH)/data_dirs/tango $(BINDIR)/tango/data
 	$(SETENV) cd Tango/GPU; ./compile.sh
 	mv Tango/GPU/AlexNet/AN $(BINDIR)/tango/
 	mv Tango/GPU/CifarNet/CN $(BINDIR)/tango/
@@ -336,3 +336,6 @@ clean_lonestar6:
 	$(SETENV) make clean $(MAKE_ARGS) -C lonestargpu-6.0/build/lonestar/mining/gpu/
 	$(SETENV) make clean $(MAKE_ARGS) -C lonestargpu-6.0/build/lonestar/scientific/gpu/
 	rm -rf lonestargpu-6.0/build
+
+clean_tango:
+	rm -rf $(BINDIR)/tango/data
