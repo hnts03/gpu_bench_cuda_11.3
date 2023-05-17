@@ -10,7 +10,7 @@ $(error You must run "source setup_environment before calling make")
 endif
 
 ifeq ($(CUDA_GT_10), 1)
-all: rodinia lonestar2 polybench parboil ispass deepbench tango graphbig lonestar6 cutlass
+all: rodinia lonestar2 polybench parboil ispass deepbench tango graphbig lonestar6 cutlass gardenia
 endif
 # ifeq ($(CUDA_GT_7), 1)
 # # all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive dragon-cdp microbench rodinia ispass-2009 lonestargpu-2.0 polybench parboil shoc custom_apps deeplearning cutlass GPU_Microbenchmark heterosync Deepbench_nvidia
@@ -26,7 +26,7 @@ endif
 #Disable clean for now, It has a bug!
 # clean_dragon-naive clean_pannotia clean_proxy-apps
 #clean: clean_rodinia_2.0-ft clean_dragon-cdp  clean_ispass-2009 clean_lonestargpu-2.0 clean_custom_apps clean_parboil clean_cutlass clean_rodinia clean_heterosync
-clean: clean_rodinia clean_lonestar2 clean_parboil clean_ispass clean_polybench clean_tango clean_graphbig clean_cutlass clean_tango
+clean: clean_rodinia clean_lonestar2 clean_parboil clean_ispass clean_polybench clean_tango clean_graphbig clean_cutlass clean_gardenia
 
 # clean_data:
 # 	./clean_data.sh
@@ -34,6 +34,18 @@ clean: clean_rodinia clean_lonestar2 clean_parboil clean_ispass clean_polybench 
 # data:
 # 	mkdir -p $(BINDIR)/
 # 	cd ../ && bash ./get_data.sh
+
+gardenia:
+	mkdir -p $(BINDIR)/gardenia
+	$(SETENV) make $(MAKE_ARGS) -C Gardenia/src/bc
+	$(SETENV) make $(MAKE_ARGS) -C Gardenia/src/bfs
+	$(SETENV) make $(MAKE_ARGS) -C Gardenia/src/cc
+	$(SETENV) make $(MAKE_ARGS) -C Gardenia/src/pr
+	$(SETENV) make $(MAKE_ARGS) -C Gardenia/src/mst
+	$(SETENV) make $(MAKE_ARGS) -C Gardenia/src/spmv
+	$(SETENV) make $(MAKE_ARGS) -C Gardenia/src/sssp
+	$(SETENV) make $(MAKE_ARGS) -C Gardenia/src/vc
+	mv Gardenia/bin/* $(BIN_DIR)/gardenia
 
 lonestar6:
 	mkdir -p $(BINDIR)/lonestargpu-6.0
@@ -337,5 +349,14 @@ clean_lonestar6:
 	$(SETENV) make clean $(MAKE_ARGS) -C lonestargpu-6.0/build/lonestar/scientific/gpu/
 	rm -rf lonestargpu-6.0/build
 
-clean_tango:
-	rm -rf $(BINDIR)/tango/data
+# clean_tango:
+# 	rm -rf $(BINDIR)/tango/data
+
+clean_gardenia:
+	$(SETENV) make clean $(MAKE_ARGS) -C Gardenia/src/bc
+	$(SETENV) make clean $(MAKE_ARGS) -C Gardenia/src/bfs
+	$(SETENV) make clean $(MAKE_ARGS) -C Gardenia/src/cc
+	$(SETENV) make clean $(MAKE_ARGS) -C Gardenia/src/pr
+	$(SETENV) make clean $(MAKE_ARGS) -C Gardenia/src/spmv
+	$(SETENV) make clean $(MAKE_ARGS) -C Gardenia/src/sssp
+	$(SETENV) make clean $(MAKE_ARGS) -C Gardenia/src/vc
