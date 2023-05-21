@@ -10,7 +10,6 @@ compile with **compute capability 70, 75, 86**
 * ubuntu-18.04
 * gcc-7.5.0
 * cuda-11.3
-* RTX 3070, V100, RTX2060, RTX2060 Super tested
 
 ## Benchsuites list: 
 * Rodinia-3.1
@@ -21,17 +20,16 @@ compile with **compute capability 70, 75, 86**
 * LonestarGPU-2.0
 * Tango
 * graphBIG
-
-## Accel-SIM only:
-* Cutlass-1.3.1
+* Cutlass-1.3.1 (only SM86)
 * DeepBench
 * Gardenia
 * LonestarGPU-6.0
-* DNNMark
-* GNNMark
-* MLperf
-* gSuite
-* cuGraph
+* DNNMark (not yet)
+* GNNMark (not yet)
+* MLperf (not yet)
+* gSuite (not yet)
+* cuGraph (not yet) 
+* nvgraph (not yet)
 
 ## Usage:
 * need [cuDNN8.2.0 installer](https://developer.nvidia.com/rdp/cudnn-archive) for compiling DeepBench
