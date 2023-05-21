@@ -1,7 +1,7 @@
 # GPU benchsuites 
 compile script written by **Jong Hyun Jeong**
 
-compile with **compute capability 70, 75, 86**
+**compute capability 70, 75, 86**
 
 ### emali: dida1245@korea.ac.kr
 ### email: dida1245@gmail.com
