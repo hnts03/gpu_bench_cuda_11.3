@@ -27,9 +27,6 @@ echo "install LLVM"
 #chmod +x llvm.sh
 sudo ./llvm.sh 10
 
-# sudo apt-get install libgflags-dev
-# sudo apt-get install libgoogle-glog-dev
-
 # install pytorch and dependencies for GNNmark
 # wget https://repo.anaconda.com/archive/Anaconda3-2023.03-1-Linux-x86_64.sh
 # chmod +x Anaconda3-2023.03-1-Linux-x86_64.sh

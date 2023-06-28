@@ -10,7 +10,7 @@ $(error You must run "source setup_environment before calling make")
 endif
 
 ifeq ($(CUDA_GT_10), 1)
-all: rodinia lonestar2 polybench parboil ispass deepbench tango graphbig lonestar6 cutlass gardenia
+all: rodinia lonestar2 polybench parboil ispass deepbench tango graphbig lonestar6 cutlass gardenia gsuite
 endif
 # ifeq ($(CUDA_GT_7), 1)
 # # all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive dragon-cdp microbench rodinia ispass-2009 lonestargpu-2.0 polybench parboil shoc custom_apps deeplearning cutlass GPU_Microbenchmark heterosync Deepbench_nvidia
@@ -35,6 +35,12 @@ clean: clean_rodinia clean_lonestar2 clean_parboil clean_ispass clean_polybench 
 # 	mkdir -p $(BINDIR)/
 # 	cd ../ && bash ./get_data.sh
 
+gsuite:
+	mkdir -p $(BINDIR)/gsuite
+	cd gSuite/cuda; sh ./compile_lib.sh
+	$(SETENV) make $(MAKE_ARGS) -C gSuite/cuda
+	mv gSuite/cuda/cudaDataLoader $(BINDIR)/gsuite/
+
 gardenia:
 	mkdir -p $(BINDIR)/gardenia
 	$(SETENV) make $(MAKE_ARGS) -C Gardenia/src/bc
@@ -45,7 +51,7 @@ gardenia:
 	$(SETENV) make $(MAKE_ARGS) -C Gardenia/src/spmv
 	$(SETENV) make $(MAKE_ARGS) -C Gardenia/src/sssp
 	$(SETENV) make $(MAKE_ARGS) -C Gardenia/src/vc
-	mv Gardenia/bin/* $(BIN_DIR)/gardenia
+	mv Gardenia/bin/* $(BINDIR)/gardenia
 
 lonestar6:
 	mkdir -p $(BINDIR)/lonestargpu-6.0
