@@ -29,14 +29,17 @@ def train(gpu,args):
     device = torch.device(cuda_string) if torch.cuda.is_available() and not args.disablecuda else torch.device("cpu")
 
     if args.pems_bay:
-        graph_pkl_filename = "./data/adj_mx_bay.pkl"
+        # graph_pkl_filename = "./data/adj_mx_bay.pkl"
+        graph_pkl_filename = "/root/workspace/hdd/data_dirs/gnnmark/stgcn/adj_mx_bay.pkl"
         sensor_ids, sensor_id_to_ind, adj_mx = load_graph_data(graph_pkl_filename)
         sp_mx = sp.coo_matrix(adj_mx)
     else:
-        sensor_filename = "./data/graph_sensor_ids.txt"
+        # sensor_filename = "./data/graph_sensor_ids.txt"
+        sensor_filename = "/root/workspace/hdd/data_dirs/gnnmark/stgcn/graph_sensor_ids.txt"
         with open(sensor_filename) as f:
             sensor_ids = f.read().strip().split(',')
-        distance_filename = "./data/distances_la_2012.csv"
+        # distance_filename = "./data/distances_la_2012.csv"
+        distance_filename = "/root/workspace/hdd/data_dirs/gnnmark/stgcn/distances_la_2012.csv"
         distance_df = pd.read_csv(distance_filename, dtype={'from': 'str', 'to': 'str'})
         adj_mx = get_adjacency_matrix(distance_df, sensor_ids)
         sp_mx = sp.coo_matrix(adj_mx)
