@@ -24,11 +24,11 @@ int LoadData(int arg) {
 
 	std::unordered_map<std::string,std::string> nodeMap;
 
-	const char* edgeIndexFileName = "pubmed.cites";
+	const char* edgeIndexFileName = "data/pubmed.cites";
 	int edgeIndexSize = getEdgeIndexSizeFromFile(edgeIndexFileName);
 	std::cout << "edgeIndexSize: " << edgeIndexSize << std::endl;
 
-	const char* featureFileName = "pubmed.content";
+	const char* featureFileName = "data/pubmed.content";
 	int featureSize = getFeatureSizeFromFile(featureFileName);
 	std::cout << "featureSize: " << featureSize << std::endl;
 
@@ -240,8 +240,8 @@ void loadEdgeIndexFromFile(const char* fileName, float* edgeIndex, const int num
 		std::cout << "DEBUG: CiteSeer dataset edges are loading..." << std::endl;
 		sep = '\t';
 	}
-	if( strcmp( fileName,"pubmed.cites" ) == 0 ) {
-		std::cout << "DEBUG: PubMed dataset edges are loading..." << std::endl;
+	if( strcmp( fileName,"data/pubmed.cites" ) == 0 ) {
+		std::cout << "DEBUG: data/pubmed dataset edges are loading..." << std::endl;
 		sep = ',';
 
 	}
@@ -275,7 +275,7 @@ int getFeatureSizeFromFile(const char* fileName) {
 
 	int numOfFeatures = -1;
 
-	if( strcmp(fileName,"pubmed.content") == 0 )
+	if( strcmp(fileName,"data/pubmed.content") == 0 )
 		return 500;
 
 	if(dsFile.is_open()) {
@@ -371,10 +371,10 @@ void loadFeatureVectorFromFile(const char* fileName, float* featureVector, int f
                 }
 
 	}
-	else if( strcmp(fileName,"pubmed.content") == 0 )
+	else if( strcmp(fileName,"data/pubmed.content") == 0 )
         {
 
-                std::cout << "DEBUG: PubMed dataset features are loading...\n";
+                std::cout << "DEBUG: data/pubmed dataset features are loading...\n";
 
                 if(dsFile.is_open()) {
                         while(getline(dsFile, line)) {
