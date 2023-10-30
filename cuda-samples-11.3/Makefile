@@ -40,20 +40,21 @@ PROJECTS ?= $(shell find 0_Simple 1_Utilities 2_Graphics 3_Imaging 4_Finance 5_S
 
 FILTER_OUT :=
 
-ifeq ($(TARGET_ARCH),ppc64le)
+# ifeq ($(TARGET_ARCH),ppc64le)
 FILTER_OUT += 2_Graphics/simpleGLES_screen/Makefile
 FILTER_OUT += 5_Simulations/nbody_screen/Makefile
-FILTER_OUT += 0_Simple/cudaNvSci
-FILTER_OUT += 2_Graphics/simpleVulkan
-FILTER_OUT += 2_Graphics/simpleVulkanMMAP
-FILTER_OUT += 3_Imaging/cudaNvSciNvMedia
-FILTER_OUT += 2_Graphics/simpleGLES
-FILTER_OUT += 2_Graphics/simpleGLES_EGLOutput/
-FILTER_OUT += 3_Imaging/EGLStream_CUDA_CrossGPU/
-FILTER_OUT += 3_Imaging/EGLStreams_CUDA_Interop/
-FILTER_OUT += 3_Imaging/EGLSync_CUDAEvent_Interop/
-FILTER_OUT += 5_Simulations/nbody_opengles/
-endif
+FILTER_OUT += 0_Simple/cudaNvSci/Makefile
+FILTER_OUT += 2_Graphics/simpleVulkan/Makefile
+FILTER_OUT += 2_Graphics/simpleVulkanMMAP/Makefile
+FILTER_OUT += 3_Imaging/cudaNvSciNvMedia/Makefile
+FILTER_OUT += 2_Graphics/simpleGLES/Makefile
+FILTER_OUT += 2_Graphics/simpleGLES_EGLOutput/Makefile
+FILTER_OUT += 3_Imaging/EGLStream_CUDA_CrossGPU/Makefile
+FILTER_OUT += 3_Imaging/EGLStreams_CUDA_Interop/Makefile
+FILTER_OUT += 3_Imaging/EGLSync_CUDAEvent_Interop/Makefile
+FILTER_OUT += 5_Simulations/nbody_opengles/Makefile
+FILTER_OUT += 6_Advanced/ptxjit/Makefile
+# endif
 
 PROJECTS := $(filter-out $(FILTER_OUT),$(PROJECTS))
 
