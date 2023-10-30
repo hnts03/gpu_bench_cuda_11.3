@@ -24,10 +24,9 @@ compile script written by **Jong Hyun Jeong**
 * DeepBench
 * Gardenia
 * LonestarGPU-6.0
-* DNNMark (not yet)
-* GNNMark (not yet)
+* GNNMark 
+* gSuite 
 * MLperf (not yet)
-* gSuite (not yet)
 * cuGraph (not yet) 
 * nvgraph (not yet)
 

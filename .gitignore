@@ -84,3 +84,4 @@ gSuite/experiment
 gSuite/py
 gSuite/fig
 gSuite/cpu
+cuda-samples-11.3/bin/*

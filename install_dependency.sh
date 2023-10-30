@@ -40,6 +40,7 @@ sudo ./llvm.sh 10
 # pip install dgl-cu113 -f https://data.dgl.ai/wheels/repo.html
 
 # pip install pyg_lib torch_scatter torch_sparse torch_cluster torch_spline_conv -f https://data.pyg.org/whl/torch-1.12.0+cu113.html
-# pip install pytorch_geometric
-# pip install -r requirements.txt
+# pip install torch_geometric    # 2.3.1
 
+# pip install -r requirements.txt
+# grapwritter, stgcn: ./download.sh

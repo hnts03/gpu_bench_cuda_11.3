@@ -10,7 +10,7 @@ $(error You must run "source setup_environment before calling make")
 endif
 
 ifeq ($(CUDA_GT_10), 1)
-all: rodinia lonestar2 polybench parboil ispass deepbench tango graphbig lonestar6 cutlass gardenia gsuite
+all: rodinia lonestar2 polybench parboil ispass deepbench tango graphbig lonestar6 cutlass gardenia gsuite sdk
 endif
 # ifeq ($(CUDA_GT_7), 1)
 # # all:   pannotia rodinia_2.0-ft proxy-apps dragon-naive dragon-cdp microbench rodinia ispass-2009 lonestargpu-2.0 polybench parboil shoc custom_apps deeplearning cutlass GPU_Microbenchmark heterosync Deepbench_nvidia
@@ -26,7 +26,7 @@ endif
 #Disable clean for now, It has a bug!
 # clean_dragon-naive clean_pannotia clean_proxy-apps
 #clean: clean_rodinia_2.0-ft clean_dragon-cdp  clean_ispass-2009 clean_lonestargpu-2.0 clean_custom_apps clean_parboil clean_cutlass clean_rodinia clean_heterosync
-clean: clean_rodinia clean_lonestar2 clean_parboil clean_ispass clean_polybench clean_tango clean_graphbig clean_cutlass clean_gardenia
+clean: clean_rodinia clean_lonestar2 clean_parboil clean_ispass clean_polybench clean_tango clean_graphbig clean_cutlass clean_gardenia clean_sdk
 
 # clean_data:
 # 	./clean_data.sh
@@ -34,6 +34,11 @@ clean: clean_rodinia clean_lonestar2 clean_parboil clean_ispass clean_polybench 
 # data:
 # 	mkdir -p $(BINDIR)/
 # 	cd ../ && bash ./get_data.sh
+
+sdk:
+	mkdir -p $(BINDIR)/sdk
+	$(SETENV) make $(MAKE_ARGS) -C cuda-samples-11.3
+	mv cuda-samples-11.3/bin/x86_64/linux/release/* $(BINDIR)/sdk
 
 gsuite:
 	mkdir -p $(BINDIR)/gsuite
@@ -278,6 +283,9 @@ cutlass:
 
 clean_cutlass:
 	rm -fr cutlass-bench/build
+
+clean_sdk:
+	$(SETENV) make $(MAKE_ARGS) clean noinline=$(noinline) -C cuda-samples-11.3
 
 # clean_tango:
 # 	rm -r $(BINDIR)/tango
