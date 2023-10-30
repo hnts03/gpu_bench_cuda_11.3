@@ -1,1 +1,1 @@
-python3 /root/workspace/gpu_bench_cuda_11.3/gnnmark/GraphWriter/train.py -n 1 -g 1 -nr 0 --epoch 10 --batch_size 32
+python3 /root/workspace/gpu_bench_cuda_11.3/gnnmark/GraphWriter/train.py --train_file /root/workspace/hdd/data_dirs/gnnmark/graphwritter/unprocessed.train.json --valid_file /root/workspace/hdd/data_dirs/gnnmark/graphwritter/unprocessed.val.json --test_file /root/workspace/hdd/data_dirs/gnnmark/graphwritter/unprocessed.test.json -n 1 -g 1 -nr 0 --epoch 10 --batch_size 32

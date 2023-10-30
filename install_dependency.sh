@@ -1,7 +1,7 @@
 
 echo "install dependencies for compile benchmarks"
 sudo apt-get update
-echo "install boost libraty"
+echo "install boost library"
 sudo apt-get install libboost-all-dev
 echo "install cmake-3.15.1"
 wget https://cmake.org/files/v3.15/cmake-3.15.1.tar.gz
